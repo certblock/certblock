@@ -120,6 +120,145 @@ vagrant status
 vagrant ssh eth0
 ```
 
+## 이더리움 eth0/eth1 노드 구성
+
+### 1. Geth 설치
+
+**eth0 가상머신, eth1 가상머신에서 각각 수행**
+
+```
+sudo apt-get update
+sudo apt-get install software-properties-common
+sudo add-apt-repository -y ppa:ethereum/ethereum
+sudo apt-get install ethereum
+```
+
+### 2. 디렉토리 생성 및 genesis 블록파일 생성
+
+```
+mkdir -p dev/eth_localdata
+cd dev/eth_localdata
+
+vi genesis.json
+```
+
+### 3. genesis.json
+
+제네시스 블록은 블록체인 네트워크의 `첫번째 블록` 이며 수많은 블록체인 네트워크들을 분별하는 하나의 `key` 역할을 한다.
+
+따라서 같은 블록체인 네트워크를 연결하려면 이 파일은 무조건 같아야하며, 이 제네시스 파일의 `chainId` 값을 가지고 구분한다고 생각하면 된다.
+
+```json
+{
+    "config": {
+        "chainId": 921,
+        "homesteadBlock": 0,
+        "eip150Block": 0,
+        "eip155Block": 0,
+        "eip158Block": 0
+    },
+    "difficulty": "0x10",
+    "coinbase": "0x0000000000000000000000000000000000000000",
+    "gasLimit": "9999999",
+    "alloc": {},
+    "extraData": "",
+    "nonce": "0xdeadbeefdeadbeef",
+    "mixhash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "parentHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "timestamp": "0x00"
+}
+```
+
+- config
+  - 제네시스 블록의 설정값 정의
+- chainId
+  - 블록체인을 식별하는 정숫값을 입력
+  - 값이 비어있으면 안 됨
+- homesteadBlock
+  - 홈스테드를 적용하는 하드 포크 블록 번호
+  - 제네시스 블록은 0을 설정
+- eip150Block,eip155Block, eip158Block
+  - 이더리움 개선 제안(EIPs)를 적용한 하드 포크 블록 번호
+  - 제네시스 블록은 0을 설정
+- nonce
+  - mixHash와 함께 해당 블록에 충분한 양의 작업 증명 연산을 실행했음을 증명하는 값
+- gasLimit
+  - 해당 블록에서 사용 가능한 가스의 최대 크기
+- difficulty
+  - 블록 생성 난이도
+  - 높을 수록 블록 생성 속도 저하
+- coinbase
+  - 블록 생성에 따른 보상금 지급 계정 주소
+- alloc
+  - 제네시스 블록을 생성할 때 특정 계정에 미리 정해진 액수의 이더를 지급해 블록 생성 가능
+
+### 4. 노드 설정
+
+- 노드 생성
+
+```
+geth --datadir ~/dev/eth_localdata init genesis.json
+```
+
+- 노드의 블록체인 네트워크로 접속
+
+```
+geth --datadir ~/dev/eth_localdata --nodiscover --networkid 921 console
+```
+
+
+
+### 노드 연결
+
+```
+// 첫 번째 노드
+$ geth --networkid 921 --datadir ~dev/eth_localdata --nodiscover --port 30303 --rpc --rpcport "8545" --rpcaddr "0.0.0.0" --rpccorsdomain "*" --rpcapi "eth, net, web3, miner, debug, personal, rpc" console
+```
+
+```
+// 두 번째 노드
+$ geth --networkid 921 --datadir ~dev/eth_localdata --nodiscover --port 30303 --rpc --rpcport "8546" --rpcaddr "0.0.0.0" --rpccorsdomain "*" --rpcapi "eth, net, web3, miner, debug, personal, rpc" console
+```
+
+- --rpc
+  - rpc통신을 사용한다.
+
+- --rpcport
+  - rpc 통신을 위한 port를 8545로 설정한다.
+
+- --rpcaddr
+  - rpc 통신에 모든 접근을 허용한다.
+
+- --rpccorsdomain
+  - CORS 모두 허용 (와일드카드 *)
+
+- --rpcapi
+  - rpc 해당 api를 사용 
+
+
+
+### 5. 마이닝 작업
+
+- 계정 생성
+
+```
+personal.newAccount("eth")
+```
+
+- 계성 확인
+
+```
+personal.listWallerts
+```
+
+- 마이닝 시작
+
+```
+miner.start()
+```
+
+
+
 
 
 
