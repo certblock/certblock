@@ -130,3 +130,6 @@ true<br>
   v: "0x756",<br>
   value: 1000000000000000000<br>
 }<br>
+- 이더를 전송받은 계정 잔액 확인<br>
+> eth.getBalance(eth.accounts[1])<br>
+1000000000000000000<br>
