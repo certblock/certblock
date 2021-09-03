@@ -28,4 +28,24 @@ vagrant@eth0:~$ geth --networkid 921 --datadir ~/dev/eth_localdata --nodiscover 
 - 가상 머신 접속(eth1) > C:\Users\multicampus\Documents\blockchain\vagrant>vagrant ssh eth1<br>
 - geth 설치 ~ datadir경로와 genesis설정 적용 > eth0과 동일<br>
 - geth 설정을 적용한 실행<br>
-vagrant@eth1:~$ geth --datadir ~/dev/eth_localdata --networkid 921 --http --http.port "8545" --port "30303" --maxpeers 2 --allow-insecure-unlock console
+vagrant@eth1:~$ geth --datadir ~/dev/eth_localdata --networkid 921 --http --http.port "8545" --port "30303" --maxpeers 2 --allow-insecure-unlock console<br>
+## 이더리움 계정 생성
+- geth 실행 후 계정 생성<br>
+personal.newAccount("ssafy")<br>
+- keystore에서 파일 확인<br>
+vagrant@eth0:~$ cd dev/eth_localdata/keystore<br>
+vagrant@eth0:~/dev/eth_localdata/keystore$ ls<br>
+UTC--2021-09-02T07-18-07.485430112Z--faed3b23ab96e9b6fb568e2617a6abc43967c730<br>
+UTC--2021-09-02T07-18-18.591875534Z--58d08a3b93c9703492e31776e07cf4144686adb5<br>
+## 코인베이스(Coinbase) 설정
+- 맨 처음 생성되는 이더리움 계정이 자동으로 coinbase로 지정됨<br>
+> eth.coinbase<br>
+"0xfaed3b23ab96e9b6fb568e2617a6abc43967c730"<br>
+## 마이닝(Mining) 시작
+- > miner.start(1)<br>
+- 마이닝 진행 상태 확인<br>
+> eth.mining<br>
+true<br>
+- 마이닝 중단<br>
+> miner.stop()<br>
+null<br>
