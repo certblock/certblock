@@ -82,3 +82,51 @@ null<br>
   transactionsRoot: "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",<br>
   uncles: []<br>
 }<br>
+## 트랜잭션(Transaction) 생성
+- 계정 간 이더(ETH) 전송을 위해 계정 잠금 해제 > geth 실행시 --allow-insecure-unlock 옵션을 주지 않으면 오류가 생길 수 있음<br>
+> personal.unlockAccount(eth.accounts[0])<br>
+Unlock account 0xfaed3b23ab96e9b6fb568e2617a6abc43967c730<br>
+Passphrase:ssafy<br>
+true<br>
+- 트랜잭션 생성<br>
+> eth.sendTransaction({from:eth.accounts[0], to:eth.accounts[1], value:web3.toWei(1,"ether")})<br>
+"0xcd04e34df33b8288780992eff24b041510f9245a562a1028763c9880c780dcb5"<br>
+- 트랜잭션 상태 조회<br>
+> eth.getTransaction("0xcd04e34df33b8288780992eff24b041510f9245a562a1028763c9880c780dcb5")<br>
+{<br>
+  blockHash: null,<br>
+  blockNumber: null,<br>
+  from: "0xfaed3b23ab96e9b6fb568e2617a6abc43967c730",<br>
+  gas: 21000,<br>
+  gasPrice: 1000000000,<br>
+  hash: "0xcd04e34df33b8288780992eff24b041510f9245a562a1028763c9880c780dcb5",<br>
+  input: "0x",<br>
+  nonce: 0,<br>
+  r: "0x820cb345b4b15045bd9a85c731aadae979f061909637db36ce5945fd25860ada",<br>
+  s: "0x1c37f00ced86f46ab36af584accc11f42f88763c4f0ef38e023caf6e03871c09",<br>
+  to: "0x58d08a3b93c9703492e31776e07cf4144686adb5",<br>
+  transactionIndex: 0,<br>
+  type: "0x0",<br>
+  v: "0x756",<br>
+  value: 1000000000000000000<br>
+}<br>
+## 트랜잭션(Transaction) 결과 확인
+- 다시 마이닝 수행 후 트랜잭션 상태 조회<br>
+> eth.getTransaction("0xcd04e34df33b8288780992eff24b041510f9245a562a1028763c9880c780dcb5")<br>
+{<br>
+  blockHash: "0xd5e2af2be13715f85e7108c9147def0a71cfd7045c192683f0b4898d7954df2c",<br>
+  blockNumber: 9,<br>
+  from: "0xfaed3b23ab96e9b6fb568e2617a6abc43967c730",<br>
+  gas: 21000,<br>
+  gasPrice: 1000000000,<br>
+  hash: "0xcd04e34df33b8288780992eff24b041510f9245a562a1028763c9880c780dcb5",<br>
+  input: "0x",<br>
+  nonce: 0,<br>
+  r: "0x820cb345b4b15045bd9a85c731aadae979f061909637db36ce5945fd25860ada",<br>
+  s: "0x1c37f00ced86f46ab36af584accc11f42f88763c4f0ef38e023caf6e03871c09",<br>
+  to: "0x58d08a3b93c9703492e31776e07cf4144686adb5",<br>
+  transactionIndex: 0,<br>
+  type: "0x0",<br>
+  v: "0x756",<br>
+  value: 1000000000000000000<br>
+}<br>
