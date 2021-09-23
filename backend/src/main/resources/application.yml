@@ -1,1 +1,44 @@
+#Server
+server:
+  encoding:
+    charset: UTF-8
+    enabled: true
+    force : true
+  port: 8080
+  servlet:
+    context-path: /
 
+
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+#DB
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/certblockDB?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul
+    username: certblock
+    password: 1234
+#JPA
+  jpa:
+    open-in-view: true
+    hibernate:
+      ddl-auto: create
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        use-new-id-generator-mappings: false
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+
+#log
+logging:
+  level:
+    org.hibernate.type.descriptor.sql: trace
