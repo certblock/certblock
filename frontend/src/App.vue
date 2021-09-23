@@ -1,10 +1,27 @@
+<!-- main.js를 통해 표시되는 페이지 -->
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
-  <router-view />
+  <!-- header 표시 -->
+  <the-header id="header" />
+
+  <!-- router페이지 표시 -->
+  <router-view style="height: 300px" />
+
+  <!-- footer 표시 -->
+  <the-footer id="footer" />
 </template>
+
+<script>
+import TheFooter from "./components/common/TheFooter.vue";
+import TheHeader from "./components/common/TheHeader.vue";
+
+export default {
+  name: "Home",
+  components: {
+    TheHeader,
+    TheFooter,
+  },
+};
+</script>
 
 <style>
 #app {
@@ -26,5 +43,13 @@
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+#header {
+  border: 1px solid red;
+}
+
+#footer {
+  border: 1px solid red;
 }
 </style>
