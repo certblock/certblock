@@ -4,6 +4,7 @@ import Main from "../views/TheMain";
 import Certificate from "../views/Certificate.vue";
 import Login from "../views/Login.vue";
 import Regist from "../views/Regist.vue";
+import store from "../store";
 // import ErrorPage from "../views/ErrorPage.vue";
 
 // path : url경로, name : 해당 route의 이름, component : 해당 route가 호출되면 표시할 페이지(위에 import한 페이지)
@@ -43,7 +44,8 @@ const router = createRouter({
 // 라우터 네비게이션 가드 : 로그인을 해야 접근할 수 있는 페이지 등 라우터를 통한 페이지 이동시 조건 설정
 // to : 이동하려는 페이지, from : 현재 페이지, next() : 페이지 이동
 router.beforeEach((to, from, next) => {
-  if (to.name == "Certificate") {
+  let isLogin = store.state.isLogin;
+  if (to.name == "Certificate" && isLogin == true) {
     alert("로그인 후 사용 가능합니다.");
     next("/login");
   } else {
