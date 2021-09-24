@@ -29,7 +29,7 @@ const routes = [
     name: "Regist",
     component: Regist,
   },
-  // 존재하지 않는 url 접근시 에러페이지로 이동
+  // 존재하지 않는 url 접근시 에러페이지로 이동 (현재 사용 불가)
   // {
   //   path: "*",
   //   component: ErrorPage,
@@ -45,12 +45,35 @@ const router = createRouter({
 // to : 이동하려는 페이지, from : 현재 페이지, next() : 페이지 이동
 router.beforeEach((to, from, next) => {
   let isLogin = store.state.isLogin;
-  if (to.name == "Certificate" && isLogin == true) {
-    alert("로그인 후 사용 가능합니다.");
-    next("/login");
-  } else {
-    next();
+  let route = to.name;
+  switch (route) {
+    case "Certificate":
+      if (!isLogin) {
+        alert("로그인 후 사용 가능합니다.");
+        next("/login");
+      } else {
+        next();
+      }
+      break;
+    case "Login":
+    case "Regist":
+      if (isLogin) {
+        alert("이미 로그인 중입니다.");
+      } else {
+        next();
+      }
+      break;
+    default:
+      next();
   }
+  // if (to.name == "Certificate" && !isLogin) {
+  //   alert("로그인 후 사용 가능합니다.");
+  //   next("/login");
+  // } else if ((to.name == "Login" || to.name == "Regist") && isLogin) {
+  //   alert("이미 로그인 중입니다.");
+  // } else {
+  //   next();
+  // }
 });
 
 export default router;
