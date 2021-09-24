@@ -2,13 +2,11 @@ package i05.a507.certblock.service;
 
 import i05.a507.certblock.domain.University;
 import i05.a507.certblock.repository.UniversityRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("universityService")
 public class UniversityServiceImpl implements UniversityService {
 
-	@Autowired
 	UniversityRepository universityRepository;
 
 	@Override

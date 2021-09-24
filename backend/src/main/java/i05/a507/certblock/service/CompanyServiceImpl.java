@@ -2,7 +2,6 @@ package i05.a507.certblock.service;
 
 import i05.a507.certblock.domain.Company;
 import i05.a507.certblock.repository.CompanyRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Service;
 @Service("companyService")
 public class CompanyServiceImpl implements CompanyService {
 
-	@Autowired
 	CompanyRepository companyRepository;
 
 	@Override

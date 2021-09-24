@@ -9,7 +9,6 @@ import i05.a507.certblock.repository.StudentRepository;
 import i05.a507.certblock.repository.UniversityRepository;
 import i05.a507.certblock.repository.UniversityStudentIdRepository;
 import i05.a507.certblock.repository.UniversityStudentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,13 +20,9 @@ import java.util.List;
 @Service("studentService")
 public class StudentServiceImpl implements StudentService {
 
-	@Autowired
 	UniversityRepository universityRepository;
-	@Autowired
 	StudentRepository studentRepository;
-	@Autowired
 	UniversityStudentRepository universityStudentRepository;
-	@Autowired
 	UniversityStudentIdRepository universityStudentIdRepository;
 
 	@Override
