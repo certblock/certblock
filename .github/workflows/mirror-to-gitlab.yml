@@ -3,7 +3,7 @@ name: Mirror to GitLab
 on: [push]
 
 jobs:
-  build:
+  mirror-to-gitlab:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
