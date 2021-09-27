@@ -4,7 +4,7 @@
   <the-header id="header" />
 
   <!-- router페이지 표시 -->
-  <router-view style="height: 300px" />
+  <router-view />
 
   <!-- footer 표시 -->
   <the-footer id="footer" />
