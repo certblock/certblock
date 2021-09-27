@@ -56,13 +56,13 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getUser(int userId){
-		User user = userRepository.findByUserId(userId).orElse(null);
+		User user = userRepository.findById(userId).orElse(null);
 		return user;
 	}
 
 	@Override
 	public boolean modifyUser(int userId, UserModifyReq userModifyReq) {
-		User user = userRepository.findByUserId(userId).orElse(null);
+		User user = userRepository.findById(userId).orElse(null);
 		if(user==null) return false;
 
 		user.setName(userModifyReq.getName());
@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean deleteUser(int userId) {
-		User user = userRepository.findByUserId(userId).orElse(null);
+		User user = userRepository.findById(userId).orElse(null);
 		if(user==null) return false;
 
 		userRepository.delete(user);

@@ -8,6 +8,6 @@ import lombok.Setter;
 @Setter
 public class UserSelectAllRes {
     User user;
-    int userId = user.getUserId();
+    int userId = user.getId();
     String userName = user.getName();
 }

@@ -14,7 +14,7 @@ public class CompanyServiceImpl implements CompanyService {
 
 	@Override
 	public Company getCompany(int userId) {
-		Company company = companyRepository.findByUserId(userId);
+		Company company = companyRepository.findById(userId);
 		return company;
 	}
 }

@@ -56,7 +56,7 @@ public class UserController {
        User user = userService.loginUser(userLoginReq);
         if(user != null){
             UserLoginRes userLoginRes = new UserLoginRes();
-            userLoginRes.setUserId(user.getUserId());
+            userLoginRes.setUserId(user.getId());
             userLoginRes.setEmail(user.getEmail());
             userLoginRes.setName(user.getName());
             userLoginRes.setPhone(user.getPhone());
@@ -65,11 +65,11 @@ public class UserController {
 
             int type = user.getType();
             if(type==2) {
-               Student student =  studentService.getStudent(user.getUserId());
-               userLoginRes.setStudentId(student.getStudentId());
+               Student student =  studentService.getStudent(user.getId());
+               userLoginRes.setStudentId(student.getId());
             }else{
-                Company company =  companyService.getCompany((user.getUserId()));
-                userLoginRes.setCompanyId(company.getCompanyId());
+                Company company =  companyService.getCompany((user.getId()));
+                userLoginRes.setCompanyId(company.getId());
             }
 
             return ResponseEntity.status(200).body(userLoginRes);
