@@ -4,29 +4,31 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
 @Getter
 @Setter
-@Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn
-public class User {
+public class Submit {
 
     @Id
+    @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
-    int type;
-    String email;
-    String password;
-    String name;
-    String phone;
-    String address;
-    Date birth;
+    @ManyToOne
+    @JoinColumns({
+        @JoinColumn(name="certificate_id"),
+        @JoinColumn(name="university_id"),
+        @JoinColumn(name="student_id")
+    })
+    Certificate certificate;
+
+    @ManyToOne
+    @JoinColumn(name="company_id")
+    Company company;
 
     @Column(name = "date", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    public Timestamp date;
+    Date date;
 
 }

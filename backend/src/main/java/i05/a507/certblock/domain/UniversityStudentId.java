@@ -11,12 +11,13 @@ import java.io.Serializable;
 @Setter
 public class UniversityStudentId implements Serializable {
 
-    @ManyToOne
-    @JoinColumn(name = "universityId")
-    University university;
+    private int university;
+    private int student;
 
-    @ManyToOne
-    @JoinColumn(name = "studentId")
-    Student student;
+    public UniversityStudentId() {}
 
+    public UniversityStudentId(int university, int student) {
+        this.university = university;
+        this.student = student;
+    }
 }
