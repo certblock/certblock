@@ -42,7 +42,8 @@ const router = createRouter({
 });
 
 // 라우터 네비게이션 가드 : 로그인을 해야 접근할 수 있는 페이지 등 라우터를 통한 페이지 이동시 조건 설정
-// to : 이동하려는 페이지, from : 현재 페이지, next() : 페이지 이동
+// to : 이동하려는 페이지, from : 현재 페이지, next() : 페이지 이동(디폴트값: to)
+// 현재는 모든 route 요청시에 실행하지만, 각 route마다 각각의 가드를 사용 할 수도 있음
 router.beforeEach((to, from, next) => {
   let isLogin = store.state.isLogin;
   let route = to.name;
@@ -66,14 +67,6 @@ router.beforeEach((to, from, next) => {
     default:
       next();
   }
-  // if (to.name == "Certificate" && !isLogin) {
-  //   alert("로그인 후 사용 가능합니다.");
-  //   next("/login");
-  // } else if ((to.name == "Login" || to.name == "Regist") && isLogin) {
-  //   alert("이미 로그인 중입니다.");
-  // } else {
-  //   next();
-  // }
 });
 
 export default router;

@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>헤더</h1>
-    <div v-if="!this.$store.state.isLogin">
+    <div v-if="!isLogin">
       <router-link :to="{ name: 'Login' }">로그인</router-link> |
       <router-link :to="{ name: 'Regist' }">회원가입</router-link>
     </div>
@@ -21,14 +21,13 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
 export default {
+  computed: {
+    ...mapState(["isLogin"]),
+  },
   methods: {
-    logout() {
-      alert("로그아웃 완료");
-      this.$store.state.id = "";
-      this.$store.state.pwd = "";
-      this.$store.state.isLogin = false;
-    },
+    ...mapActions(["logout"]),
   },
 };
 </script>

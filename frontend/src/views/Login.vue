@@ -14,22 +14,26 @@
     v-model="pwd"
     placeholder="password입력"
   /><br />
-  <button @click="login()">로그인</button>
+  <button @click="login({ id, pwd })">로그인</button>
+  <button @click="axiostest(id)">axiostest</button>
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
 export default {
-  data: () => ({
-    id: "",
-    pwd: "",
-  }),
+  data() {
+    return {
+      id: "",
+      pwd: "",
+    };
+  },
+
+  computed: {
+    ...mapState(["isLogin"]),
+  },
+
   methods: {
-    login() {
-      alert("id : " + this.id + "\npassword : " + this.pwd + "\n" + this.$store.state.isLogin);
-      this.$store.state.id = this.id;
-      this.$store.state.pwd = this.pwd;
-      this.$store.state.isLogin = true;
-    },
+    ...mapActions(["login", "axiostest"]),
   },
 };
 </script>
