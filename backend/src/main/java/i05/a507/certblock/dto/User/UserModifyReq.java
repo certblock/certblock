@@ -12,4 +12,5 @@ public class UserModifyReq {
     String pass;
     String pass_confirm;
     Date birth;
+    int type;
 }

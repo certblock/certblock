@@ -1,9 +1,15 @@
 package i05.a507.certblock.service;
 
+import i05.a507.certblock.domain.Company;
+import i05.a507.certblock.domain.Student;
+import i05.a507.certblock.domain.University;
 import i05.a507.certblock.domain.User;
 import i05.a507.certblock.dto.User.UserLoginReq;
 import i05.a507.certblock.dto.User.UserModifyReq;
 import i05.a507.certblock.dto.User.UserRegisterReq;
+import i05.a507.certblock.repository.CompanyRepository;
+import i05.a507.certblock.repository.StudentRepository;
+import i05.a507.certblock.repository.UniversityRepository;
 import i05.a507.certblock.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +25,12 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	UserRepository userRepository;
+	@Autowired
+	StudentRepository studentRepository;
+	@Autowired
+	CompanyRepository companyRepository;
+	@Autowired
+	UniversityRepository universityRepository;
 
 	@Override
 	public void registUser(UserRegisterReq userRegisterReq){
@@ -30,16 +42,37 @@ public class UserServiceImpl implements UserService {
 		String email = userRegisterReq.getEmail();
 		String pass = userRegisterReq.getPass();
 
-		User user = new User();
-		user.setType(type);
-		user.setBirth(birth);
-		user.setName(name);
-		user.setPhone(phone);
-		user.setEmail(email);
-		user.setPassword(pass);
-		user.setAddress(null); //처음에는 지갑주소없으니까
-
-		userRepository.save(user);
+		if(type==1){
+			University university = new University();
+			university.setType(type);
+			university.setBirth(birth);
+			university.setName(name);
+			university.setPhone(phone);
+			university.setEmail(email);
+			university.setPassword(pass);
+			university.setAddress(null); //처음에는 지갑주소없으니까
+			universityRepository.save(university);
+		}else if(type==2){
+			Student student = new Student();
+			student.setType(type);
+			student.setBirth(birth);
+			student.setName(name);
+			student.setPhone(phone);
+			student.setEmail(email);
+			student.setPassword(pass);
+			student.setAddress(null); //처음에는 지갑주소없으니까
+			studentRepository.save(student);
+		}else if(type==3){
+			Company company = new Company();
+			company.setType(type);
+			company.setBirth(birth);
+			company.setName(name);
+			company.setPhone(phone);
+			company.setEmail(email);
+			company.setPassword(pass);
+			company.setAddress(null); //처음에는 지갑주소없으니까
+			companyRepository.save(company);
+		}
 	}
 
 	@Override

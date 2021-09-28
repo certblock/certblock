@@ -1,11 +1,8 @@
 package i05.a507.certblock.controller;
 
-import i05.a507.certblock.domain.Company;
-import i05.a507.certblock.domain.Student;
 import i05.a507.certblock.domain.User;
 import i05.a507.certblock.dto.BaseResponseBody;
 import i05.a507.certblock.dto.User.UserLoginReq;
-import i05.a507.certblock.dto.User.UserLoginRes;
 import i05.a507.certblock.dto.User.UserModifyReq;
 import i05.a507.certblock.dto.User.UserRegisterReq;
 import i05.a507.certblock.service.CompanyService;
@@ -33,13 +30,12 @@ public class UserController {
     public ResponseEntity<? extends BaseResponseBody> registUser(
             @RequestBody UserRegisterReq userRegisterReq){
 
-        try {
+        int type = userRegisterReq.getType();
+        if(type==1 || type==2 || type == 3) {
             userService.registUser(userRegisterReq);
             return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
-        }catch (Exception e){
-            e.printStackTrace();
         }
-        return ResponseEntity.status(200).body(BaseResponseBody.of(400, "회원 가입에 실패했습니다."));
+        else return ResponseEntity.status(200).body(BaseResponseBody.of(400, "회원 가입에 실패했습니다."));
     }
 
     //유저 목록 조회
@@ -52,32 +48,9 @@ public class UserController {
     //로그인
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody UserLoginReq userLoginReq){
-
        User user = userService.loginUser(userLoginReq);
-        if(user != null){
-            UserLoginRes userLoginRes = new UserLoginRes();
-            userLoginRes.setUserId(user.getId());
-            userLoginRes.setEmail(user.getEmail());
-            userLoginRes.setName(user.getName());
-            userLoginRes.setPhone(user.getPhone());
-            userLoginRes.setBirth(user.getBirth());
-            userLoginRes.setType(user.getType());
-
-            int type = user.getType();
-            if(type==2) {
-               Student student =  studentService.getStudent(user.getId());
-               userLoginRes.setStudentId(student.getId());
-            }else{
-                Company company =  companyService.getCompany(user.getId());
-                userLoginRes.setCompanyId(company.getId());
-            }
-
-            return ResponseEntity.status(200).body(userLoginRes);
-        }
-        else{
-            return ResponseEntity.status(200).body(BaseResponseBody.of(404, "존재하지 않는 회원입니다."));
-        }
-
+        if(user != null) return ResponseEntity.status(200).body(user);
+        else return ResponseEntity.status(200).body(BaseResponseBody.of(404, "존재하지 않는 회원입니다."));
     }
 
     //특정 유저 조회

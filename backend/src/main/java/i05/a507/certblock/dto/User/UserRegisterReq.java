@@ -10,7 +10,6 @@ public class UserRegisterReq {
     String phone;
     String email;
     String pass;
-    String pass_confirm;
     Date birth;
     int type;
 }
