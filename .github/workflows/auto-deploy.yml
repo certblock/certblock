@@ -46,12 +46,14 @@ jobs:
           outputs: type=docker,dest=/tmp/nginx.tar
 
       - name: Upload images
+        if: github.event_name == 'push'
         uses: actions/upload-artifact@v2
         with:
           name: images
           path: |
             /tmp/backend.tar
             /tmp/nginx.tar
+          retention-days: 1
 
   deploy:
     if: github.event_name == 'push'
