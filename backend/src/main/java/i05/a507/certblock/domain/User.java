@@ -11,7 +11,6 @@ import java.util.Date;
 @Getter
 @Setter
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn
 public class User {
 
     @Id

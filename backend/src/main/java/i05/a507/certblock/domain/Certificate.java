@@ -5,21 +5,19 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
-public class Certificate implements Serializable {
+public class Certificate {
 
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
-    @Id
     @ManyToOne
     @JoinColumns({
             @JoinColumn(name="university_id"),

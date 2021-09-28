@@ -17,11 +17,7 @@ public class Submit {
     int id;
 
     @ManyToOne
-    @JoinColumns({
-        @JoinColumn(name="certificate_id"),
-        @JoinColumn(name="university_id"),
-        @JoinColumn(name="student_id")
-    })
+    @JoinColumn(name="certificate_id")
     Certificate certificate;
 
     @ManyToOne

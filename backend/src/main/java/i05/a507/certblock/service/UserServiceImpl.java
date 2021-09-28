@@ -5,6 +5,7 @@ import i05.a507.certblock.dto.User.UserLoginReq;
 import i05.a507.certblock.dto.User.UserModifyReq;
 import i05.a507.certblock.dto.User.UserRegisterReq;
 import i05.a507.certblock.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -16,6 +17,7 @@ import java.util.List;
 @Service("userService")
 public class UserServiceImpl implements UserService {
 
+	@Autowired
 	UserRepository userRepository;
 
 	@Override

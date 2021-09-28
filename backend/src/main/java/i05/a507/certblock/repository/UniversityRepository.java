@@ -8,6 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface UniversityRepository extends JpaRepository<University, String> {
-    Optional<University> findByUniversityId(int universityId);
+    Optional<University> findById(int universityId);
 
 }
