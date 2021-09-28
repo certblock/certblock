@@ -1,15 +1,19 @@
 package i05.a507.certblock.service;
 
+import i05.a507.certblock.domain.Certificate;
 import i05.a507.certblock.domain.Student;
 import i05.a507.certblock.domain.University;
 import i05.a507.certblock.domain.UniversityStudent;
 import i05.a507.certblock.dto.Student.StudentUniversitiesRes;
+import i05.a507.certblock.repository.CertificateRepository;
 import i05.a507.certblock.repository.StudentRepository;
 import i05.a507.certblock.repository.UniversityRepository;
 import i05.a507.certblock.repository.UniversityStudentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,9 +22,14 @@ import java.util.List;
 @Service("studentService")
 public class StudentServiceImpl implements StudentService {
 
+	@Autowired
 	UniversityRepository universityRepository;
+	@Autowired
 	StudentRepository studentRepository;
+	@Autowired
 	UniversityStudentRepository universityStudentRepository;
+	@Autowired
+	CertificateRepository certificateRepository;
 
 	@Override
 	public Student getStudent(int userId) {
@@ -46,8 +55,8 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public boolean registStudentUniversity (int studentId, int universityId){
-		Student student = studentRepository.findByStudentId(studentId).orElse(null);
-		University university = universityRepository.findByUniversityId(universityId).orElse(null);
+		Student student = studentRepository.findById(studentId).orElse(null);
+		University university = universityRepository.findById(universityId).orElse(null);
 		if(student == null || university == null) return false;
 
 		UniversityStudent us = new UniversityStudent();
@@ -57,4 +66,68 @@ public class StudentServiceImpl implements StudentService {
 		return true;
 	}
 
+	@Override
+	public List<Certificate> getStudentCertificate(int studentId, int universityId) {
+		List<Certificate> issueCertList = new ArrayList<>();
+
+		UniversityStudent universityStudent = universityStudentRepository.findByStudentIdAndUniversityId(studentId,universityId).orElse(null);
+
+		List<Certificate> certificateList = certificateRepository.findByUniversityStudent(universityStudent).orElse(null);
+		for (Certificate cf : certificateList) { //증명서 목록(1~6)
+			//증명서가 발급된 경우만 -> 조회
+			if (cf.getIssuance()) issueCertList.add(cf);
+		}
+		return issueCertList;
+	}
+
+	@Override
+	public boolean issueCertificate(int studentId, int universityId, int certId){
+		UniversityStudent us = universityStudentRepository.findByStudentIdAndUniversityId(studentId,universityId).orElse(null);
+
+		//졸업 여부 확인
+		int status = us.getType();
+		boolean flg = false; //사용자가 원하는 증명서 발급가능한지 여부
+
+		//선택 증명서에 따른 발급여부 가능 확인
+		if(status==1) { //학사 졸업 경우
+			if(certId == 1 || certId == 2) flg = true;
+			else flg = false;
+		}else if(status == 2) { //석사 졸업인경우
+			if(certId == 3 || certId == 4) flg = true;
+			else flg = false;
+		}else if(status == 3) { //박사 졸업인경우
+			if(certId == 5 || certId == 6) flg = true;
+			else flg = false;
+		}else flg = false;
+
+		if(flg){ //발급상태 가능하니까 발급해주기
+			List<Certificate> list = certificateRepository.findByUniversityStudent(us).orElse(null);
+			Certificate certificate = list.get(certId-1); //0부터 시작이니까
+
+			Date now = new Date();
+			certificate.setDate(now); //오늘 발급된거니까 날짜 바꿔주기
+			certificate.setIssuance(true);
+			certificateRepository.save(certificate);
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public List<Certificate> getAllCertificate(int studentId){
+		List<Certificate> certList = new ArrayList<>();
+
+		//학교 목록 먼저 다 찾기
+		List<UniversityStudent> universityStudentList = universityStudentRepository.findByStudentId(studentId).orElse(null);
+		for (UniversityStudent us: universityStudentList) {
+			//저장된 학교의 증명서 모두 찾기
+			List<Certificate> certificateList = certificateRepository.findByUniversityStudent(us).orElse(null);
+			for (Certificate cf : certificateList) {
+				if(cf.getIssuance()) certList.add(cf);
+			}
+		}
+
+		return certList;
+	}
 }

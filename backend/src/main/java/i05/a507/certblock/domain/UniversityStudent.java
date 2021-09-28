@@ -15,11 +15,11 @@ public class UniversityStudent {
     @Id
     @ManyToOne
     @JoinColumn(name="university_id")
-    University university;
+    private University university;
     @Id
     @ManyToOne
     @JoinColumn(name="student_id")
-    Student student;
+    private Student student;
 
     int type;
 

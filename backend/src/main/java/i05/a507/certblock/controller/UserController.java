@@ -68,7 +68,7 @@ public class UserController {
                Student student =  studentService.getStudent(user.getId());
                userLoginRes.setStudentId(student.getId());
             }else{
-                Company company =  companyService.getCompany((user.getId()));
+                Company company =  companyService.getCompany(user.getId());
                 userLoginRes.setCompanyId(company.getId());
             }
 
@@ -93,8 +93,13 @@ public class UserController {
             @PathVariable int userId, @RequestBody UserModifyReq userModifyReq) {
 
       boolean flg = userService.modifyUser(userId,userModifyReq);
-      if(flg)  return ResponseEntity.status(200).body(BaseResponseBody.of(200, "회원정보 수정이 완료되었습니다."));
-      else return ResponseEntity.status(200).body(BaseResponseBody.of(404, "수정할 회원이 존재하지 않습니다."));
+      try{
+          if(flg)  return ResponseEntity.status(200).body(BaseResponseBody.of(200, "회원정보 수정이 완료되었습니다."));
+          else return ResponseEntity.status(200).body(BaseResponseBody.of(404, "수정할 회원이 존재하지 않습니다."));
+      }catch (Exception e){
+          e.printStackTrace();
+      }
+        return ResponseEntity.status(200).body(BaseResponseBody.of(401, "회원수정에 실패하였습니다."));
     }
 
     //회원탈퇴
@@ -103,8 +108,13 @@ public class UserController {
             @PathVariable int userId) {
 
         boolean flg = userService.deleteUser(userId);
-        if(flg)  return ResponseEntity.status(200).body(BaseResponseBody.of(200, "탈퇴가 완료되었습니다."));
-        else return ResponseEntity.status(200).body(BaseResponseBody.of(404, "탈퇴할 회원이 존재하지 않습니다."));
+        try{
+            if(flg)  return ResponseEntity.status(200).body(BaseResponseBody.of(200, "탈퇴가 완료되었습니다."));
+            else return ResponseEntity.status(200).body(BaseResponseBody.of(404, "탈퇴할 회원이 존재하지 않습니다."));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return ResponseEntity.status(200).body(BaseResponseBody.of(401, "회원탈퇴에 실패하였습니다."));
     }
 
 
