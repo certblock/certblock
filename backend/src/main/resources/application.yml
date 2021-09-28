@@ -4,7 +4,7 @@ server:
     charset: UTF-8
     enabled: true
     force : true
-  port: 8080
+  port: 80
   servlet:
     context-path: /
 
@@ -27,8 +27,8 @@ spring:
       ddl-auto: update
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-        use-new-id-generator-mappings: false
-    show-sql: true
+        use-new-id-generator-mappings:
+    show-sql: false
     properties:
       hibernate:
         format_sql: true
