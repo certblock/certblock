@@ -52,6 +52,7 @@ jobs:
           path: |
             /tmp/backend.tar
             /tmp/nginx.tar
+          retention-days: 1
 
   deploy:
     if: github.event_name == 'push'
