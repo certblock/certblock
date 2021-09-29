@@ -57,7 +57,7 @@ export default {
     regist(data) {
       axios
         // .post(`http://localhost/api/users/`, data)
-        .post(`https://j5a507.p.ssafy.io/api/users/`, data)
+        .post(`https://j5a507.p.ssafy.io/api/users`, data)
         .then(() => {
           alert("회원가입 완료");
           router.push({ name: "Login" });
