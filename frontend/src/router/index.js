@@ -45,7 +45,7 @@ const router = createRouter({
 // to : 이동하려는 페이지, from : 현재 페이지, next() : 페이지 이동(디폴트값: to)
 // 현재는 모든 route 요청시에 실행하지만, 각 route마다 각각의 가드를 사용 할 수도 있음
 router.beforeEach((to, from, next) => {
-  let isLogin = store.state.isLogin;
+  let isLogin = store.state.user != null ? true : false;
   let route = to.name;
   switch (route) {
     case "Certificate":
@@ -56,6 +56,7 @@ router.beforeEach((to, from, next) => {
         next();
       }
       break;
+
     case "Login":
     case "Regist":
       if (isLogin) {
@@ -64,6 +65,7 @@ router.beforeEach((to, from, next) => {
         next();
       }
       break;
+
     default:
       next();
   }

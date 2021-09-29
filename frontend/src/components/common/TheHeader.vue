@@ -1,14 +1,18 @@
 <template>
   <div>
     <h1>헤더</h1>
-    <div v-if="!isLogin">
+    <div v-if="user == null">
       <router-link :to="{ name: 'Login' }">로그인</router-link> |
       <router-link :to="{ name: 'Regist' }">회원가입</router-link>
     </div>
-    <div v-if="this.$store.state.isLogin">
-      <p>{{ this.$store.state.id }} 님 환영합니다</p>
+    <div v-if="user != null">
+      <p>{{ user.name }} 님 환영합니다</p>
+      {{ user.phone }}<br />
+      {{ user.birth }}<br />
+      {{ user.email }}<br />
       <button @click="logout">로그아웃</button> |
-      <router-link :to="{ name: 'Regist' }">마이페이지</router-link>
+      <router-link :to="{ name: 'Regist' }">마이페이지</router-link> |
+      <button @click="deleteuser">회원탈퇴</button>
     </div>
     <div style="border: 1px solid green; margin: 10px">
       <h3>메뉴</h3>
@@ -24,10 +28,10 @@
 import { mapState, mapActions } from "vuex";
 export default {
   computed: {
-    ...mapState(["isLogin"]),
+    ...mapState(["user"]),
   },
   methods: {
-    ...mapActions(["logout"]),
+    ...mapActions(["logout", "deleteuser"]),
   },
 };
 </script>
