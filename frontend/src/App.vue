@@ -15,7 +15,6 @@ import TheFooter from "./components/common/TheFooter.vue";
 import TheHeader from "./components/common/TheHeader.vue";
 
 export default {
-  name: "Home",
   components: {
     TheHeader,
     TheFooter,

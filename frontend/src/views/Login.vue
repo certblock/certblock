@@ -2,38 +2,35 @@
   <h1>로그인</h1>
   <input
     type="text"
-    name="id"
-    id="id"
-    v-model="id"
-    placeholder="id입력"
+    name="email"
+    id="email"
+    v-model="email"
+    placeholder="이메일"
   /><br />
   <input
     type="password"
     name="password"
     id="password"
-    v-model="pwd"
-    placeholder="password입력"
+    v-model="password"
+    placeholder="비밀번호"
   /><br />
-  <button @click="login({ id, pwd })">로그인</button>
-  <button @click="axiostest(id)">axiostest</button>
+  <button @click="login({ email, password })">로그인</button>
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapActions } from "vuex";
 export default {
   data() {
     return {
-      id: "",
-      pwd: "",
+      email: "",
+      password: "",
     };
   },
 
-  computed: {
-    ...mapState(["isLogin"]),
-  },
+  computed: {},
 
   methods: {
-    ...mapActions(["login", "axiostest"]),
+    ...mapActions(["login"]),
   },
 };
 </script>
