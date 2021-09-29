@@ -50,14 +50,15 @@ public class UserController {
     public ResponseEntity<?> loginUser(@RequestBody UserLoginReq userLoginReq){
        User user = userService.loginUser(userLoginReq);
         if(user != null) return ResponseEntity.status(200).body(user);
-        else return ResponseEntity.status(200).body(BaseResponseBody.of(404, "존재하지 않는 회원입니다."));
+        else return ResponseEntity.status(404).body(BaseResponseBody.of(404, "존재하지 않는 회원입니다."));
     }
 
     //특정 유저 조회
     @GetMapping("/{userId}")
     public ResponseEntity<?> selectUser(@PathVariable int userId) {
         User user = userService.getUser(userId);
-        return ResponseEntity.status(200).body(user);
+        if(user!=null) return ResponseEntity.status(200).body(user);
+        else return ResponseEntity.status(404).body(BaseResponseBody.of(404, "존재하지 않는 회원입니다."));
     }
 
     //회원 수정

@@ -1,7 +1,7 @@
 package i05.a507.certblock.controller;
 
-import i05.a507.certblock.domain.Certificate;
-import i05.a507.certblock.domain.Student;
+import i05.a507.certblock.dto.Company.CompanyApplicantCertRes;
+import i05.a507.certblock.dto.Company.CompanyApplicantRes;
 import i05.a507.certblock.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,16 +21,16 @@ public class CompanyController {
 
    //지원자 목록 조회
     @GetMapping("/{companyId}/students")
-    public ResponseEntity<?> selectUniversity(@PathVariable int companyId) {
-        List<Student> studentList = companyService.selectAllApplicant(companyId);
-        return ResponseEntity.status(200).body(studentList);
+    public ResponseEntity<?> selectAllApplicant(@PathVariable int companyId) {
+        List<CompanyApplicantRes> carList = companyService.selectAllApplicant(companyId);
+        return ResponseEntity.status(200).body(carList);
     }
 
     //특정 지원자의 증명서 목록 조회
     @GetMapping("/{companyId}/students/{studentId}")
-    public ResponseEntity<?> selectUniversity(@PathVariable int companyId, @PathVariable int studentId) {
-        List<Certificate> certificateList = companyService.selectApplicantCert(companyId,studentId);
-        return ResponseEntity.status(200).body(certificateList);
+    public ResponseEntity<?> selectAllApplicant(@PathVariable int companyId, @PathVariable int studentId) {
+        List<CompanyApplicantCertRes> cacrList = companyService.selectApplicantCert(companyId,studentId);
+        return ResponseEntity.status(200).body(cacrList);
     }
 
 

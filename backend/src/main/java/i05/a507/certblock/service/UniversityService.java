@@ -1,12 +1,13 @@
 package i05.a507.certblock.service;
 
-import i05.a507.certblock.domain.Certificate;
-import i05.a507.certblock.domain.University;
+import i05.a507.certblock.dto.University.UniversityCertiRes;
+import i05.a507.certblock.dto.University.UniversitySelectRes;
 
 import java.util.List;
 
 public interface UniversityService {
-    University getUniversity(int universityId);
-    List<Certificate> selectAllCertificate(int universityId);
-    List<Certificate> getStudentCertificate(int userId, int universityId);
+    List<UniversitySelectRes> getAllUniversity();
+    UniversitySelectRes getUniversity(int universityId);
+    List<UniversityCertiRes> selectAllCertificate(int universityId);
+    List<UniversityCertiRes> getStudentCertificate(int userId, int universityId);
 }

@@ -10,11 +10,6 @@ import java.util.List;
 @Getter
 @Setter
 public class Student extends User{
-
-    @Column(name = "student_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int studentId;
-
     @OneToMany(mappedBy = "student")
     private List<UniversityStudent> universityStudentList;
 }

@@ -11,10 +11,6 @@ import java.util.List;
 @Setter
 public class University extends User {
 
-    @Column(name = "university_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int universityId;
-
     @OneToMany(mappedBy = "university")
     private List<UniversityStudent> universityStudentList;
 }

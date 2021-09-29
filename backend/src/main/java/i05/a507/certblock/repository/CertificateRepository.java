@@ -11,4 +11,5 @@ import java.util.Optional;
 @Repository
 public interface CertificateRepository extends JpaRepository<Certificate, String> {
     Optional<List<Certificate>> findByUniversityStudent(UniversityStudent universityStudent);
+    Optional<Certificate> findById(int certificateId);
 }
