@@ -11,7 +11,7 @@ import java.util.List;
  *	유저 관련 비즈니스 로직 처리를 위한 서비스 인터페이스 정의.
  */
 public interface UserService {
-	void registUser(UserRegisterReq userRegisterReq);
+	boolean registUser(UserRegisterReq userRegisterReq);
 	List<User> getAllUsers();
 	User loginUser(UserLoginReq userLoginReq);
 	User getUser(int userId);
