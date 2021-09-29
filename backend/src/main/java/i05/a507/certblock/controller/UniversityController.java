@@ -20,8 +20,8 @@ public class UniversityController {
     @Autowired
     private UniversityService universityService;
 
-    //대학 조회
-    @GetMapping("/")
+    //모든 대학 조회
+    @GetMapping("")
     public ResponseEntity<?> selectAllUniversity() {
         List<UniversitySelectRes> list = universityService.getAllUniversity();
         return ResponseEntity.status(200).body(list);
@@ -32,7 +32,7 @@ public class UniversityController {
     public ResponseEntity<?> selectUniversity(@PathVariable int universityId) {
         UniversitySelectRes usr = universityService.getUniversity(universityId);
         if(usr!=null) return ResponseEntity.status(200).body(usr);
-        else return ResponseEntity.status(200).body(BaseResponseBody.of(404, "등록된 학교가 없습니다."));
+        else return ResponseEntity.status(404).body(BaseResponseBody.of(404, "등록된 학교가 없습니다."));
     }
 
     //증명서 발급 기록 목록 조회
