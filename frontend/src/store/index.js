@@ -26,7 +26,8 @@ export default createStore({
   actions: {
     async login({ commit }, data) {
       await axios
-        .post(`http://localhost/api/users/login`, data)
+        // .post(`http://localhost/api/users/login`, data)
+        .post(`https://j5a507.p.ssafy.io/api/users/login`, data)
         .then(({ data }) => {
           commit("login", data);
           router.push({ name: "Main" });
@@ -45,7 +46,8 @@ export default createStore({
 
     async deleteuser({ state, commit }) {
       await axios
-        .delete(`http://localhost/api/users/${state.user.id}`)
+        // .delete(`http://localhost/api/users/${state.user.id}`)
+        .delete(`https://j5a507.p.ssafy.io/api/users/${state.user.id}`)
         .then(() => {
           alert("탈퇴 완료");
           commit("logout");
