@@ -14,17 +14,17 @@ public class Submit {
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name="certificate_id")
-    Certificate certificate;
+    private Certificate certificate;
 
     @ManyToOne
     @JoinColumn(name="company_id")
-    Company company;
+    private Company company;
 
     @Column(name = "date", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    Date date;
+    private Date date;
 
 }

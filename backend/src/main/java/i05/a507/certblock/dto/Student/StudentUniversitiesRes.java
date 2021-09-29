@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class StudentUniversitiesRes {
-    int universityId;
-    int type;
-    String universityName;
+    private int universityId;
+    private int type;
+    private String universityName;
 }

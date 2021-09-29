@@ -6,5 +6,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UniversityRegisterReq {
-    int studentIdInUniv;
+    private int studentIdInUniv;
 }

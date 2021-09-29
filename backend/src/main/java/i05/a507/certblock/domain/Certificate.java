@@ -16,21 +16,21 @@ public class Certificate {
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    private int id;
 
     @ManyToOne
     @JoinColumns({
             @JoinColumn(name="university_id"),
             @JoinColumn(name="student_id")
     })
-    UniversityStudent universityStudent;
+    private UniversityStudent universityStudent;
 
     int type;
     @Column(name = "date", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    Date date;
-    String hash;
-    Boolean issuance;
+    private Date date;
+    private String hash;
+    private Boolean issuance;
 
     @OneToMany(mappedBy = "certificate")
-    List<Submit> submitList;
+    private List<Submit> submitList;
 }

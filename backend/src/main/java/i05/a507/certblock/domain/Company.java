@@ -14,8 +14,8 @@ public class Company extends User{
 
     @Column(name="company_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int companyId;
+    private int companyId;
 
     @OneToMany(mappedBy = "company")
-    List<Submit> submitList;
+    private List<Submit> submitList;
 }

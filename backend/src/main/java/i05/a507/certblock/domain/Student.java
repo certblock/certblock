@@ -13,8 +13,8 @@ public class Student extends User{
 
     @Column(name = "student_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int studentId;
+    private int studentId;
 
     @OneToMany(mappedBy = "student")
-    List<UniversityStudent> universityStudentList;
+    private List<UniversityStudent> universityStudentList;
 }

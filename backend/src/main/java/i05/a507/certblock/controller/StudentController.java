@@ -18,13 +18,13 @@ import java.util.List;
 public class StudentController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
     @Autowired
-    StudentService studentService;
+    private StudentService studentService;
     @Autowired
-    CompanyService companyService;
+    private CompanyService companyService;
     @Autowired
-    UniversityStudentRepository universityStudentRepository;
+    private UniversityStudentRepository universityStudentRepository;
 
     //유저의 대학 목록 조회
     @GetMapping("/{studentId}/universities")

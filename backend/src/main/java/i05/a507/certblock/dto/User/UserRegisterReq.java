@@ -6,10 +6,10 @@ import java.util.Date;
 
 @Getter
 public class UserRegisterReq {
-    String name;
-    String phone;
-    String email;
-    String pass;
-    Date birth;
-    int type;
+    private String name;
+    private String phone;
+    private String email;
+    private String pass;
+    private Date birth;
+    private int type;
 }

@@ -15,17 +15,17 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    private int id;
 
-    int type;
-    String email;
-    String password;
-    String name;
-    String phone;
-    String address;
-    Date birth;
+    private int type;
+    private String email;
+    private String password;
+    private String name;
+    private String phone;
+    private String address;
+    private Date birth;
 
     @Column(name = "date", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    public Timestamp date;
+    private Timestamp date;
 
 }
