@@ -6,11 +6,11 @@ import java.util.Date;
 
 @Getter
 public class UserModifyReq {
-    String name;
-    String phone;
-    String email;
-    String pass;
-    String pass_confirm;
-    Date birth;
-    int type;
+    private String name;
+    private String phone;
+    private String email;
+    private String pass;
+    private String pass_confirm;
+    private Date birth;
+    private int type;
 }

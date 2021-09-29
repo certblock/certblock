@@ -18,7 +18,7 @@ import java.util.List;
 public class UniversityController {
 
     @Autowired
-    UniversityService universityService;
+    private UniversityService universityService;
 
    //대학 조회
     @GetMapping("/{universityId}")

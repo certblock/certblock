@@ -17,7 +17,7 @@ import java.util.List;
 public class CompanyController {
 
     @Autowired
-    CompanyService companyService;
+    private CompanyService companyService;
 
    //지원자 목록 조회
     @GetMapping("/{companyId}/students")

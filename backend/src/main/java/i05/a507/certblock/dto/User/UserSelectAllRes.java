@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserSelectAllRes {
-    User user;
-    int userId = user.getId();
-    String userName = user.getName();
+    private User user;
+    private int userId = user.getId();
+    private String userName = user.getName();
 }

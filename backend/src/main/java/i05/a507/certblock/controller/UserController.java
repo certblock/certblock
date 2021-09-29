@@ -19,11 +19,11 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
     @Autowired
-    StudentService studentService;
+    private StudentService studentService;
     @Autowired
-    CompanyService companyService;
+    private CompanyService companyService;
 
     //회원가입
     @PostMapping("/")

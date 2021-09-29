@@ -21,8 +21,8 @@ public class UniversityStudent {
     @JoinColumn(name="student_id")
     private Student student;
 
-    int type;
+    private int type;
 
     @OneToMany(mappedBy = "universityStudent")
-    List<Certificate> certificateList;
+    private List<Certificate> certificateList;
 }
