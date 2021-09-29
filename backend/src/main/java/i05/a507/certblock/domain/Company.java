@@ -11,11 +11,6 @@ import java.util.List;
 @Getter
 @Setter
 public class Company extends User{
-
-    @Column(name="company_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int companyId;
-
     @OneToMany(mappedBy = "company")
     private List<Submit> submitList;
 }

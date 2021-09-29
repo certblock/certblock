@@ -3,6 +3,8 @@ package i05.a507.certblock.service;
 import i05.a507.certblock.domain.Certificate;
 import i05.a507.certblock.domain.University;
 import i05.a507.certblock.domain.UniversityStudent;
+import i05.a507.certblock.dto.University.UniversityCertiRes;
+import i05.a507.certblock.dto.University.UniversitySelectRes;
 import i05.a507.certblock.repository.CertificateRepository;
 import i05.a507.certblock.repository.UniversityRepository;
 import i05.a507.certblock.repository.UniversityStudentRepository;
@@ -23,13 +25,31 @@ public class UniversityServiceImpl implements UniversityService {
 	CertificateRepository certificateRepository;
 
 	@Override
-	public University getUniversity(int universityId) {
-		return universityRepository.findById(universityId).orElse(null);
+	public List<UniversitySelectRes> getAllUniversity() {
+		List<University> universityList = universityRepository.findAll();
+
+		List<UniversitySelectRes> usrList = new ArrayList<>();
+		for (University us: universityList) {
+			UniversitySelectRes usr = new UniversitySelectRes();
+			usr.setUniversityId(us.getId());
+			usr.setName(us.getName());
+			usrList.add(usr);
+		}
+		return usrList;
 	}
 
 	@Override
-	public List<Certificate> selectAllCertificate(int universityId) {
-		List<Certificate> certList = new ArrayList<>();
+	public UniversitySelectRes getUniversity(int universityId) {
+		University university = universityRepository.findById(universityId).orElse(null);
+		UniversitySelectRes usr = new UniversitySelectRes();
+		usr.setUniversityId(universityId);
+		usr.setName(university.getName());
+		return usr;
+	}
+
+	@Override
+	public List<UniversityCertiRes> selectAllCertificate(int universityId) {
+		List<UniversityCertiRes> certList = new ArrayList<>();
 
 		//학교 목록 먼저 다 찾기
 		List<UniversityStudent> universityStudentList = universityStudentRepository.findByUniversityId(universityId).orElse(null);
@@ -37,22 +57,30 @@ public class UniversityServiceImpl implements UniversityService {
 			//저장된 학교의 증명서 모두 찾기
 			List<Certificate> certificateList = certificateRepository.findByUniversityStudent(us).orElse(null);
 			for (Certificate cf : certificateList) {
-				if(cf.getIssuance()) certList.add(cf);
+				if(cf.getIssuance()) {
+					UniversityCertiRes ucr = new UniversityCertiRes();
+					ucr.setCertificateHistoryId(cf.getId());
+					certList.add(ucr);
+				}
 			}
 		}
 		return certList;
 	}
 
 	@Override
-	public List<Certificate> getStudentCertificate(int userId, int universityId) {
-		List<Certificate> issueCertList = new ArrayList<>();
+	public List<UniversityCertiRes> getStudentCertificate(int userId, int universityId) {
+		List<UniversityCertiRes> issueCertList = new ArrayList<>();
 
 		UniversityStudent universityStudent = universityStudentRepository.findByStudentIdAndUniversityId(userId,universityId).orElse(null);
 
 		List<Certificate> certificateList = certificateRepository.findByUniversityStudent(universityStudent).orElse(null);
 		for (Certificate cf : certificateList) { //증명서 목록(1~6)
 			//증명서가 발급된 경우만 -> 조회
-			if (cf.getIssuance()) issueCertList.add(cf);
+			if (cf.getIssuance()) {
+				UniversityCertiRes ucr = new UniversityCertiRes();
+				ucr.setCertificateHistoryId(cf.getId());
+				issueCertList.add(ucr);
+			}
 		}
 		return issueCertList;
 	}

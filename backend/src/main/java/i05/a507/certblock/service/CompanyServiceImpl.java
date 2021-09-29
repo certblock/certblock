@@ -1,7 +1,11 @@
 package i05.a507.certblock.service;
 
-import i05.a507.certblock.domain.*;
-import i05.a507.certblock.repository.*;
+import i05.a507.certblock.domain.Company;
+import i05.a507.certblock.domain.Submit;
+import i05.a507.certblock.dto.Company.CompanyApplicantCertRes;
+import i05.a507.certblock.dto.Company.CompanyApplicantRes;
+import i05.a507.certblock.repository.CompanyRepository;
+import i05.a507.certblock.repository.SubmitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,40 +16,42 @@ import java.util.List;
 public class CompanyServiceImpl implements CompanyService {
 
 	@Autowired
-	SubmitRepository submitRepository;
-	@Autowired
-	StudentRepository studentRepository;
-	@Autowired
 	CompanyRepository companyRepository;
+	@Autowired
+	SubmitRepository submitRepository;
 
 	@Override
 	public Company getCompany(int companyId){
-		return companyRepository.findById(companyId);
+		return companyRepository.findById(companyId).orElse(null);
 	}
 
 	@Override
-	public List<Student> selectAllApplicant(int companyId) {
-		List<Student> studentList = new ArrayList<>();
+	public List<CompanyApplicantRes> selectAllApplicant(int companyId){
+		List<CompanyApplicantRes> list = new ArrayList<>();
 
-		//해당기업에 모든 제출 기록 확인
-		List<Submit> submitList = submitRepository.findByCompanyId(companyId).orElse(null);
-		for (Submit submit: submitList) {
-			Student student = submit.getCertificate().getUniversityStudent().getStudent();
-			if(!studentList.contains(student)) studentList.add(student);
+		List<Submit> subList = submitRepository.findByCompanyId(companyId).orElse(null);
+		for (Submit submit: subList) {
+			CompanyApplicantRes car = new CompanyApplicantRes();
+			car.setStudentId(submit.getCertificate().getUniversityStudent().getStudent().getId());
+			list.add(car);
 		}
-		return studentList;
+
+		return list;
 	}
 
 	@Override
-	public List<Certificate> selectApplicantCert(int companyId, int studentId) {
-		List<Certificate> certificateList = new ArrayList<>();
+	public List<CompanyApplicantCertRes> selectApplicantCert(int companyId, int studentId){
+		List<CompanyApplicantCertRes> list = new ArrayList<>();
 
-		List<Submit> submitList = submitRepository.findByCompanyId(companyId).orElse(null);
-		for (Submit submit: submitList) {
-			if(submit.getCertificate().getUniversityStudent().getStudent().getId()==studentId)
-				certificateList.add(submit.getCertificate());
+		List<Submit> subList = submitRepository.findByCompanyId(companyId).orElse(null);
+		for (Submit submit: subList) {
+			if(submit.getCertificate().getUniversityStudent().getStudent().getId()==studentId){
+				CompanyApplicantCertRes car = new CompanyApplicantCertRes();
+				car.setCertificateId(submit.getCertificate().getId());
+				list.add(car);
+			}
 		}
-		return certificateList;
+		return list;
 	}
 
 }
