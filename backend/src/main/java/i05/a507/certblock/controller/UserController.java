@@ -32,8 +32,9 @@ public class UserController {
 
         int type = userRegisterReq.getType();
         if(type==1 || type==2 || type == 3) {
-            userService.registUser(userRegisterReq);
-            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+            boolean flg = userService.registUser(userRegisterReq);
+            if(flg) return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+            else return ResponseEntity.status(400).body(BaseResponseBody.of(400, "등록된 회원입니다."));
         }
         else return ResponseEntity.status(400).body(BaseResponseBody.of(400, "회원 가입에 실패했습니다."));
     }
