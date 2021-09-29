@@ -26,7 +26,7 @@ public class UserController {
     private CompanyService companyService;
 
     //회원가입
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<? extends BaseResponseBody> registUser(
             @RequestBody UserRegisterReq userRegisterReq){
 
@@ -35,11 +35,11 @@ public class UserController {
             userService.registUser(userRegisterReq);
             return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
         }
-        else return ResponseEntity.status(200).body(BaseResponseBody.of(400, "회원 가입에 실패했습니다."));
+        else return ResponseEntity.status(400).body(BaseResponseBody.of(400, "회원 가입에 실패했습니다."));
     }
 
     //유저 목록 조회
-    @GetMapping("/")
+    @GetMapping("")
     public ResponseEntity<?> selectAllUsers() {
         List<User> userList = userService.getAllUsers();
         return ResponseEntity.status(200).body(userList);
@@ -69,11 +69,11 @@ public class UserController {
       boolean flg = userService.modifyUser(userId,userModifyReq);
       try{
           if(flg)  return ResponseEntity.status(200).body(BaseResponseBody.of(200, "회원정보 수정이 완료되었습니다."));
-          else return ResponseEntity.status(200).body(BaseResponseBody.of(404, "수정할 회원이 존재하지 않습니다."));
+          else return ResponseEntity.status(404).body(BaseResponseBody.of(404, "수정할 회원이 존재하지 않습니다."));
       }catch (Exception e){
           e.printStackTrace();
       }
-        return ResponseEntity.status(200).body(BaseResponseBody.of(401, "회원수정에 실패하였습니다."));
+        return ResponseEntity.status(401).body(BaseResponseBody.of(401, "회원수정에 실패하였습니다."));
     }
 
     //회원탈퇴
@@ -84,11 +84,11 @@ public class UserController {
         boolean flg = userService.deleteUser(userId);
         try{
             if(flg)  return ResponseEntity.status(200).body(BaseResponseBody.of(200, "탈퇴가 완료되었습니다."));
-            else return ResponseEntity.status(200).body(BaseResponseBody.of(404, "탈퇴할 회원이 존재하지 않습니다."));
+            else return ResponseEntity.status(404).body(BaseResponseBody.of(404, "탈퇴할 회원이 존재하지 않습니다."));
         }catch (Exception e){
             e.printStackTrace();
         }
-        return ResponseEntity.status(200).body(BaseResponseBody.of(401, "회원탈퇴에 실패하였습니다."));
+        return ResponseEntity.status(401).body(BaseResponseBody.of(401, "회원탈퇴에 실패하였습니다."));
     }
 
 

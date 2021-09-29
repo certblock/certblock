@@ -1,6 +1,5 @@
 package i05.a507.certblock.controller;
 
-import i05.a507.certblock.domain.Certificate;
 import i05.a507.certblock.dto.BaseResponseBody;
 import i05.a507.certblock.dto.Student.StudentCertRes;
 import i05.a507.certblock.dto.Student.StudentRegistUniReq;
@@ -44,7 +43,7 @@ public class StudentController {
        boolean flg = studentService.registStudentUniversity(studentId,universityId,studentRegistUniReq);
        if(flg)  return ResponseEntity.status(200).body(BaseResponseBody.of(200, "등록이 완료되었습니다."));
        //학생이 학교의 재학생이 맞는데도 등록 실패니 회원정보 입력하는데 오류있는거
-       else return ResponseEntity.status(200).body(BaseResponseBody.of(401, "이미 등록되었거나 잘못된 정보를 입력하셨습니다."));
+       else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "이미 등록되었거나 잘못된 정보를 입력하셨습니다."));
     }
 
     //유저의 특정 대학 증명서 목록 조회
@@ -61,7 +60,7 @@ public class StudentController {
         boolean flg = studentService.issueCertificate(studentId,universityId,certId);
 
         if(flg) return ResponseEntity.status(200).body(BaseResponseBody.of(200, ""));
-        else return ResponseEntity.status(404).body(BaseResponseBody.of(401, "증명서를 발급받을 수 있는 권한이 없습니다."));
+        else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "증명서를 발급받을 수 있는 권한이 없습니다."));
     }
 
     //유저의 증명서 발급 현황 조회
@@ -69,7 +68,7 @@ public class StudentController {
     public ResponseEntity<?> selectAllCertificate(@PathVariable int studentId){
         List<StudentCertRes> certificateList = studentService.getAllCertificate(studentId);
 
-        if(certificateList.size()==0) return ResponseEntity.status(200).body(BaseResponseBody.of(404, "등록된 증명서가 존재하지 않습니다."));
+        if(certificateList.size()==0) return ResponseEntity.status(404).body(BaseResponseBody.of(404, "등록된 증명서가 존재하지 않습니다."));
         else return ResponseEntity.status(200).body(certificateList);
     }
 
