@@ -2,6 +2,7 @@ package i05.a507.certblock.service;
 
 import i05.a507.certblock.domain.User;
 import i05.a507.certblock.dto.User.UserLoginReq;
+import i05.a507.certblock.dto.User.UserLoginRes;
 import i05.a507.certblock.dto.User.UserModifyReq;
 import i05.a507.certblock.dto.User.UserRegisterReq;
 
@@ -13,8 +14,8 @@ import java.util.List;
 public interface UserService {
 	boolean registUser(UserRegisterReq userRegisterReq);
 	List<User> getAllUsers();
-	User loginUser(UserLoginReq userLoginReq);
-	User getUser(int userId);
+	UserLoginRes loginUser(UserLoginReq userLoginReq);
+	UserLoginRes getUser(int userId);
 	boolean modifyUser(int userId, UserModifyReq userModifyReq);
 	boolean deleteUser(int userId);
 }
