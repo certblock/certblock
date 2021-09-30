@@ -62,7 +62,7 @@ export default {
           alert("회원가입 완료");
           router.push({ name: "Login" });
         })
-        .catch(({ error }) => {
+        .catch((error) => {
           console.log("catch:");
           console.log(error);
         });
