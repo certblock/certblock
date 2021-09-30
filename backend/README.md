@@ -9,3 +9,10 @@ S3_BUCKET=s3bucketname
 ### IDE(IntelliJ)에서 환경변수 설정 방법
 configuration에서 다음과 같이 설정할 수 있다.
 ![set](../etc/set-env-in-intellij.png)
+
+## AES128 사용을 위해 다음과 같은 환경변수 설정이 필요하다
+
+```sh
+# 32자로 설정해야 한다
+AES128_SECRETKEY=1q2w3e4r1q2w3e4r1q2w3e4r1q2w3e4r
+```
