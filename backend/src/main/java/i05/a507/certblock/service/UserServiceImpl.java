@@ -5,6 +5,7 @@ import i05.a507.certblock.domain.Student;
 import i05.a507.certblock.domain.University;
 import i05.a507.certblock.domain.User;
 import i05.a507.certblock.dto.User.UserLoginReq;
+import i05.a507.certblock.dto.User.UserLoginRes;
 import i05.a507.certblock.dto.User.UserModifyReq;
 import i05.a507.certblock.dto.User.UserRegisterReq;
 import i05.a507.certblock.repository.CompanyRepository;
@@ -85,18 +86,33 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User loginUser(UserLoginReq userLoginReq) {
+	public UserLoginRes loginUser(UserLoginReq userLoginReq) {
 		String email = userLoginReq.getEmail();
 		String password = userLoginReq.getPassword();
 
 		User user = userRepository.findByEmailAndPassword(email,password).orElse(null);
-		return user;
+		UserLoginRes ulr = new UserLoginRes();
+		ulr.setId(user.getId());
+		ulr.setEmail(user.getEmail());
+		ulr.setName(user.getName());
+		ulr.setPhone(user.getPhone());
+		ulr.setBirth(user.getBirth());
+		ulr.setType(user.getType());
+
+		return ulr;
 	}
 
 	@Override
-	public User getUser(int userId){
+	public UserLoginRes getUser(int userId){
 		User user = userRepository.findById(userId).orElse(null);
-		return user;
+		UserLoginRes ulr = new UserLoginRes();
+		ulr.setId(user.getId());
+		ulr.setEmail(user.getEmail());
+		ulr.setName(user.getName());
+		ulr.setPhone(user.getPhone());
+		ulr.setBirth(user.getBirth());
+		ulr.setType(user.getType());
+		return ulr;
 	}
 
 	@Override
