@@ -93,6 +93,7 @@ S3_SECRET_KEY=1q2w3e4r/1q2w3e4r
 S3_BUCKET=s3bucketname
 S3_REGION=ap-northeast-2
 
+# >= 16
 AES128_SECRETKEY=1q2w3e4r1q2w3e4r1q2w3e4r1q2w3e4r
 
 # mysql, backend, nginx
