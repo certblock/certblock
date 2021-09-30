@@ -29,7 +29,9 @@
     v-model="pass"
     placeholder="비밀번호"
   /><br />
-  <input type="radio" id="student" value="2" v-model="type" />
+  <input type="radio" id="university" value="1" v-model="type" />
+  <label for="university">학교</label>
+  <input type="radio" id="student" value="2" v-model="type" checked/>
   <label for="student">학생</label>
   <input type="radio" id="company" value="3" v-model="type" />
   <label for="company">기업</label><br />

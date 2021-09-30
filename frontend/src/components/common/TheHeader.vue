@@ -11,7 +11,6 @@
       {{ user.birth }}<br />
       {{ user.email }}<br />
       <button @click="logout">로그아웃</button> |
-      <router-link :to="{ name: 'Regist' }">마이페이지</router-link> |
       <button @click="deleteuser">회원탈퇴</button>
     </div>
     <div style="border: 1px solid green; margin: 10px">
