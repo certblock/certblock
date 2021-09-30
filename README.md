@@ -72,7 +72,7 @@ project의 다음 파일을 root directory로 복사합니다.
 
 <br>
 
-docker compose와 certbot을 실행하기 위해서는 `.env` 파일이 필요합니다. `.env`의 내용은 다음과 같습니다.
+docker compose와 certbot을 실행하기 위해서는 `.env` 파일이 필요합니다. `.env`의 항목은 다음과 같습니다.
 ```env
 REGISTRY=repo.treescale.com
 APP_DOMAIN=my-app.com
@@ -87,6 +87,14 @@ MYSQL_DATABASE=mydb
 # backend
 SPRING_DATASOURCE_USERNAME=${MYSQL_USER}
 SPRING_DATASOURCE_PASSWORD=${MYSQL_PASSWORD}
+
+S3_ACCESS_KEY=1q2w3e4r
+S3_SECRET_KEY=1q2w3e4r/1q2w3e4r
+S3_BUCKET=s3bucketname
+S3_REGION=ap-northeast-2
+
+# >= 16
+AES128_SECRETKEY=1q2w3e4r1q2w3e4r1q2w3e4r1q2w3e4r
 
 # mysql, backend, nginx
 TZ=Asia/Seoul

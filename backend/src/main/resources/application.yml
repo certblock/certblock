@@ -45,3 +45,7 @@ spring:
 logging:
   level:
     org.hibernate.type.descriptor.sql: trace
+
+app:
+  aes128:
+    secret-key: ${AES128_SECRETKEY}
