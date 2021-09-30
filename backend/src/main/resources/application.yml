@@ -10,6 +10,9 @@ server:
 
 
 spring:
+  config:
+    import:
+      classpath:application-aws.yml
   mvc:
     view:
       prefix: /WEB-INF/views/
