@@ -60,6 +60,12 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-images
     steps:
+      - name: Delete previous artifacts
+        uses: kolpav/purge-artifacts-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          expire-in: 0
+
       - name: Checkout repository
         uses: actions/checkout@v2
 
