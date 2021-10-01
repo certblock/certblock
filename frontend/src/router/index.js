@@ -116,7 +116,7 @@ router.beforeEach((to, from, next) => {
   let isLogin = store.state.user != null ? true : false;
   let route = to.name;
   switch (route) {
-    case "Certificate":
+    case "certificate":
       if (!isLogin) {
         alert("로그인 후 사용 가능합니다.");
         next("/login");
@@ -125,8 +125,8 @@ router.beforeEach((to, from, next) => {
       }
       break;
 
-    case "Login":
-    case "Regist":
+    case "login":
+    case "regist":
       if (isLogin) {
         alert("이미 로그인 중입니다.");
       } else {
