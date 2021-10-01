@@ -7,6 +7,7 @@ export default createStore({
   // SPA에서 사용하는 변수들의 중앙 저장소
   state: {
     user: null,
+    inuniv: null,
   },
 
   // state의 상태를 변경하는 함수들의 모음 (동기 methods)
@@ -17,19 +18,25 @@ export default createStore({
 
     logout(state) {
       state.user = null;
+      state.inuniv = null;
+    },
+
+    inuniv(state, data) {
+      state.inuniv = data;
     },
   },
 
   // vuex에서 사용할 함수들의 모음 (비동기 methods)
   // state의 상태를 변경할 때는 commit함수를 이용해서 mutations를 호출하는 것을 권장
+  // actions 내에서 dispatch를 통해 다른 action 호출 가능
   // `${변수명}`으로 url 내에 변수 사용 가능
   actions: {
-    async login({ commit }, data) {
+    async login({ commit, dispatch }, data) {
       await axios
-        // .post(`http://localhost/api/users/login`, data)
         .post(`https://j5a507.p.ssafy.io/api/users/login`, data)
         .then(({ data }) => {
           commit("login", data);
+          dispatch("studentinuniv", data.id);
           router.push({ name: "Main" });
         })
         .catch((error) => {
@@ -46,12 +53,22 @@ export default createStore({
 
     async deleteuser({ state, commit }) {
       await axios
-        // .delete(`http://localhost/api/users/${state.user.id}`)
         .delete(`https://j5a507.p.ssafy.io/api/users/${state.user.id}`)
         .then(() => {
           alert("탈퇴 완료");
           commit("logout");
           router.push({ name: "Main" });
+        });
+    },
+
+    async studentinuniv({ commit }, studentId) {
+      await axios
+        .get(`https://j5a507.p.ssafy.io/api/students/${studentId}/universities`)
+        .then(({ data }) => {
+          commit("inuniv", data);
+        })
+        .catch((error) => {
+          console.log(error);
         });
     },
   },

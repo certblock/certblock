@@ -29,7 +29,9 @@
     v-model="pass"
     placeholder="비밀번호"
   /><br />
-  <input type="radio" id="student" value="2" v-model="type" />
+  <input type="radio" id="university" value="1" v-model="type" />
+  <label for="university">학교</label>
+  <input type="radio" id="student" value="2" v-model="type" checked />
   <label for="student">학생</label>
   <input type="radio" id="company" value="3" v-model="type" />
   <label for="company">기업</label><br />
@@ -56,13 +58,12 @@ export default {
   methods: {
     regist(data) {
       axios
-        // .post(`http://localhost/api/users/`, data)
         .post(`https://j5a507.p.ssafy.io/api/users`, data)
         .then(() => {
           alert("회원가입 완료");
           router.push({ name: "Login" });
         })
-        .catch(({ error }) => {
+        .catch((error) => {
           console.log("catch:");
           console.log(error);
         });
