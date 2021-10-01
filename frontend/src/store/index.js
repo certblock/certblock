@@ -6,49 +6,70 @@ import axios from "axios";
 export default createStore({
   // SPA에서 사용하는 변수들의 중앙 저장소
   state: {
-    isLogin: false,
-    id: "",
-    pwd: "",
-    axios: [],
+    user: null,
+    inuniv: null,
   },
 
   // state의 상태를 변경하는 함수들의 모음 (동기 methods)
   mutations: {
     login(state, data) {
-      state.id = data.id;
-      state.pwd = data.pwd;
-      state.isLogin = true;
+      state.user = data;
     },
+
     logout(state) {
-      state.id = "";
-      state.pwd = "";
-      state.isLogin = false;
+      state.user = null;
+      state.inuniv = null;
     },
-    axios(state, data) {
-      state.axios.push(data);
+
+    inuniv(state, data) {
+      state.inuniv = data;
     },
   },
 
   // vuex에서 사용할 함수들의 모음 (비동기 methods)
   // state의 상태를 변경할 때는 commit함수를 이용해서 mutations를 호출하는 것을 권장
+  // actions 내에서 dispatch를 통해 다른 action 호출 가능
+  // `${변수명}`으로 url 내에 변수 사용 가능
   actions: {
-    login({ commit }, data) {
-      commit("login", data);
-      router.push({ name: "Home" });
-    },
-    logout({ commit }) {
-      commit("logout");
-      router.push({ name: "Home" });
-    },
-    axiostest({ commit }, test) {
-      console.log(test);
-      axios
-        .get(`http://localhost:8099/api/v1/admin/getUserByName/` + test)
+    async login({ commit, dispatch }, data) {
+      await axios
+        .post(`https://j5a507.p.ssafy.io/api/users/login`, data)
         .then(({ data }) => {
-          console.log(data);
-          commit("axios", data);
+          commit("login", data);
+          dispatch("studentinuniv", data.id);
+          router.push({ name: "Main" });
+        })
+        .catch((error) => {
+          console.log(error);
+          alert("로그인 실패");
         });
-      console.log(this.state.axios);
+    },
+
+    async logout({ commit }) {
+      await commit("logout");
+      alert("로그아웃");
+      router.push({ name: "Main" });
+    },
+
+    async deleteuser({ state, commit }) {
+      await axios
+        .delete(`https://j5a507.p.ssafy.io/api/users/${state.user.id}`)
+        .then(() => {
+          alert("탈퇴 완료");
+          commit("logout");
+          router.push({ name: "Main" });
+        });
+    },
+
+    async studentinuniv({ commit }, studentId) {
+      await axios
+        .get(`https://j5a507.p.ssafy.io/api/students/${studentId}/universities`)
+        .then(({ data }) => {
+          commit("inuniv", data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 

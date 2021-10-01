@@ -53,24 +53,20 @@
   </div>
 </template>
 <script>
-import { mapState, mapActions } from "vuex";
-
+import { mapActions } from "vuex";
 export default {
   name: "login",
   data() {
     return {
-      model: {
-        id: "",
-        pwd: "",
-      },
+      email: "",
+      password: "",
     };
   },
-  computed: {
-    ...mapState(["isLogin"]),
-  },
+
+  computed: {},
 
   methods: {
-    ...mapActions(["login", "axiostest"]),
+    ...mapActions(["login"]),
   },
 };
 </script>

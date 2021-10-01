@@ -5,6 +5,7 @@ import i05.a507.certblock.domain.Student;
 import i05.a507.certblock.domain.University;
 import i05.a507.certblock.domain.User;
 import i05.a507.certblock.dto.User.UserLoginReq;
+import i05.a507.certblock.dto.User.UserLoginRes;
 import i05.a507.certblock.dto.User.UserModifyReq;
 import i05.a507.certblock.dto.User.UserRegisterReq;
 import i05.a507.certblock.repository.CompanyRepository;
@@ -33,7 +34,7 @@ public class UserServiceImpl implements UserService {
 	UniversityRepository universityRepository;
 
 	@Override
-	public void registUser(UserRegisterReq userRegisterReq){
+	public boolean registUser(UserRegisterReq userRegisterReq){
 
 		int type = userRegisterReq.getType();
 		Date birth = userRegisterReq.getBirth();
@@ -43,6 +44,7 @@ public class UserServiceImpl implements UserService {
 		String pass = userRegisterReq.getPass();
 
 		if(type==1){
+			if(universityRepository.findByEmail(email).orElse(null)!=null) return false;
 			University university = new University();
 			university.setType(type);
 			university.setBirth(birth);
@@ -53,6 +55,7 @@ public class UserServiceImpl implements UserService {
 			university.setAddress(null); //처음에는 지갑주소없으니까
 			universityRepository.save(university);
 		}else if(type==2){
+			if(studentRepository.findByEmail(email).orElse(null)!=null) return false;
 			Student student = new Student();
 			student.setType(type);
 			student.setBirth(birth);
@@ -63,6 +66,7 @@ public class UserServiceImpl implements UserService {
 			student.setAddress(null); //처음에는 지갑주소없으니까
 			studentRepository.save(student);
 		}else if(type==3){
+			if(companyRepository.findByEmail(email).orElse(null)!=null) return false;
 			Company company = new Company();
 			company.setType(type);
 			company.setBirth(birth);
@@ -73,6 +77,7 @@ public class UserServiceImpl implements UserService {
 			company.setAddress(null); //처음에는 지갑주소없으니까
 			companyRepository.save(company);
 		}
+		return true;
 	}
 
 	@Override
@@ -81,18 +86,33 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User loginUser(UserLoginReq userLoginReq) {
+	public UserLoginRes loginUser(UserLoginReq userLoginReq) {
 		String email = userLoginReq.getEmail();
 		String password = userLoginReq.getPassword();
 
 		User user = userRepository.findByEmailAndPassword(email,password).orElse(null);
-		return user;
+		UserLoginRes ulr = new UserLoginRes();
+		ulr.setId(user.getId());
+		ulr.setEmail(user.getEmail());
+		ulr.setName(user.getName());
+		ulr.setPhone(user.getPhone());
+		ulr.setBirth(user.getBirth());
+		ulr.setType(user.getType());
+
+		return ulr;
 	}
 
 	@Override
-	public User getUser(int userId){
+	public UserLoginRes getUser(int userId){
 		User user = userRepository.findById(userId).orElse(null);
-		return user;
+		UserLoginRes ulr = new UserLoginRes();
+		ulr.setId(user.getId());
+		ulr.setEmail(user.getEmail());
+		ulr.setName(user.getName());
+		ulr.setPhone(user.getPhone());
+		ulr.setBirth(user.getBirth());
+		ulr.setType(user.getType());
+		return ulr;
 	}
 
 	@Override

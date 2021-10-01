@@ -3,6 +3,7 @@ package i05.a507.certblock.controller;
 import i05.a507.certblock.domain.User;
 import i05.a507.certblock.dto.BaseResponseBody;
 import i05.a507.certblock.dto.User.UserLoginReq;
+import i05.a507.certblock.dto.User.UserLoginRes;
 import i05.a507.certblock.dto.User.UserModifyReq;
 import i05.a507.certblock.dto.User.UserRegisterReq;
 import i05.a507.certblock.service.CompanyService;
@@ -32,8 +33,9 @@ public class UserController {
 
         int type = userRegisterReq.getType();
         if(type==1 || type==2 || type == 3) {
-            userService.registUser(userRegisterReq);
-            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+            boolean flg = userService.registUser(userRegisterReq);
+            if(flg) return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+            else return ResponseEntity.status(400).body(BaseResponseBody.of(400, "등록된 회원입니다."));
         }
         else return ResponseEntity.status(400).body(BaseResponseBody.of(400, "회원 가입에 실패했습니다."));
     }
@@ -48,7 +50,7 @@ public class UserController {
     //로그인
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody UserLoginReq userLoginReq){
-       User user = userService.loginUser(userLoginReq);
+        UserLoginRes user = userService.loginUser(userLoginReq);
         if(user != null) return ResponseEntity.status(200).body(user);
         else return ResponseEntity.status(404).body(BaseResponseBody.of(404, "존재하지 않는 회원입니다."));
     }
@@ -56,7 +58,7 @@ public class UserController {
     //특정 유저 조회
     @GetMapping("/{userId}")
     public ResponseEntity<?> selectUser(@PathVariable int userId) {
-        User user = userService.getUser(userId);
+        UserLoginRes user = userService.getUser(userId);
         if(user!=null) return ResponseEntity.status(200).body(user);
         else return ResponseEntity.status(404).body(BaseResponseBody.of(404, "존재하지 않는 회원입니다."));
     }

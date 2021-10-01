@@ -10,6 +10,9 @@ server:
 
 
 spring:
+  config:
+    import:
+      classpath:application-aws.yml
   mvc:
     view:
       prefix: /WEB-INF/views/
@@ -42,3 +45,7 @@ spring:
 logging:
   level:
     org.hibernate.type.descriptor.sql: trace
+
+app:
+  aes128:
+    secret-key: ${AES128_SECRETKEY}
