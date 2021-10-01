@@ -9,18 +9,19 @@
           <!-- <form role="form"> -->
           <base-input
             type="text"
-            name="id"
-            id="id"
-            v-model="id"
-            placeholder="id입력"
-          />
+            name="email"
+            id="email"
+            v-model="email"
+            placeholder="이메일"
+          /><br />
           <base-input
             type="password"
             name="password"
             id="password"
-            v-model="pwd"
-            placeholder="password입력"
-          />
+            v-model="password"
+            placeholder="비밀번호"
+          /><br />
+
           <base-checkbox class="custom-control-alternative">
             <span class="text-muted">Remember me</span>
           </base-checkbox>
@@ -32,9 +33,9 @@
               </router-link>
             </base-button>
 
-            <base-button type="primary" @click="login({ id, pwd })"
-              >로그인</base-button
-            >
+            <button class="btn btn-primary" @click="login({ email, password })">
+              로그인
+            </button>
           </div>
           <!-- </form> -->
         </div>
@@ -55,16 +56,13 @@
 <script>
 import { mapActions } from "vuex";
 export default {
-  name: "login",
   data() {
     return {
       email: "",
       password: "",
     };
   },
-
   computed: {},
-
   methods: {
     ...mapActions(["login"]),
   },

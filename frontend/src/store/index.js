@@ -37,7 +37,8 @@ export default createStore({
         .then(({ data }) => {
           commit("login", data);
           dispatch("studentinuniv", data.id);
-          router.push({ name: "Main" });
+          // router.push({ name: "home" });
+          console.log(data)
         })
         .catch((error) => {
           console.log(error);

@@ -6,90 +6,109 @@
           <div class="text-center text-muted mb-4">
             <h1>Sign up</h1>
           </div>
-          <form role="form">
-            <!-- <base-input
-              formClasses="input-group-alternative mb-3"
-              placeholder="Email"
-              addon-left-icon="ni ni-email-83"
-              v-model="model.email"
-            >
-            </base-input>
 
-            <base-input
-              formClasses="input-group-alternative mb-3"
-              placeholder="Password"
-              type="password"
-              addon-left-icon="ni ni-lock-circle-open"
-              v-model="model.password"
-            > 
-            </base-input> -->
+          <base-input
+            type="text"
+            name="name"
+            id="name"
+            v-model="name"
+            placeholder="이름"
+          /><br />
+          <base-input
+            type="text"
+            name="phone"
+            id="phone"
+            v-model="phone"
+            placeholder="전화번호"
+          /><br />
+          <base-input
+            type="date"
+            name="birth"
+            id="birth"
+            v-model="birth"
+          /><br />
+          <base-input
+            type="email"
+            name="email"
+            id="email"
+            v-model="email"
+            placeholder="이메일"
+          /><br />
+          <base-input
+            type="password"
+            name="pass"
+            id="pass"
+            v-model="pass"
+            placeholder="비밀번호"
+          /><br />
 
-            <base-input
-              type="text"
-              name="id"
-              id="id"
-              v-model="id"
-              placeholder="id입력"
-            />
-            <base-input
-              type="password"
-              name="password"
-              id="password"
-              v-model="pwd"
-              placeholder="password입력"
-            />
-            <base-checkbox class="custom-control-alternative">
-              <span class="text-muted">Remember me</span>
-            </base-checkbox>
-            <br />
-            <div class="text-center">
-              <base-button outline type="primary">
-                <router-link to="/login" class="text-light">
-                  로그인
-                </router-link>
-              </base-button>
-
-              <base-button type="primary">
-                <router-link to="/signup" class="text-light">
-                  회원가입
-                </router-link>
-              </base-button>
+          <div class="container ct-example-row">
+            <div class="row">
+              <div class="col-sm">
+                <base-radio id="university" value="1" v-model="type"
+                  >학교</base-radio
+                >
+              </div>
+              <div class="col-sm">
+                <base-radio id="student" value="2" v-model="type" checked
+                  >학생</base-radio
+                >
+              </div>
+              <div class="col-sm">
+                <base-radio id="company" value="3" v-model="type"
+                  >기업</base-radio
+                >
+              </div>
             </div>
-          </form>
-        </div>
-      </div>
-      <div class="row mt-3">
-        <div class="col-6">
-          <a href="#" class="text-light"><small>Forgot password?</small></a>
-        </div>
-        <div class="col-6 text-right">
-          <router-link to="/register" class="text-light"
-            ><small>Create new account</small></router-link
-          >
+          </div>
+          <br />
+
+          <div class="text-center">
+            <base-button outline type="primary">
+              <router-link to="/login" class="text-light"> 로그인 </router-link>
+            </base-button>
+
+            <button
+              class="btn btn-primary"
+              @click="regist({ name, phone, birth, email, pass, type })"
+            >
+              회원가입
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { mapState, mapActions } from "vuex";
-
+import axios from "axios";
+import router from "../router";
 export default {
-  name: "login",
   data() {
     return {
-      model: {
-        id: "",
-        pwd: "",
-      },
+      name: "",
+      phone: "",
+      birth: "",
+      email: "",
+      pass: "",
+      type: 2,
     };
-  },
-  computed: {
-    ...mapState(["isLogin"]),
   },
 
   methods: {
-    ...mapActions(["login", "axiostest"]),
+    regist(data) {
+      axios
+        .post(`https://j5a507.p.ssafy.io/api/users`, data)
+        .then(() => {
+          alert("회원가입 완료");
+          router.push({ name: "Login" });
+        })
+        .catch((error) => {
+          console.log("catch:");
+          console.log(error);
+        });
+      console.log(data);
+    },
   },
 };
 </script>
