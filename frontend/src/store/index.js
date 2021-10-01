@@ -37,7 +37,8 @@ export default createStore({
         .then(({ data }) => {
           commit("login", data);
           dispatch("studentinuniv", data.id);
-          router.push({ name: "Main" });
+          router.push({ name: "profile" });
+          console.log(data)
         })
         .catch((error) => {
           console.log(error);
@@ -48,7 +49,7 @@ export default createStore({
     async logout({ commit }) {
       await commit("logout");
       alert("로그아웃");
-      router.push({ name: "Main" });
+      router.push({ name: "home" });
     },
 
     async deleteuser({ state, commit }) {
