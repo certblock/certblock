@@ -45,7 +45,7 @@
           <a href="#" class="text-light"><small>Forgot password?</small></a>
         </div>
         <div class="col-6 text-right">
-          <router-link to="/register" class="text-light"
+          <router-link to="/signup" class="text-light"
             ><small>Create new account</small></router-link
           >
         </div>

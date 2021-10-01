@@ -37,11 +37,11 @@
           <li class="nav-item">
             <router-link class="nav-link nav-link-icon" to="/">
               <i class="ni ni-planet"></i>
-              <span class="nav-link-inner--text">Dashboard</span>
+              <span class="nav-link-inner--text">Home</span>
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link nav-link-icon" to="/register">
+            <router-link class="nav-link nav-link-icon" to="/signup">
               <i class="ni ni-circle-08"></i>
               <span class="nav-link-inner--text">Register</span>
             </router-link>

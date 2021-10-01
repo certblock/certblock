@@ -44,10 +44,16 @@
 
           <div class="container ct-example-row">
             <div class="row">
-              <div class="col-sm">
-                <base-radio id="university" value="1" v-model="type"
-                  >학교</base-radio
-                >
+              <div class="custom-control custom-radio mb-3">
+                <input
+                  name="custom-radio-1"
+                  class="custom-control-input"
+                  id="university"
+                  value="1"
+                  v-model="type"
+                  type="radio"
+                />
+                Unchecked
               </div>
               <div class="col-sm">
                 <base-radio id="student" value="2" v-model="type" checked

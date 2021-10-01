@@ -1,26 +1,49 @@
 <template>
   <div>
     <base-header
-      class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
+      class="header pb-8 pt-5 pt-lg-12 d-flex align-items-center"
       style="
         min-height: 600px;
-        background-image: url(img/theme/profile-cover.jpg);
+        background-image: url(img/theme/profile-cover.png);
         background-size: cover;
         background-position: center top;
       "
     >
       <!-- Mask -->
-      <span class="mask bg-gradient-success opacity-8"></span>
+      <span class="mask bg-gradient-default opacity-8"></span>
       <!-- Header container -->
-      <div class="container-fluid d-flex align-items-center">
+      <div class="container-fluid align-items-center">
         <div class="row">
-          <div class="col-lg-7 col-md-10">
-            <h1 class="display-2 text-white">Hello Jesse</h1>
+          <div class="col-lg-4 col-md-10">
+            <h1 class="display-2 text-white">Hello {{ user.name }}</h1>
             <p class="text-white mt-0 mb-5">
-              This is your profile page. You can see the progress you've made
-              with your work and manage your projects or assigned tasks
+              안녕하세요, 반갑습니다.<br />
+              CERTBLOCK에서 쉽게 증명서를 발급해보세요.
             </p>
-            <a href="#!" class="btn btn-info">Edit profile</a>
+          </div>
+
+          <div class="col-lg-8 col-md-10">
+            <div class="card card-profile shadow">
+              <div class="card-body pt-0 pt-md-4">
+                <div class="text-right">
+                  <h3>
+                    Phone
+                    <span class="font-weight-light">{{ user.phone }}</span>
+                  </h3>
+                  <h3>
+                    Birth
+                    <span class="font-weight-light">{{ user.birth}}</span>
+                  </h3>
+                  <h3>
+                    Email
+                    <span class="font-weight-light">{{ user.email }}</span>
+                  </h3>
+                  <hr class="my-4" />
+
+                  <a href="#">Show more</a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -28,7 +51,7 @@
 
     <div class="container-fluid mt--7">
       <div class="row">
-        <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+        <!-- <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
           <div class="card card-profile shadow">
             <div class="row justify-content-center">
               <div class="col-lg-3 order-lg-2">
@@ -99,7 +122,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <div class="col-xl-8 order-xl-1">
           <card shadow type="secondary">
@@ -229,6 +252,7 @@ A beautiful Dashboard for Bootstrap 4. It is Free and Open Source.</textarea
   </div>
 </template>
 <script>
+import { mapState } from "vuex";
 export default {
   name: "user-profile",
   data() {
@@ -245,6 +269,9 @@ export default {
         about: "",
       },
     };
+  },
+  computed: {
+    ...mapState(["user"]),
   },
 };
 </script>
