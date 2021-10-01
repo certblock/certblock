@@ -34,11 +34,11 @@ export default createStore({
   actions: {
     login({ commit }, data) {
       commit("login", data);
-      router.push({ name: "Main" });
+      router.push({ name: "Home" });
     },
     logout({ commit }) {
       commit("logout");
-      router.push({ name: "Main" });
+      router.push({ name: "Home" });
     },
     axiostest({ commit }, test) {
       console.log(test);
