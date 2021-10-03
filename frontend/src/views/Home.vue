@@ -8,9 +8,12 @@
         <div class="col">
           <div class="card shadow">
             <div class="card-header bg-transparent">
-              <img class="mainImage" src="img/brand/CERTBLOCK.jpg" />
-              <router-link class="navbar-brand" to="/login">
-                <base-button outline type="primary"
+               <vue-particles color="#dedede">
+                 <span id="hello">hELLO</span>
+
+               </vue-particles>
+              <router-link class="navbar-brand" to="/signup">
+                <base-button outline type="primary" class="startBtn"
                   >CertBlock 시작하기</base-button
                 >
               </router-link>
@@ -41,5 +44,12 @@ export default {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+#hello{
+  z-index : 999;
+  color : black;
+}
+.startBtn{
+  margin: 0 auto;
 }
 </style>

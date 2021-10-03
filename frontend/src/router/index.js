@@ -1,7 +1,7 @@
 // 페이지를 이동할 때 사용할 설정들, <router-link :to="{ name: 'route의 name' }">로 링크를 만들 수 있음
 import { createRouter, createWebHashHistory } from "vue-router";
 //import Main from "../views/TheMain";
-//import Certificate from "../views/Certificate.vue";
+import Certificate from "../views/Certificate.vue";
 import store from "../store";
 
 import DashboardLayout from "../layouts/DashboardLayout";
@@ -25,11 +25,6 @@ const routes = [
     //   path: "/",
     //   name: "Main",
     //   component: Main,
-    // },
-    // {
-    //   path: "/certificate",
-    //   name: "Certificate",
-    //   component: Certificate,
     // },
     // {
     //   path: "/login",
@@ -75,6 +70,11 @@ const routes = [
         name: "tables",
         components: { default: Tables },
       },
+    {
+      path: "/certificate",
+      name: "Certificate",
+      component: Certificate,
+    },
     ],
   },
   {
@@ -116,7 +116,7 @@ router.beforeEach((to, from, next) => {
   let isLogin = store.state.user != null ? true : false;
   let route = to.name;
   switch (route) {
-    case "Certificate":
+    case "certificate":
       if (!isLogin) {
         alert("로그인 후 사용 가능합니다.");
         next("/login");
@@ -125,8 +125,8 @@ router.beforeEach((to, from, next) => {
       }
       break;
 
-    case "Login":
-    case "Regist":
+    case "login":
+    case "signup":
       if (isLogin) {
         alert("이미 로그인 중입니다.");
       } else {

@@ -86,10 +86,13 @@
     </div>
   </div>
 </template>
+
 <script>
 import axios from "axios";
 import router from "../router";
+
 export default {
+  
   data() {
     return {
       name: "",
@@ -100,7 +103,6 @@ export default {
       type: 2,
     };
   },
-
   methods: {
     regist(data) {
       axios
