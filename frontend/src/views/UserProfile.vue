@@ -71,29 +71,30 @@
     </base-header>
 
     <div class="container-fluid mt--7">
-      <div class="col-xl-12 order-xl-1">
-        <card shadow type="secondary">
-          <base-button
+      <card shadow type="secondary">
+        <div class="row">
+          <div
             v-for="(item, index) in inuniv"
             :key="index"
-            @click="univarrnum = index"
+            @click="univarrnum =index"
             class="col-md-3"
           >
-            {{ item.universityName }}
-          </base-button>
-          <base-button
-            @click="
-              if (univ == null) getuniv();
-              add();
-            "
-            class="col-md-1"
-          >
+            <base-button class="col-md-12">
+              {{ item.universityName }}
+            </base-button>
+          </div>
+
+          <base-button @click="add()" class="col-md-1">
             {{ this.click ? "-" : "+" }}</base-button
           ><br />
-            <projects-table :univarrnum="this.univarrnum" title="Light Table" ></projects-table> 
-          <add-univ v-if="click" :univ="this.univ" />
-        </card>
-      </div>
+        </div>
+
+        <projects-table
+          :univarrnum="this.univarrnum"
+          title="Light Table"
+        ></projects-table>
+        <add-univ v-if="click" :univ="this.univ" />
+      </card>
     </div>
   </div>
 </template>
@@ -109,7 +110,7 @@ export default {
   components: {
     registUniv,
     AddUniv,
-   ProjectsTable,
+    ProjectsTable,
   },
   data() {
     return {
@@ -148,7 +149,6 @@ export default {
           console.log(error);
         });
     },
-
     add() {
       this.click = !this.click;
     },

@@ -11,7 +11,8 @@
             class="mb-0"
             :class="type === 'dark' ? 'text-white' : ''"
           >
-            {{ inuniv[univarrnum].universityName }} 증명서 목록
+           {{ inuniv[univarrnum].universityName }} 증명서
+            목록
           </h3>
         </div>
       </div>
@@ -26,7 +27,7 @@
         :class="type === 'dark' ? 'table-dark' : ''"
         :thead-classes="type === 'dark' ? 'thead-dark' : 'thead-light'"
         tbody-classes="list"
-        :data="inuniv"
+        :data="inCert"
       >
         <template v-slot>
           <th scope="row">
@@ -37,7 +38,9 @@
             >
               <badge type="default"><i class="ni ni-app"></i></badge>
               <div class="media-body">
-                <span class="name mb-0 text-sm">{{ inuniv[univarrnum].universityName }}증명서 이름</span>
+                <span class="name mb-0 text-sm"
+                  >{{ inuniv[univarrnum].universityName }}증명서 이름</span
+                >
               </div>
             </div>
           </th>
@@ -58,6 +61,7 @@
 </template>
 <script>
 import { mapState } from "vuex";
+import axios from "axios";
 
 export default {
   name: "projects-table",
@@ -68,6 +72,28 @@ export default {
     ...mapState(["user"]),
     ...mapState(["inuniv"]),
   },
+  data(){
+    return {
+      inCert:[],
+    }
+  },
+   methods: {
+    async getCert() {
+      await axios
+        .get(`https://j5a507.p.ssafy.io/api/${this.user.id}/universities/${this.inuniv[this.univarrnum].universityId}/certificates`)
+        .then(({ data }) => {
+          console.log(data);
+          this.inCert = data;
+          console.log(this.inCert);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
+  mounted(){
+   this.getCert();
+  }
 };
 </script>
 <style></style>

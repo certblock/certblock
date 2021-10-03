@@ -2,7 +2,6 @@
   <component
     :is="tag"
     :type="tag === 'button' ? nativeType : ''"
-    @click="handleClick"
     class="btn"
     :class="classes"
   >
