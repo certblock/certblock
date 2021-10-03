@@ -7,7 +7,7 @@ export default createStore({
   // SPA에서 사용하는 변수들의 중앙 저장소
   state: {
     user: null,
-    inuniv: null,
+    inuniv: [],
   },
 
   // state의 상태를 변경하는 함수들의 모음 (동기 methods)
@@ -18,7 +18,7 @@ export default createStore({
 
     logout(state) {
       state.user = null;
-      state.inuniv = null;
+      state.inuniv = [];
     },
 
     inuniv(state, data) {
