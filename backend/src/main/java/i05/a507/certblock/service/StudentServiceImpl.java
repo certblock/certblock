@@ -61,18 +61,21 @@ public class StudentServiceImpl implements StudentService {
 		University university = universityRepository.findById(universityId).orElse(null);
 		UniversityStudent universityStudent = universityStudentRepository.findByStudentIdAndUniversityId(studentId,universityId).orElse(null);
 		int type = studentRegistUniReq.getType();
+		int studentIdInUniv = studentRegistUniReq.getStudentIdInUniv();
 		if(student == null || university == null || universityStudent!=null) return false;
 
 		UniversityStudent us = new UniversityStudent();
 		us.setStudent(student);
 		us.setUniversity(university);
 		us.setType(type);
+		us.setStudentIdInUniv(studentIdInUniv);
 		universityStudentRepository.save(us);
 
-		for (int i=1; i<=6; i++){
+		for (int i = 0; i < 2; i++){
+			int certType = type * 2 - 1 + i;
 			Certificate certificate = new Certificate();
 			certificate.setUniversityStudent(us);
-			certificate.setType(i);
+			certificate.setType(certType);
 			certificate.setIssuance(false);
 			certificateRepository.save(certificate);
 		}
@@ -149,6 +152,10 @@ public class StudentServiceImpl implements StudentService {
 					scr.setCertificateId(cf.getId());
 					scr.setType(cf.getType());
 					scr.setFlg(cf.getIssuance());
+					scr.setDate(cf.getIssuance()? cf.getDate() : null);
+					scr.setStudentId(cf.getUniversityStudent().getStudent().getId());
+					scr.setUniversityId(cf.getUniversityStudent().getUniversity().getId());
+					scr.setHash(cf.getHash());
 					certList.add(scr);
 				}
 			}
