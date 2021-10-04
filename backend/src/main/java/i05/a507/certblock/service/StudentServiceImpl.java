@@ -144,17 +144,15 @@ public class StudentServiceImpl implements StudentService {
 			//저장된 학교의 증명서 모두 찾기
 			List<Certificate> certificateList = certificateRepository.findByUniversityStudent(us).orElse(null);
 			for (Certificate cf : certificateList) {
-				if(cf.getIssuance()) {
-					StudentCertRes scr = new StudentCertRes();
-					scr.setCertificateId(cf.getId());
-					scr.setType(cf.getType());
-					scr.setFlg(cf.getIssuance());
-					scr.setDate(cf.getIssuance()? cf.getDate() : null);
-					scr.setStudentId(cf.getUniversityStudent().getStudent().getId());
-					scr.setUniversityId(cf.getUniversityStudent().getUniversity().getId());
-					scr.setHash(cf.getHash());
-					certList.add(scr);
-				}
+				StudentCertRes scr = new StudentCertRes();
+				scr.setCertificateId(cf.getId());
+				scr.setType(cf.getType());
+				scr.setFlg(cf.getIssuance());
+				scr.setDate(cf.getIssuance()? cf.getDate() : null);
+				scr.setStudentId(cf.getUniversityStudent().getStudent().getId());
+				scr.setUniversityId(cf.getUniversityStudent().getUniversity().getId());
+				scr.setHash(cf.getHash());
+				certList.add(scr);
 			}
 		}
 		return certList;
