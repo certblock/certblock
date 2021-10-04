@@ -23,6 +23,8 @@ public class UniversityStudent {
 
     private int type;
 
+    private Integer studentIdInUniv;
+
     @OneToMany(mappedBy = "universityStudent")
     private List<Certificate> certificateList;
 }

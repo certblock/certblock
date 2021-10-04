@@ -5,8 +5,6 @@ server:
     enabled: true
     force : true
   port: 80
-  servlet:
-    context-path: /
 
 
 spring:
@@ -14,9 +12,7 @@ spring:
     import:
       classpath:application-aws.yml
   mvc:
-    view:
-      prefix: /WEB-INF/views/
-      suffix: .jsp
+    static-path-pattern: /static/**
 #DB
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver

@@ -13,4 +13,6 @@ public class University extends User {
 
     @OneToMany(mappedBy = "university")
     private List<UniversityStudent> universityStudentList;
+
+    private String apiServerBaseUrl;
 }
