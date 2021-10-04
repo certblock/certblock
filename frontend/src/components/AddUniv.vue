@@ -10,14 +10,21 @@
       {{ item.name }}
     </option></select
   ><br />
+  학번 :
+  <input
+    type="text"
+    name="studentIdInUniv"
+    id="studentIdInUniv"
+    v-model="studentIdInUniv"
+  /><br />
   졸업 :
-  <input type="radio" id="1" value="1" v-model="status" checked />
+  <input type="radio" id="1" value="1" v-model="type" checked />
   <label for="1">학사</label>
-  <input type="radio" id="2" value="2" v-model="status" />
+  <input type="radio" id="2" value="2" v-model="type" />
   <label for="2">석사</label>
-  <input type="radio" id="3" value="3" v-model="status" />
+  <input type="radio" id="3" value="3" v-model="type" />
   <label for="3">박사</label><br />
-  <button @click="regist(universityId, status)">등록</button>
+  <button @click="regist(universityId, { type, studentIdInUniv })">등록</button>
 </template>
 
 <script>
@@ -31,7 +38,8 @@ export default {
   data() {
     return {
       universityId: null,
-      status: 1,
+      type: 1,
+      studentIdInUniv: "",
     };
   },
 
@@ -41,11 +49,11 @@ export default {
 
   methods: {
     ...mapActions(["studentinuniv"]),
-    async regist(universityId, status) {
+    async regist(universityId, data) {
       await axios
         .post(
           `https://j5a507.p.ssafy.io/api/students/${this.user.id}/universities/${universityId}`,
-          { type: status }
+          data
         )
         .then(() => {
           alert("등록 완료");
