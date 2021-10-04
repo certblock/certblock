@@ -91,14 +91,11 @@ public class StudentServiceImpl implements StudentService {
 
 		List<Certificate> certificateList = certificateRepository.findByUniversityStudent(universityStudent).orElse(null);
 		for (Certificate cf : certificateList) { //증명서 목록(1~6)
-			//증명서가 발급된 경우만 -> 조회
-			if (cf.getIssuance()) {
-				StudentCertRes scr = new StudentCertRes();
-				scr.setCertificateId(cf.getId());
-				scr.setType(cf.getType());
-				scr.setFlg(cf.getIssuance());
-				issueCertList.add(scr);
-			}
+			StudentCertRes scr = new StudentCertRes();
+			scr.setCertificateId(cf.getId());
+			scr.setType(cf.getType());
+			scr.setFlg(cf.getIssuance());
+			issueCertList.add(scr);
 		}
 		return issueCertList;
 	}
