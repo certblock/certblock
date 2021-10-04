@@ -17,9 +17,8 @@ import Signup from "../views/Signup.vue";
 import Register from "../views/Register.vue";
 
 import Company from "../views/CompanyAdmin.vue";
-import ApplySubmit from "../components/Modals/ApplySubmit.vue"
+import ApplySubmit from "../components/Modals/ApplySubmit.vue";
 import ErrorPage from "../views/ErrorPage.vue";
-
 
 // path : url경로, name : 해당 route의 이름, component : 해당 route가 호출되면 표시할 페이지(위에 import한 페이지)
 const routes = [
@@ -119,6 +118,7 @@ router.beforeEach((to, from, next) => {
   let route = to.name;
   switch (route) {
     case "certificate":
+    case "profile":
       if (!isLogin) {
         alert("로그인 후 사용 가능합니다.");
         next("/login");

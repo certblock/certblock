@@ -11,15 +11,25 @@
             class="mb-0"
             :class="type === 'dark' ? 'text-white' : ''"
           >
-           {{ inuniv[univarrnum].universityName }} 증명서
-            목록
+            {{ inuniv[univarrnum].universityName }} 증명서 목록
           </h3>
         </div>
       </div>
     </div>
 
-    <!-- <div v-if="inuniv.length == 0">등록된 대학교가 없습니다</div>
-    <div v-for="index in univarrnum + 1" :key="index">{{ index }}</div> -->
+    <div>
+      졸업 증명서 :
+      <a v-if="certificate[certnum].hash != null">{{
+        certificate[certnum].hash
+      }}</a
+      ><a v-else><base-button>발급받기</base-button></a
+      ><br />
+      성적 증명서 :
+      <a v-if="certificate[certnum + 1].hash != null">{{
+        certificate[certnum + 1].hash
+      }}</a
+      ><a v-else><base-button>발급받기</base-button></a>
+    </div>
 
     <div class="table-responsive">
       <base-table
@@ -61,20 +71,32 @@
 </template>
 <script>
 import { mapState } from "vuex";
+import BaseButton from "../../components/BaseButton.vue";
 
 export default {
+  components: { BaseButton },
   name: "projects-table",
   props: {
     univarrnum: Number,
   },
-  computed: {
-    ...mapState(["user"]),
-    ...mapState(["inuniv"]),
+  watch: {
+    univarrnum: function (val) {
+      this.updatecertnum(val);
+    },
   },
-  data(){
+  computed: {
+    ...mapState(["user", "inuniv", "certificate"]),
+  },
+  data() {
     return {
-      inCert:[],
-    }
+      inCert: [],
+      certnum: this.univarrnum * 2,
+    };
+  },
+  methods: {
+    updatecertnum(univarrnum) {
+      this.certnum = univarrnum * 2;
+    },
   },
 };
 </script>

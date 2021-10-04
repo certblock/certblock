@@ -8,6 +8,7 @@ export default createStore({
   state: {
     user: null,
     inuniv: [],
+    certificate: [],
   },
 
   // state의 상태를 변경하는 함수들의 모음 (동기 methods)
@@ -19,10 +20,15 @@ export default createStore({
     logout(state) {
       state.user = null;
       state.inuniv = [];
+      state.certificate = [];
     },
 
     inuniv(state, data) {
       state.inuniv = data;
+    },
+
+    certificate(state, data) {
+      state.certificate = data;
     },
   },
 
@@ -37,8 +43,9 @@ export default createStore({
         .then(({ data }) => {
           commit("login", data);
           dispatch("studentinuniv", data.id);
+          dispatch("getcertificate", data.id);
           router.push({ name: "profile" });
-          console.log(data)
+          console.log(data);
         })
         .catch((error) => {
           console.log(error);
@@ -67,6 +74,19 @@ export default createStore({
         .get(`https://j5a507.p.ssafy.io/api/students/${studentId}/universities`)
         .then(({ data }) => {
           commit("inuniv", data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    async getcertificate({ commit }, studentId) {
+      await axios
+        .get(`https://j5a507.p.ssafy.io/api/students/${studentId}/certificates`)
+        .then(({ data }) => {
+          commit("certificate", data);
+          console.log("증명서:");
+          console.log(this.state.certificate);
         })
         .catch((error) => {
           console.log(error);

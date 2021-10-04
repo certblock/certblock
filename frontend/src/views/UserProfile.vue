@@ -73,27 +73,25 @@
     <div class="container-fluid mt--7">
       <card shadow type="secondary">
         <div class="row">
+          <!-- <div v-if="inuniv.length == 0">등록된 대학교가 없습니다</div> -->
           <div
             v-for="(item, index) in inuniv"
             :key="index"
-            @click="getCert(index)"
+            @click="univarrnum = index"
             class="col-md-3"
           >
             <base-button class="col-md-12">
-              {{ item.universityName }}
+              {{ item.universityName }}(<a v-if="item.type == 1">학사</a
+              ><a v-if="item.type == 2">석사</a
+              ><a v-if="item.type == 3">박사</a>)
             </base-button>
           </div>
-
-          <base-button @click="add()" class="col-md-1">
-            {{ this.click ? "-" : "+" }}</base-button
-          ><br />
         </div>
 
         <projects-table
           :univarrnum="this.univarrnum"
           title="Light Table"
         ></projects-table>
-        <add-univ v-if="click" :univ="this.univ" />
       </card>
     </div>
   </div>
@@ -101,15 +99,12 @@
 <script>
 import { mapState } from "vuex";
 import registUniv from "../components/common/registUnivModal.vue";
-import axios from "axios";
-import AddUniv from "../components/AddUniv";
 import ProjectsTable from "./Tables/ProjectsTable";
 
 export default {
   name: "user-profile",
   components: {
     registUniv,
-    AddUniv,
     ProjectsTable,
   },
   data() {
@@ -128,44 +123,13 @@ export default {
       modals: {
         modal0: false,
       },
-      click: false,
-      univ: null,
       univarrnum: 0,
     };
   },
   computed: {
-    ...mapState(["user"]),
-    ...mapState(["inuniv"]),
+    ...mapState(["user", "inuniv", "certificate"]),
   },
-  methods: {
-    async getuniv() {
-      await axios
-        .get(`https://j5a507.p.ssafy.io/api/universities`)
-        .then(({ data }) => {
-          console.log(data);
-          this.univ = data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    async getCert(index) {
-      await axios
-        .get(`https://j5a507.p.ssafy.io/api/universities/${this.user.id}/users/${this.inuniv[index].universityId}/certificates`)
-        .then(({ data }) => {
-          console.log(this.user.id);
-          console.log(this.inuniv[index].universityName);
-          this.inCert = data;
-          console.log(this.inCert);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    add() {
-      this.click = !this.click;
-    },
-  },
+  methods: {},
 };
 </script>
 <style></style>
