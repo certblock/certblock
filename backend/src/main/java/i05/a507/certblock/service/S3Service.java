@@ -36,7 +36,7 @@ public class S3Service {
     }
 
     // S3로 파일 업로드하기
-    private String upload(File uploadFile, String dirName) {
+    public String upload(File uploadFile, String dirName) {
         int extensionIdx = uploadFile.getName().lastIndexOf('.');
         String fileName = dirName + "/" + UUID.randomUUID();
         if (extensionIdx > 0) {
@@ -44,7 +44,7 @@ public class S3Service {
         }
         String uploadImageUrl = putFile(uploadFile, fileName); // s3로 업로드
         removeNewFile(uploadFile);
-        return uploadImageUrl;
+        return fileName;
     }
 
     // S3로 업로드
