@@ -7,4 +7,5 @@ import lombok.Setter;
 @Setter
 public class StudentRegistUniReq {
     private int type;
+    private int studentIdInUniv;
 }
