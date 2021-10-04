@@ -1,14 +1,13 @@
 // 페이지를 이동할 때 사용할 설정들, <router-link :to="{ name: 'route의 name' }">로 링크를 만들 수 있음
-import { createRouter, createWebHashHistory } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 //import Main from "../views/TheMain";
-//import Certificate from "../views/Certificate.vue";
+import Certificate from "../views/Certificate.vue";
 import store from "../store";
 
 import DashboardLayout from "../layouts/DashboardLayout";
 import AuthLayout from "../layouts/AuthLayout";
 
 import Service from "../views/Service.vue";
-import Icons from "../views/Icons.vue";
 import Home from "../views/Home.vue";
 import Profile from "../views/UserProfile.vue";
 import Tables from "../views/Tables.vue";
@@ -16,36 +15,15 @@ import Tables from "../views/Tables.vue";
 import Login from "../views/Login.vue";
 import Signup from "../views/Signup.vue";
 import Register from "../views/Register.vue";
-// import ErrorPage from "../views/ErrorPage.vue";
+
+import Company from "../views/CompanyAdmin.vue";
+import ApplySubmit from "../components/Modals/ApplySubmit.vue"
+import ErrorPage from "../views/ErrorPage.vue";
+
 
 // path : url경로, name : 해당 route의 이름, component : 해당 route가 호출되면 표시할 페이지(위에 import한 페이지)
 const routes = [
   {
-    // {
-    //   path: "/",
-    //   name: "Main",
-    //   component: Main,
-    // },
-    // {
-    //   path: "/certificate",
-    //   name: "Certificate",
-    //   component: Certificate,
-    // },
-    // {
-    //   path: "/login",
-    //   name: "Login",
-    //   component: Login,
-    // },
-    // {
-    //   path: "/regist",
-    //   name: "Regist",
-    //   component: Regist,
-    // },
-    // 존재하지 않는 url 접근시 에러페이지로 이동 (현재 사용 불가)
-    // {
-    //   path: "*",
-    //   component: ErrorPage,
-    // },
     path: "/",
     redirect: "/home",
     component: DashboardLayout,
@@ -54,11 +32,6 @@ const routes = [
         path: "/service",
         name: "service",
         components: { default: Service },
-      },
-      {
-        path: "/icons",
-        name: "icons",
-        components: { default: Icons },
       },
       {
         path: "/home",
@@ -75,10 +48,19 @@ const routes = [
         name: "tables",
         components: { default: Tables },
       },
+      {
+        path: "/certificate",
+        name: "Certificate",
+        component: Certificate,
+      },
+      {
+        path: "*",
+        component: ErrorPage,
+      },
     ],
   },
   {
-    path: "/",
+    path: "/user",
     redirect: "login",
     component: AuthLayout,
     children: [
@@ -99,12 +81,32 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/company",
+    redirect: "company",
+    component: Company,
+    children: [
+      {
+        path: "/company",
+        name: "company",
+        components: { default: Company },
+      },
+      {
+        path: "/submit",
+        name: "submit",
+        components: { default: ApplySubmit },
+      },
+      {
+        path: "/register",
+        name: "register",
+        components: { default: Register },
+      },
+    ],
+  },
 ];
 
 const router = createRouter({
-  // history: createWebHistory(process.env.BASE_URL),
-  // routes,
-  history: createWebHashHistory(),
+  history: createWebHistory(process.env.BASE_URL),
   linkActiveClass: "active",
   routes,
 });
@@ -116,7 +118,7 @@ router.beforeEach((to, from, next) => {
   let isLogin = store.state.user != null ? true : false;
   let route = to.name;
   switch (route) {
-    case "Certificate":
+    case "certificate":
       if (!isLogin) {
         alert("로그인 후 사용 가능합니다.");
         next("/login");
@@ -125,8 +127,8 @@ router.beforeEach((to, from, next) => {
       }
       break;
 
-    case "Login":
-    case "Regist":
+    case "login":
+    case "signup":
       if (isLogin) {
         alert("이미 로그인 중입니다.");
       } else {
