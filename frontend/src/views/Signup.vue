@@ -6,7 +6,6 @@
           <div class="text-center text-muted mb-4">
             <h1>Sign up</h1>
           </div>
-          <button @click="checkIdentity()">본인인증</button>
 
           <base-input
             type="text"
@@ -44,31 +43,27 @@
           /><br />
 
           <div class="container ct-example-row">
-            <div class="row">
-              <div class="custom-control custom-radio mb-3">
+            <div class="row justify-content-center">
+              <div class="col-md-3">
+                <input type="radio" id="university" v-model="type" value="1" />
+                <label for="html">학교</label>
+              </div>
+              <div class="col-md-3">
                 <input
-                  name="custom-radio-1"
-                  class="custom-control-input"
-                  id="university"
-                  value="1"
-                  v-model="type"
                   type="radio"
+                  id="student"
+                  v-model="type"
+                  value="2"
+                  checked
                 />
-                Unchecked
+                <label for="html">학생</label>
               </div>
-              <div class="col-sm">
-                <base-radio id="student" value="2" v-model="type" checked
-                  >학생</base-radio
-                >
-              </div>
-              <div class="col-sm">
-                <base-radio id="company" value="3" v-model="type"
-                  >기업</base-radio
-                >
+              <div class="col-md-3">
+                <input type="radio" id="company" v-model="type" value="3" />
+                <label for="html">기업</label>
               </div>
             </div>
           </div>
-          <br />
 
           <div class="text-center">
             <base-button outline type="primary">
