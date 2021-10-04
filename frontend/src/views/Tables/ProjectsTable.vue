@@ -61,7 +61,6 @@
 </template>
 <script>
 import { mapState } from "vuex";
-import axios from "axios";
 
 export default {
   name: "projects-table",
@@ -77,23 +76,6 @@ export default {
       inCert:[],
     }
   },
-   methods: {
-    async getCert() {
-      await axios
-        .get(`https://j5a507.p.ssafy.io/api/${this.user.id}/universities/${this.inuniv[this.univarrnum].universityId}/certificates`)
-        .then(({ data }) => {
-          console.log(data);
-          this.inCert = data;
-          console.log(this.inCert);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-  },
-  mounted(){
-   this.getCert();
-  }
 };
 </script>
 <style></style>

@@ -51,7 +51,7 @@
                       </h5>
                     </template>
                     <div>
-                      <regist-univ></regist-univ>
+                      <!-- <regist-univ></regist-univ> -->
                     </div>
                     <template v-slot:footer>
                       <base-button
@@ -76,7 +76,7 @@
           <div
             v-for="(item, index) in inuniv"
             :key="index"
-            @click="getCert(index)"
+            @click="univarrnum =index"
             class="col-md-3"
           >
             <base-button class="col-md-12">
@@ -88,29 +88,23 @@
             {{ this.click ? "-" : "+" }}</base-button
           ><br />
         </div>
-
+<!-- 
         <projects-table
           :univarrnum="this.univarrnum"
           title="Light Table"
         ></projects-table>
-        <add-univ v-if="click" :univ="this.univ" />
+        <add-univ v-if="click" :univ="this.univ" /> -->
       </card>
     </div>
   </div>
 </template>
 <script>
 import { mapState } from "vuex";
-import registUniv from "../components/common/registUnivModal.vue";
 import axios from "axios";
-import AddUniv from "../components/AddUniv";
-import ProjectsTable from "./Tables/ProjectsTable";
 
 export default {
   name: "user-profile",
   components: {
-    registUniv,
-    AddUniv,
-    ProjectsTable,
   },
   data() {
     return {
@@ -144,19 +138,6 @@ export default {
         .then(({ data }) => {
           console.log(data);
           this.univ = data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    async getCert(index) {
-      await axios
-        .get(`https://j5a507.p.ssafy.io/api/universities/${this.user.id}/users/${this.inuniv[index].universityId}/certificates`)
-        .then(({ data }) => {
-          console.log(this.user.id);
-          console.log(this.inuniv[index].universityName);
-          this.inCert = data;
-          console.log(this.inCert);
         })
         .catch((error) => {
           console.log(error);

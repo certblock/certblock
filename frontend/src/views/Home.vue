@@ -8,13 +8,15 @@
         <div class="col">
           <div class="card shadow">
             <div class="card-header bg-transparent">
-               <vue-particles color="#dedede">
-                 <span id="hello">hELLO</span>
-
-               </vue-particles>
+               <vue-particles color="#dedede"/>
               <router-link class="navbar-brand" to="/signup">
                 <base-button outline type="primary" class="startBtn"
                   >CertBlock 시작하기</base-button
+                >
+              </router-link>
+              <router-link class="navbar-brand" to="/company">
+                <base-button outline type="primary" class="startBtn"
+                  >기업회원</base-button
                 >
               </router-link>
             </div>

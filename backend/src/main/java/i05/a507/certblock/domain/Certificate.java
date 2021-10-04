@@ -20,8 +20,8 @@ public class Certificate {
 
     @ManyToOne
     @JoinColumns({
+            @JoinColumn(name="student_id"),
             @JoinColumn(name="university_id"),
-            @JoinColumn(name="student_id")
     })
     private UniversityStudent universityStudent;
 
