@@ -17,49 +17,68 @@
       </div>
     </div>
 
-    <div>
-      졸업 증명서 :
-      <a v-if="certificate[certnum].hash != null">{{
-        certificate[certnum].hash
-      }}</a
-      ><a v-else><base-button>발급받기</base-button></a
-      ><br />
-      성적 증명서 :
-      <a v-if="certificate[certnum + 1].hash != null">{{
-        certificate[certnum + 1].hash
-      }}</a
-      ><a v-else><base-button>발급받기</base-button></a>
-    </div>
-
-    <div class="table-responsive">
-      <base-table
-        class="table align-items-center table-flush"
-        :class="type === 'dark' ? 'table-dark' : ''"
-        :thead-classes="type === 'dark' ? 'thead-dark' : 'thead-light'"
-        tbody-classes="list"
-        :data="inCert"
-      >
-        <template v-slot>
-          <th scope="row">
-            <div
-              class="media align-items-center"
-              v-for="index in univarrnum + 1"
-              :key="index"
-            >
-              <badge type="default"><i class="ni ni-app"></i></badge>
-              <div class="media-body">
-                <span class="name mb-0 text-sm"
-                  >{{ inuniv[univarrnum].universityName }}증명서 이름</span
-                >
-              </div>
+     <div class="row justify-content-md-center">
+      <div class="col-xl-12 col-lg-12">
+        <stats-card>
+          <div class="row" v-if="certificate[certnum].hash != null">
+            <div class="col-md-3">
+              <badge type="primary"><i class="ni ni-app"></i></badge>
+              <span class="text-primary">졸업 증명서</span>
             </div>
-          </th>
-          <td class="budget" v-for="index in univarrnum + 1" :key="index">
-            발급여부
-          </td>
-        </template>
-      </base-table>
-    </div>
+            <div class="col">
+              <a>{{ certificate[certnum].hash }}</a>&nbsp;
+              <base-button size="sm" @click="doCopy()">
+                Copy!
+              </base-button>
+            </div>
+            <div class="col"></div>
+          </div>
+          <div class="row" v-else>
+            <div class="col-md-3">
+              <badge type="secondary"><i class="ni ni-app"></i></badge>
+              <span class="text-default">졸업 증명서</span>
+            </div>
+            <div class="col">
+              <a>
+                <base-button>발급받기</base-button>
+              </a>
+            </div>
+            <div class="col"></div>
+          </div>
+        </stats-card>
+      </div>
+      <div class="col-xl-12 col-lg-12">
+        <stats-card>
+          <div class="row" v-if="certificate[certnum + 1].hash != null">
+            <div class="col-md-3">
+              <badge type="primary"><i class="ni ni-app"></i></badge>
+              <span class="text-primary">성적 증명서</span>
+            </div>
+            <div class="col">
+              <a>{{ certificate[certnum + 1].hash }}</a>&nbsp;
+              <base-button size="sm"
+                @click="doCopy1()"
+              >
+                Copy!
+              </base-button>
+            </div>
+            <div class="col"></div>
+          </div>
+          <div class="row" v-else>
+            <div class="col-md-3">
+              <badge type="secondary"><i class="ni ni-app"></i></badge>
+              <span class="text-default">졸업 증명서</span>
+            </div>
+            <div class="col">
+              <a>
+                <base-button>발급받기</base-button>
+              </a>
+            </div>
+            <div class="col"></div>
+          </div>
+        </stats-card>
+      </div>
+    </div> 
 
     <div
       class="card-footer d-flex justify-content-end"
@@ -71,10 +90,9 @@
 </template>
 <script>
 import { mapState } from "vuex";
-import BaseButton from "../../components/BaseButton.vue";
 
 export default {
-  components: { BaseButton },
+  components: {},
   name: "projects-table",
   props: {
     univarrnum: Number,
@@ -96,6 +114,15 @@ export default {
   methods: {
     updatecertnum(univarrnum) {
       this.certnum = univarrnum * 2;
+    },
+    doCopy() {
+      alert(this.certificate[this.certnum].hash);
+      this.$copyText(this.certificate[this.certnum].hash);
+      alert("복사했습니다.");
+    },
+    doCopy1() {
+      this.$copyText(this.certificate[this.certnum + 1].hash);
+      alert("복사했습니다.");
     },
   },
 };
