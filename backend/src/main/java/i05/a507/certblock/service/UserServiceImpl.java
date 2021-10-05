@@ -12,16 +12,23 @@ import i05.a507.certblock.repository.CompanyRepository;
 import i05.a507.certblock.repository.StudentRepository;
 import i05.a507.certblock.repository.UniversityRepository;
 import i05.a507.certblock.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.web3j.crypto.*;
 
+import java.security.InvalidAlgorithmParameterException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  *	유저 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
  */
 @Service("userService")
+@Slf4j
 public class UserServiceImpl implements UserService {
 
 	@Autowired
@@ -34,7 +41,9 @@ public class UserServiceImpl implements UserService {
 	UniversityRepository universityRepository;
 
 	@Override
-	public boolean registUser(UserRegisterReq userRegisterReq){
+	public boolean registUser(UserRegisterReq userRegisterReq)
+			throws InvalidAlgorithmParameterException, NoSuchAlgorithmException,
+			NoSuchProviderException, CipherException {
 
 		int type = userRegisterReq.getType();
 		Date birth = userRegisterReq.getBirth();
@@ -42,6 +51,10 @@ public class UserServiceImpl implements UserService {
 		String phone = userRegisterReq.getPhone();
 		String email = userRegisterReq.getEmail();
 		String pass = userRegisterReq.getPass();
+
+		ECKeyPair ecKeyPair = Keys.createEcKeyPair();
+		WalletFile newWallet = Wallet.createLight("1234", ecKeyPair);
+		String walletAddress = newWallet.getAddress();
 
 		if(type==1){
 			if(universityRepository.findByEmail(email).orElse(null)!=null) return false;
@@ -52,7 +65,7 @@ public class UserServiceImpl implements UserService {
 			university.setPhone(phone);
 			university.setEmail(email);
 			university.setPassword(pass);
-			university.setAddress(null); //처음에는 지갑주소없으니까
+			university.setWalletAddress(walletAddress);
 			universityRepository.save(university);
 		}else if(type==2){
 			if(studentRepository.findByEmail(email).orElse(null)!=null) return false;
@@ -63,7 +76,7 @@ public class UserServiceImpl implements UserService {
 			student.setPhone(phone);
 			student.setEmail(email);
 			student.setPassword(pass);
-			student.setAddress(null); //처음에는 지갑주소없으니까
+			student.setWalletAddress(walletAddress);
 			studentRepository.save(student);
 		}else if(type==3){
 			if(companyRepository.findByEmail(email).orElse(null)!=null) return false;
@@ -74,7 +87,7 @@ public class UserServiceImpl implements UserService {
 			company.setPhone(phone);
 			company.setEmail(email);
 			company.setPassword(pass);
-			company.setAddress(null); //처음에는 지갑주소없으니까
+			company.setWalletAddress(walletAddress);
 			companyRepository.save(company);
 		}
 		return true;
