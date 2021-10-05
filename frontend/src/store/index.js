@@ -40,12 +40,11 @@ export default createStore({
     async login({ commit, dispatch }, data) {
       await axios
         .post(`https://j5a507.p.ssafy.io/api/users/login`, data)
-        .then(({ data }) => {
-          commit("login", data);
-          dispatch("studentinuniv", data.id);
-          dispatch("getcertificate", data.id);
+        .then(async ({ data }) => {
+          await commit("login", data);
+          await dispatch("studentinuniv", data.id);
+          await dispatch("getcertificate", data.id);
           router.push({ name: "profile" });
-          console.log(data);
         })
         .catch((error) => {
           console.log(error);
@@ -54,9 +53,8 @@ export default createStore({
     },
 
     async logout({ commit }) {
-      await commit("logout");
-      alert("로그아웃");
-      router.push({ name: "home" });
+      await router.push({ name: "home" });
+      commit("logout");
     },
 
     async deleteuser({ state, commit }) {
@@ -85,8 +83,6 @@ export default createStore({
         .get(`https://j5a507.p.ssafy.io/api/students/${studentId}/certificates`)
         .then(({ data }) => {
           commit("certificate", data);
-          console.log("증명서:");
-          console.log(this.state.certificate);
         })
         .catch((error) => {
           console.log(error);
