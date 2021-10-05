@@ -17,7 +17,7 @@ import Signup from "../views/Signup.vue";
 import Register from "../views/Register.vue";
 
 import Company from "../views/CompanyAdmin.vue";
-import ApplySubmit from "../components/Modals/ApplySubmit.vue";
+//import ApplySubmit from "../components/Modals/ApplySubmit.vue";
 import ErrorPage from "../views/ErrorPage.vue";
 
 // path : url경로, name : 해당 route의 이름, component : 해당 route가 호출되면 표시할 페이지(위에 import한 페이지)
@@ -93,7 +93,7 @@ const routes = [
       {
         path: "/submit",
         name: "submit",
-        components: { default: ApplySubmit },
+        components: { default: Home },
       },
       {
         path: "/register",

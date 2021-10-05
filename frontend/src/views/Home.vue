@@ -7,18 +7,22 @@
       <div class="row">
         <div class="col">
           <div class="card shadow">
-            <div class="card-header bg-transparent">
-               <vue-particles color="#dedede"/>
-              <router-link class="navbar-brand" to="/signup">
-                <base-button outline type="primary" class="startBtn"
-                  >CertBlock 시작하기</base-button
-                >
-              </router-link>
-              <router-link class="navbar-brand" to="/company">
-                <base-button outline type="primary" class="startBtn"
-                  >기업회원</base-button
-                >
-              </router-link>
+            <div class="card-header bg-secondary">
+              <vue-particles color="#dedede"></vue-particles>
+              <div class="centered-text">
+                <h2>블록체인 기반 증명서 발급/조회 서비스</h2>
+                <h1 class="title">CERTBLOCK</h1>
+                <router-link class="navbar-brand" to="/signup">
+                  <base-button outline type="primary" class="startBtn"
+                    >CertBlock 시작하기</base-button
+                  >
+                </router-link>
+                <router-link class="navbar-brand" to="/company">
+                  <base-button outline type="primary" class="startBtn"
+                    >기업회원</base-button
+                  >
+                </router-link>
+              </div>
             </div>
           </div>
         </div>
@@ -27,12 +31,15 @@
   </div>
 </template>
 <script>
+
 export default {
+  components: {
+  },
   data() {
     return {
       nav: null,
     };
-  }
+  },
 };
 </script>
 <style>
@@ -47,11 +54,26 @@ export default {
   height: 100%;
   object-fit: cover;
 }
-#hello{
-  z-index : 999;
-  color : black;
+#hello {
+  z-index: 999;
+  color: black;
 }
-.startBtn{
+.startBtn {
   margin: 0 auto;
+}
+#particles-js {
+  height: 100vh;
+}
+
+.centered-text {
+  color: #000000;
+  position: absolute;
+  text-align: center;
+  top: 40%;
+  width: 100%;
+}
+
+.title{
+  font-size: 100px;
 }
 </style>
