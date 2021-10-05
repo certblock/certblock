@@ -48,7 +48,7 @@ export default createStore({
         })
         .catch((error) => {
           console.log(error);
-          alert("로그인 실패");
+          alert("이메일 또는 비밀번호가 틀립니다.");
         });
     },
 
