@@ -91,7 +91,6 @@ export default {
         .get(`https://j5a507.p.ssafy.io/api/universities`)
         .then(({ data }) => {
           this.univ = data;
-          console.log(this.univ);
         })
         .catch((error) => {
           console.log(error);

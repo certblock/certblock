@@ -13,13 +13,13 @@ spring:
       classpath:application-aws.yml
   mvc:
     static-path-pattern: /static/**
-#DB
+  #DB
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/certblockDB?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul
     username: certblock
     password: 1234
-#JPA
+  #JPA
   jpa:
     open-in-view: true
     hibernate:
@@ -45,3 +45,8 @@ logging:
 app:
   aes128:
     secret-key: ${AES128_SECRETKEY}
+  sens:
+    access-key: ${SENS_ACCESSKEY}
+    service-key: ${SENS_SERVICEKEY}
+    secret-key: ${SENS_SECRETKEY}
+    from-num: ${SENS_FROMNUM}

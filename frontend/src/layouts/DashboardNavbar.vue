@@ -23,7 +23,7 @@
 
     <div v-if="user == null">
       <div class="media align-items-center">
-        <router-link class="navbar-brand" to="/signup">
+        <router-link class="navbar-brand" to="/signupAuth">
           <base-button type="primary" icon="fa fa-user">회원가입</base-button>
         </router-link>
         <router-link class="navbar-brand" to="/login">
