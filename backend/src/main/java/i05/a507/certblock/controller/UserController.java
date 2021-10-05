@@ -121,6 +121,14 @@ public class UserController {
         return ResponseEntity.status(401).body(BaseResponseBody.of(401, "회원탈퇴에 실패하였습니다."));
     }
 
+    //이메일 중복확인
+    @GetMapping("/email/{email}")
+    public ResponseEntity<?> selectUser(@PathVariable String email) {
+        boolean flg  = userService.checkUser(email);
+        if(flg)  return ResponseEntity.status(200).body("존재하는 회원입니다.");
+        else return ResponseEntity.status(404).body("존재하지 않는 회원입니다.");
+    }
+
 
 }
 
