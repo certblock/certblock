@@ -113,12 +113,9 @@ export default {
         });
     },
     confirmNum() {
-      console.log(this.inputNum+" "+this.certNum);
       if (this.inputNum == this.certNum) {
-        this.$router.commit()
         router.push({ name: "signup" });
-      }
-      else alert("인증번호를 다시 입력해주세요.");
+      }else alert("인증번호를 다시 입력해주세요.");
     },
   },
 };
