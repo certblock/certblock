@@ -14,12 +14,15 @@ import i05.a507.certblock.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.web3j.crypto.CipherException;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.NoSuchProviderException;
 import java.util.List;
 
 @RestController
@@ -37,8 +40,9 @@ public class UserController {
 
     //회원가입
     @PostMapping("")
-    public ResponseEntity<? extends BaseResponseBody> registUser(
-            @RequestBody UserRegisterReq userRegisterReq){
+    public ResponseEntity<? extends BaseResponseBody> registUser(@RequestBody UserRegisterReq userRegisterReq)
+            throws InvalidAlgorithmParameterException, CipherException, NoSuchAlgorithmException,
+            NoSuchProviderException {
 
         int type = userRegisterReq.getType();
         if(type==1 || type==2 || type == 3) {

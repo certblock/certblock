@@ -91,14 +91,11 @@ public class StudentServiceImpl implements StudentService {
 
 		List<Certificate> certificateList = certificateRepository.findByUniversityStudent(universityStudent).orElse(null);
 		for (Certificate cf : certificateList) { //증명서 목록(1~6)
-			//증명서가 발급된 경우만 -> 조회
-			if (cf.getIssuance()) {
-				StudentCertRes scr = new StudentCertRes();
-				scr.setCertificateId(cf.getId());
-				scr.setType(cf.getType());
-				scr.setFlg(cf.getIssuance());
-				issueCertList.add(scr);
-			}
+			StudentCertRes scr = new StudentCertRes();
+			scr.setCertificateId(cf.getId());
+			scr.setType(cf.getType());
+			scr.setFlg(cf.getIssuance());
+			issueCertList.add(scr);
 		}
 		return issueCertList;
 	}
@@ -147,17 +144,15 @@ public class StudentServiceImpl implements StudentService {
 			//저장된 학교의 증명서 모두 찾기
 			List<Certificate> certificateList = certificateRepository.findByUniversityStudent(us).orElse(null);
 			for (Certificate cf : certificateList) {
-				if(cf.getIssuance()) {
-					StudentCertRes scr = new StudentCertRes();
-					scr.setCertificateId(cf.getId());
-					scr.setType(cf.getType());
-					scr.setFlg(cf.getIssuance());
-					scr.setDate(cf.getIssuance()? cf.getDate() : null);
-					scr.setStudentId(cf.getUniversityStudent().getStudent().getId());
-					scr.setUniversityId(cf.getUniversityStudent().getUniversity().getId());
-					scr.setHash(cf.getHash());
-					certList.add(scr);
-				}
+				StudentCertRes scr = new StudentCertRes();
+				scr.setCertificateId(cf.getId());
+				scr.setType(cf.getType());
+				scr.setFlg(cf.getIssuance());
+				scr.setDate(cf.getIssuance()? cf.getDate() : null);
+				scr.setStudentId(cf.getUniversityStudent().getStudent().getId());
+				scr.setUniversityId(cf.getUniversityStudent().getUniversity().getId());
+				scr.setHash(cf.getHash());
+				certList.add(scr);
 			}
 		}
 		return certList;

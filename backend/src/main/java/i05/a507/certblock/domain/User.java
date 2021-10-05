@@ -22,7 +22,7 @@ public class User {
     private String password;
     private String name;
     private String phone;
-    private String address;
+    private String walletAddress;
     private Date birth;
 
     @Column(name = "date", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
