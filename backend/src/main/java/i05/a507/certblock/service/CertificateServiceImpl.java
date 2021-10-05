@@ -8,6 +8,7 @@ import i05.a507.certblock.exception.CertificateNotFoundException;
 import i05.a507.certblock.repository.CertificateRepository;
 import i05.a507.certblock.ssafyuniv.Resp;
 import i05.a507.certblock.utils.Aes128;
+import i05.a507.certblock.utils.Base64Encoder;
 import i05.a507.certblock.utils.Checksum;
 import lombok.RequiredArgsConstructor;
 import net.minidev.json.parser.ParseException;
@@ -73,23 +74,20 @@ public class CertificateServiceImpl implements CertificateService {
     @Override
     public String retrieveCertificate(int id) throws Exception {
         Certificate certificate = findById(id);
-//        String contractHash = certificate.getHash();
-//        File file =
-//
-//        s3Service.getFile(fileName);
-//
-//        File file2 = s3Service.getFile(fileName);
-//        String hash2 = Checksum.getFileChecksumWithSha256(file2);
-//        certificate.setDate(new Date());
-//        certificate.setIssuance(true);
-//        certificateRepository.save(certificate);
-//        return null;
 
-//        File file2 = s3Service.getFile(fileName);
-//        String hash2 = Checksum.getFileChecksumWithSha256(file2);
-//        certificate.setDate(new Date());
-//        certificate.setIssuance(true);
-//        certificateRepository.save(certificate);
-        return "";
+        String fileNameFromBlockChain = "static/8dd56691-ed73-455a-b8ab-9155fe75dfde.jpeg";
+        String fileHashFromBlockChain = "";
+
+
+        String fileExtName = fileNameFromBlockChain.substring(fileNameFromBlockChain.lastIndexOf(".") + 1);
+        File imageFile = s3Service.getFile(fileNameFromBlockChain);
+        String fileHash = Checksum.getFileChecksumWithSha256(imageFile);
+        String encoded = Base64Encoder.encodeFileToBase64Binary(imageFile, fileExtName);
+//        if (!blockChainFileHash.equals(fileHash)) {
+//            // TODO: exception
+//            return "";
+//        }
+
+        return encoded;
     }
 }
