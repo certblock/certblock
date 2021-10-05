@@ -6,38 +6,37 @@
           <div class="text-center text-muted mb-4">
             <h1>Login</h1>
           </div>
-          <!-- <form role="form"> -->
-          <base-input
-            type="text"
-            name="email"
-            id="email"
-            v-model="email"
-            placeholder="이메일"
-          /><br />
-          <base-input
-            type="password"
-            name="password"
-            id="password"
-            v-model="password"
-            placeholder="비밀번호"
-          /><br />
+          <form v-on:submit.prevent>
+            <base-input
+              type="email"
+              name="email"
+              id="email"
+              v-model="loginuser.email"
+              placeholder="이메일"
+            /><br />
+            <base-input
+              type="password"
+              name="password"
+              id="password"
+              v-model="loginuser.password"
+              placeholder="비밀번호"
+              autocomplete="off"
+            /><br />
 
-          <base-checkbox class="custom-control-alternative">
-            <span class="text-muted">Remember me</span>
-          </base-checkbox>
-          <br />
-          <div class="text-center">
-            <base-button outline type="primary">
-              <router-link to="/signup" class="text-light">
-                회원가입
-              </router-link>
-            </base-button>
+            <base-checkbox class="custom-control-alternative">
+              <span class="text-muted">Remember me</span>
+            </base-checkbox>
+            <br />
+            <div class="text-center">
+              <base-button outline type="primary">
+                <router-link to="/signup" class="text-light">
+                  회원가입
+                </router-link>
+              </base-button>
 
-            <button class="btn btn-primary" @click="login({ email, password })">
-              로그인
-            </button>
-          </div>
-          <!-- </form> -->
+              <button class="btn btn-primary" @click="check()">로그인</button>
+            </div>
+          </form>
         </div>
       </div>
       <div class="row mt-3">
@@ -58,13 +57,29 @@ import { mapActions } from "vuex";
 export default {
   data() {
     return {
-      email: "",
-      password: "",
+      loginuser: {
+        email: "",
+        password: "",
+      },
     };
   },
   computed: {},
   methods: {
     ...mapActions(["login"]),
+    check() {
+      if (!this.validEmail(this.loginuser.email)) {
+        alert("이메일 형식을 확인하세요.");
+      } else if (this.loginuser.password == "") {
+        alert("비밀번호를 입력하세요.");
+      } else {
+        this.login(this.loginuser);
+      }
+    },
+    validEmail: function (email) {
+      var re =
+        /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    },
   },
 };
 </script>

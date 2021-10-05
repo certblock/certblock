@@ -41,7 +41,7 @@ public class CertificateController {
     @GetMapping("/{certificateId}")
     public ResponseEntity<?> retrieveCertificate(@PathVariable int certificateId)
             throws Exception {
-        String str = certificateService.retrieveCertificate(certificateId);
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, ""));
+        String base64Str = certificateService.retrieveCertificate(certificateId);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, base64Str));
     }
 }

@@ -1,5 +1,6 @@
 package i05.a507.certblock.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import i05.a507.certblock.domain.User;
 import i05.a507.certblock.dto.BaseResponseBody;
 import i05.a507.certblock.dto.User.UserLoginReq;
@@ -7,12 +8,21 @@ import i05.a507.certblock.dto.User.UserLoginRes;
 import i05.a507.certblock.dto.User.UserModifyReq;
 import i05.a507.certblock.dto.User.UserRegisterReq;
 import i05.a507.certblock.service.CompanyService;
+import i05.a507.certblock.service.SmsService;
 import i05.a507.certblock.service.StudentService;
 import i05.a507.certblock.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.web3j.crypto.CipherException;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -25,11 +35,29 @@ public class UserController {
     private StudentService studentService;
     @Autowired
     private CompanyService companyService;
+    @Autowired
+    private SmsService smsService;
+
+    //본인 문자인증
+    @GetMapping("/auth/{toNum}")
+    public String authUser(@PathVariable String toNum) throws JsonProcessingException, ParseException, UnsupportedEncodingException, URISyntaxException, NoSuchAlgorithmException, InvalidKeyException {
+        //6자리 난수 생성
+        StringBuilder sb = new StringBuilder();
+        for(int i=0; i<6; i++){
+            int num = (int) (Math.random()*10);
+            sb.append(num);
+        }
+        String certNum = sb.toString();
+        smsService.sendSms(toNum,certNum);
+
+        return certNum;
+    }
 
     //회원가입
     @PostMapping("")
-    public ResponseEntity<? extends BaseResponseBody> registUser(
-            @RequestBody UserRegisterReq userRegisterReq){
+    public ResponseEntity<? extends BaseResponseBody> registUser(@RequestBody UserRegisterReq userRegisterReq)
+            throws InvalidAlgorithmParameterException, CipherException, NoSuchAlgorithmException,
+            NoSuchProviderException {
 
         int type = userRegisterReq.getType();
         if(type==1 || type==2 || type == 3) {
@@ -91,6 +119,13 @@ public class UserController {
             e.printStackTrace();
         }
         return ResponseEntity.status(401).body(BaseResponseBody.of(401, "회원탈퇴에 실패하였습니다."));
+    }
+
+    //이메일 중복확인
+    @GetMapping("/email/{email}")
+    public ResponseEntity<?> selectUser(@PathVariable String email) {
+        boolean flg  = userService.checkUser(email);
+        return ResponseEntity.status(200).body(!flg);
     }
 
 

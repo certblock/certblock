@@ -9,6 +9,7 @@ export default createStore({
     user: null,
     inuniv: [],
     certificate: [],
+    confirm:[],
   },
 
   // state의 상태를 변경하는 함수들의 모음 (동기 methods)
@@ -30,6 +31,10 @@ export default createStore({
     certificate(state, data) {
       state.certificate = data;
     },
+
+    confirmNum(state, data) {
+      state.confirm = data;
+    },
   },
 
   // vuex에서 사용할 함수들의 모음 (비동기 methods)
@@ -40,23 +45,21 @@ export default createStore({
     async login({ commit, dispatch }, data) {
       await axios
         .post(`https://j5a507.p.ssafy.io/api/users/login`, data)
-        .then(({ data }) => {
-          commit("login", data);
-          dispatch("studentinuniv", data.id);
-          dispatch("getcertificate", data.id);
+        .then(async ({ data }) => {
+          await commit("login", data);
+          await dispatch("studentinuniv", data.id);
+          await dispatch("getcertificate", data.id);
           router.push({ name: "profile" });
-          console.log(data);
         })
         .catch((error) => {
           console.log(error);
-          alert("로그인 실패");
+          alert("이메일 또는 비밀번호가 틀립니다.");
         });
     },
 
     async logout({ commit }) {
-      await commit("logout");
-      alert("로그아웃");
-      router.push({ name: "home" });
+      await router.push({ name: "home" });
+      commit("logout");
     },
 
     async deleteuser({ state, commit }) {
@@ -85,8 +88,6 @@ export default createStore({
         .get(`https://j5a507.p.ssafy.io/api/students/${studentId}/certificates`)
         .then(({ data }) => {
           commit("certificate", data);
-          console.log("증명서:");
-          console.log(this.state.certificate);
         })
         .catch((error) => {
           console.log(error);
