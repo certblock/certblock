@@ -104,7 +104,7 @@ export default {
     sendMsg() {
       this.certFlg = true;
       axios
-        .get(`http://localhost/api/users/auth/${this.phone}`)
+        .get(`https://j5a507.p.ssafy.io/api/users/auth/${this.phone}`)
         .then((res) => {
           this.certNum = res.data;
         })
@@ -114,7 +114,10 @@ export default {
     },
     confirmNum() {
       console.log(this.inputNum+" "+this.certNum);
-      if (this.inputNum == this.certNum) router.push({ name: "signup" });
+      if (this.inputNum == this.certNum) {
+        this.$router.commit()
+        router.push({ name: "signup" });
+      }
       else alert("인증번호를 다시 입력해주세요.");
     },
   },
