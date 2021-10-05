@@ -125,8 +125,7 @@ public class UserController {
     @GetMapping("/email/{email}")
     public ResponseEntity<?> selectUser(@PathVariable String email) {
         boolean flg  = userService.checkUser(email);
-        if(flg)  return ResponseEntity.status(200).body("존재하는 회원입니다.");
-        else return ResponseEntity.status(404).body("존재하지 않는 회원입니다.");
+        return ResponseEntity.status(200).body(!flg);
     }
 
 
