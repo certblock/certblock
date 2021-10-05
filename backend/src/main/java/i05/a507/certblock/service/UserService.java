@@ -22,4 +22,5 @@ public interface UserService {
 	UserLoginRes getUser(int userId);
 	boolean modifyUser(int userId, UserModifyReq userModifyReq);
 	boolean deleteUser(int userId);
+	boolean checkUser(String email);
 }

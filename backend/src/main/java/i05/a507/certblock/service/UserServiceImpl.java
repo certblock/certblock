@@ -22,7 +22,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 /**
  *	유저 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
@@ -148,6 +147,13 @@ public class UserServiceImpl implements UserService {
 		if(user==null) return false;
 
 		userRepository.delete(user);
+		return true;
+	}
+
+	@Override
+	public boolean checkUser(String email) {
+		User user = userRepository.findByEmail(email).orElse(null);
+		if(user==null) return false;
 		return true;
 	}
 
