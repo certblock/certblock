@@ -1,5 +1,6 @@
 package i05.a507.certblock.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import i05.a507.certblock.domain.User;
 import i05.a507.certblock.dto.BaseResponseBody;
 import i05.a507.certblock.dto.User.UserLoginReq;
@@ -7,12 +8,18 @@ import i05.a507.certblock.dto.User.UserLoginRes;
 import i05.a507.certblock.dto.User.UserModifyReq;
 import i05.a507.certblock.dto.User.UserRegisterReq;
 import i05.a507.certblock.service.CompanyService;
+import i05.a507.certblock.service.SmsService;
 import i05.a507.certblock.service.StudentService;
 import i05.a507.certblock.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -25,6 +32,8 @@ public class UserController {
     private StudentService studentService;
     @Autowired
     private CompanyService companyService;
+    @Autowired
+    private SmsService smsService;
 
     //회원가입
     @PostMapping("")
@@ -42,7 +51,8 @@ public class UserController {
 
     //유저 목록 조회
     @GetMapping("")
-    public ResponseEntity<?> selectAllUsers() {
+    public ResponseEntity<?> selectAllUsers() throws JsonProcessingException, ParseException, UnsupportedEncodingException, URISyntaxException, NoSuchAlgorithmException, InvalidKeyException {
+        smsService.sendSms("01030187019","hey");
         List<User> userList = userService.getAllUsers();
         return ResponseEntity.status(200).body(userList);
     }
