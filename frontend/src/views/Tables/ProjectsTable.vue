@@ -29,6 +29,12 @@
               <a>{{ certificate[certnum].hash }}</a
               >&nbsp;
               <base-button size="sm" @click="doCopy()"> Copy! </base-button>
+              <base-button @click="showImage()">증명서 이미지 보기</base-button>
+               <modal v-model:show="modals.modal0">
+                 <div class="modal-all">
+                  <img :src="this.imageSrc" class="certImage"/>
+                 </div>
+              </modal>
             </div>
             <div class="col"></div>
           </div>
@@ -57,7 +63,7 @@
               <a>{{ certificate[certnum + 1].hash }}</a
               >&nbsp;
               <base-button size="sm" @click="doCopy1()"> Copy! </base-button>
-              <base-button @click="showImage()">증명서 이미지 보기</base-button>
+              <base-button @click="showImage1()">증명서 이미지 보기</base-button>
                <modal v-model:show="modals.modal0">
                  <div class="modal-all">
                   <img :src="this.imageSrc" class="certImage"/>
@@ -138,6 +144,22 @@ export default {
         .get(
           `https://j5a507.p.ssafy.io/api/certificate/${
             this.certificate[this.certnum].certificateId
+          }`
+        )
+        .then((res) => {
+          console.log(res.data.message);
+          this.imageSrc = res.data.message;
+          this.modals.modal0 = true;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+     showImage1() {
+      axios
+        .get(
+          `https://j5a507.p.ssafy.io/api/certificate/${
+            this.certificate[this.certnum+1].certificateId
           }`
         )
         .then((res) => {
