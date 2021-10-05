@@ -116,7 +116,7 @@ export default {
       return {
         input: this.updateValue,
         focus: this.onFocus,
-        blur: this.onBlur,
+        // blur: this.onBlur,
       };
     },
     hasIcon() {
@@ -138,10 +138,10 @@ export default {
       this.focused = true;
       this.$emit("focus", value);
     },
-    onBlur(value) {
-      this.focused = false;
-      this.$emit("blur", value);
-    },
+    // onBlur(value) {
+    //   this.focused = false;
+    //   this.$emit("blur", value);
+    // },
   },
 };
 </script>
