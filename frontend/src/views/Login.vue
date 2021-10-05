@@ -8,7 +8,7 @@
           </div>
           <!-- <form role="form"> -->
           <base-input
-            type="text"
+            type="email"
             name="email"
             id="email"
             v-model="email"
@@ -33,9 +33,7 @@
               </router-link>
             </base-button>
 
-            <button class="btn btn-primary" @click="login({ email, password })">
-              로그인
-            </button>
+            <button class="btn btn-primary" @click="check()">로그인</button>
           </div>
           <!-- </form> -->
         </div>
@@ -65,6 +63,20 @@ export default {
   computed: {},
   methods: {
     ...mapActions(["login"]),
+    check() {
+      if (!this.validEmail(this.email)) {
+        alert("이메일 형식을 확인하세요.");
+      } else if (this.password == "") {
+        alert("비밀번호를 입력하세요.");
+      } else {
+        this.login({ email: this.email, password: this.password });
+      }
+    },
+    validEmail: function (email) {
+      var re =
+        /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    },
   },
 };
 </script>
