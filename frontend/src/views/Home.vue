@@ -12,7 +12,7 @@
               <div class="centered-text">
                 <h2>블록체인 기반 증명서 발급/조회 서비스</h2>
                 <h1 class="title">CERTBLOCK</h1>
-                <router-link class="navbar-brand" to="/signup">
+                <router-link class="navbar-brand" to="/signupAuth">
                   <base-button outline type="primary" class="startBtn"
                     >CertBlock 시작하기</base-button
                   >

@@ -9,6 +9,7 @@ export default createStore({
     user: null,
     inuniv: [],
     certificate: [],
+    confirm:[],
   },
 
   // state의 상태를 변경하는 함수들의 모음 (동기 methods)
@@ -29,6 +30,10 @@ export default createStore({
 
     certificate(state, data) {
       state.certificate = data;
+    },
+
+    confirmNum(state, data) {
+      state.confirm = data;
     },
   },
 

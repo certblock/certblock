@@ -18,11 +18,11 @@ import org.web3j.crypto.CipherException;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
+import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.text.ParseException;
-import java.security.InvalidAlgorithmParameterException;
 import java.security.NoSuchProviderException;
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -37,6 +37,21 @@ public class UserController {
     private CompanyService companyService;
     @Autowired
     private SmsService smsService;
+
+    //본인 문자인증
+    @GetMapping("/auth/{toNum}")
+    public String authUser(@PathVariable String toNum) throws JsonProcessingException, ParseException, UnsupportedEncodingException, URISyntaxException, NoSuchAlgorithmException, InvalidKeyException {
+        //6자리 난수 생성
+        StringBuilder sb = new StringBuilder();
+        for(int i=0; i<6; i++){
+            int num = (int) (Math.random()*10);
+            sb.append(num);
+        }
+        String certNum = sb.toString();
+        smsService.sendSms(toNum,certNum);
+
+        return certNum;
+    }
 
     //회원가입
     @PostMapping("")
@@ -55,8 +70,7 @@ public class UserController {
 
     //유저 목록 조회
     @GetMapping("")
-    public ResponseEntity<?> selectAllUsers() throws JsonProcessingException, ParseException, UnsupportedEncodingException, URISyntaxException, NoSuchAlgorithmException, InvalidKeyException {
-        smsService.sendSms("01030187019","hey");
+    public ResponseEntity<?> selectAllUsers() {
         List<User> userList = userService.getAllUsers();
         return ResponseEntity.status(200).body(userList);
     }

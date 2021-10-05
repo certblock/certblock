@@ -14,6 +14,7 @@ import Tables from "../views/Tables.vue";
 
 import Login from "../views/Login.vue";
 import Signup from "../views/Signup.vue";
+import SignupAuth from "../views/SignupAuth.vue";
 import Register from "../views/Register.vue";
 
 import Company from "../views/CompanyAdmin.vue";
@@ -67,6 +68,11 @@ const routes = [
         path: "/login",
         name: "login",
         components: { default: Login },
+      },
+      {
+        path: "/signupAuth",
+        name: "signupAuth",
+        components: { default: SignupAuth },
       },
       {
         path: "/signup",
