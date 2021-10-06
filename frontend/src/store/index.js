@@ -1,6 +1,7 @@
 import { createStore } from "vuex";
 import router from "../router";
 import axios from "axios";
+import createPersistedState from "vuex-persistedstate";
 
 // vuex helper를 활용하여 각 route에서 호출 가능 (mapState, mapMutations, mapActions, mapGetters를 import하여 사용)
 export default createStore({
@@ -105,4 +106,7 @@ export default createStore({
 
   // state를 기반으로 계산 후 return을 돌려줄 함수들의 모음 (computed)
   getters: {},
+
+  // vuex-persistedstate : paths에 입력된 state값을 localstorage와 연결해주는 plugin -> 새로고침 해도 로그아웃 되지 않음
+  plugins: [createPersistedState({ paths: ["user", "inuniv", "certificate"] })],
 });
