@@ -76,7 +76,7 @@ export default {
     return {
       universityId: null,
       type: 1,
-      studentIdInUniv: "20201234",
+      studentIdInUniv: "",
       selectUniv: "학교 검색",
       univ: [],
     };
