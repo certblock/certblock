@@ -13,12 +13,13 @@ public class StudentService {
         Student student = studentRepository.findById(id).orElseThrow(RuntimeException::new);
         return student;
     }
+
     String issueCertificate(int id, int type) {
         Student student = findById(id);
         if (type % 2 == 0) {
-            return student.getPath1();
-        } else {
             return student.getPath2();
+        } else {
+            return student.getPath1();
         }
     }
 }
