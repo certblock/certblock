@@ -33,9 +33,10 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class CertificateServiceImpl implements CertificateService {
 
-    final CertificateRepository certificateRepository;
-    final S3Service s3Service;
-    final Aes128 aes128;
+    private final EthereumService ethereumService;
+    private final CertificateRepository certificateRepository;
+    private final S3Service s3Service;
+    private final Aes128 aes128;
 
     @Override
     public Certificate findById(int id) {
@@ -67,6 +68,10 @@ public class CertificateServiceImpl implements CertificateService {
         String fileHash = Checksum.getFileChecksumWithSha256(file);
         String fileName = s3Service.upload(file, "static");
 
+        // 발급받은 증명서 DB 갱신
+        certificate.setDate(new Date());
+        certificate.setIssuance(true);
+        certificateRepository.save(certificate);
 
         return certificate;
     }
