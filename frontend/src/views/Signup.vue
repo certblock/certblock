@@ -10,28 +10,31 @@
             type="text"
             name="name"
             id="name"
-            v-model="user.name"
+            v-model="signup.name"
             placeholder="이름"
+            disabled="true"
           /><br />
           <base-input
             type="text"
             name="phone"
             id="phone"
-            v-model="user.phone"
+            v-model="signup.phone"
             placeholder="전화번호"
+            disabled="true"
           /><br />
           <base-input
             type="date"
             name="birth"
             id="birth"
-            v-model="user.birth"
+            v-model="signup.birth"
+            disabled="true"
           /><br />
           <form v-on:submit.prevent>
             <base-input
               type="email"
               name="email"
               id="email"
-              v-model="user.email"
+              v-model="signup.email"
               placeholder="이메일"
               @focus="availableemail = false"
             /><br />
@@ -39,7 +42,7 @@
               type="password"
               name="pass"
               id="pass"
-              v-model="user.pass"
+              v-model="signup.pass"
               placeholder="비밀번호"
               autocomplete="off"
             /><br />
@@ -58,7 +61,7 @@
                   <input
                     type="radio"
                     id="university"
-                    v-model="user.type"
+                    v-model="signup.type"
                     value="1"
                   />
                   <label for="university">학교</label>
@@ -67,7 +70,7 @@
                   <input
                     type="radio"
                     id="student"
-                    v-model="user.type"
+                    v-model="signup.type"
                     value="2"
                     checked
                   />
@@ -77,7 +80,7 @@
                   <input
                     type="radio"
                     id="company"
-                    v-model="user.type"
+                    v-model="signup.type"
                     value="3"
                   />
                   <label for="company">기업</label>
@@ -106,6 +109,7 @@
 <script>
 import axios from "axios";
 import router from "../router";
+import { mapState } from "vuex";
 
 export default {
   head: {
@@ -116,17 +120,10 @@ export default {
   },
   data() {
     return {
-      user: {
-        email: "",
-        name: "",
-        phone: "",
-        birth: "",
-        pass: "",
-        type: 2,
-      },
       passconfirm: "",
     };
   },
+  computed: { ...mapState(["signup"]) },
   methods: {
     registready() {
       if (this.checkemail()) {
@@ -138,7 +135,7 @@ export default {
       }
     },
     checkemail() {
-      if (this.user.email == "") {
+      if (this.signup.email == "") {
         alert("이메일을 입력하세요.");
         return false;
       } else if (!this.validEmail()) {
@@ -151,14 +148,14 @@ export default {
     validEmail() {
       var re =
         /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(this.user.email);
+      return re.test(this.signup.email);
     },
     async reduplication() {
       await axios
-        .get(`https://j5a507.p.ssafy.io/api/users/email/${this.user.email}`)
+        .get(`https://j5a507.p.ssafy.io/api/users/email/${this.signup.email}`)
         .then(({ data }) => {
           if (data) {
-            this.regist(this.user);
+            this.regist(this.signup);
           } else {
             alert("이미 사용중인 이메일입니다.");
           }
@@ -168,7 +165,7 @@ export default {
         });
     },
     checkpass() {
-      var pw = this.user.pass;
+      var pw = this.signup.pass;
       var num = pw.search(/[0-9]/g);
       var eng = pw.search(/[a-z]/gi);
       var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
@@ -187,7 +184,7 @@ export default {
       }
     },
     checkpassconfirm() {
-      if (this.user.pass != this.passconfirm) {
+      if (this.signup.pass != this.passconfirm) {
         alert("비밀번호 확인이 일치하지 않습니다.");
         return false;
       } else {
