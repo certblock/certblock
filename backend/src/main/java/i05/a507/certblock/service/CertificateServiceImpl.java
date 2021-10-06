@@ -5,6 +5,7 @@ import i05.a507.certblock.domain.Certificate;
 import i05.a507.certblock.domain.Student;
 import i05.a507.certblock.domain.University;
 import i05.a507.certblock.domain.UniversityStudent;
+import i05.a507.certblock.dto.Student.StudentCertRes;
 import i05.a507.certblock.exception.CertificateNotFoundException;
 import i05.a507.certblock.repository.CertificateRepository;
 import i05.a507.certblock.ssafyuniv.Resp;
@@ -34,6 +35,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
+import java.sql.Timestamp;
 
 @Service
 @RequiredArgsConstructor
@@ -51,7 +53,7 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     @Override
-    public Certificate issueCertificate(int id) throws Exception {
+    public StudentCertRes issueCertificate(int id) throws Exception {
         Certificate certificate = findById(id);
         UniversityStudent universityStudent = certificate.getUniversityStudent();
         University university = universityStudent.getUniversity();
@@ -78,12 +80,16 @@ public class CertificateServiceImpl implements CertificateService {
 
         addCertificateToBlockChain(fileHash, fileName, student.getWalletAddress(), certificate.getType() - 1);
 
+
+        String[] ret = getCertificateFromBlockChain(student.getWalletAddress(), certificate.getType() - 1);
+
         // 발급받은 증명서 DB 갱신
-        certificate.setDate(new Date());
         certificate.setIssuance(true);
+        certificate.setIssuanceDate(new Date());
+        certificate.setExpiryDate(new Date(Long.parseLong(ret[2]) * 1000L));
         certificateRepository.save(certificate);
 
-        return certificate;
+        return StudentCertRes.of(certificate);
     }
 
     @Override
