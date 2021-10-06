@@ -132,7 +132,7 @@ export default {
       if (this.checkemail()) {
         if (this.checkpass()) {
           if (this.checkpassconfirm()) {
-            this.regist(this.user);
+            this.reduplication();
           }
         }
       }
@@ -141,17 +141,31 @@ export default {
       if (this.user.email == "") {
         alert("이메일을 입력하세요.");
         return false;
-      } else if (!this.validEmail(this.user.email)) {
+      } else if (!this.validEmail()) {
         alert("이메일 형식을 확인하세요.");
         return false;
       } else {
         return true;
       }
     },
-    validEmail(email) {
+    validEmail() {
       var re =
         /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(email);
+      return re.test(this.user.email);
+    },
+    async reduplication() {
+      await axios
+        .get(`https://j5a507.p.ssafy.io/api/users/email/${this.user.email}`)
+        .then(({ data }) => {
+          if (data) {
+            this.regist(this.user);
+          } else {
+            alert("이미 사용중인 이메일입니다.");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     checkpass() {
       var pw = this.user.pass;
