@@ -50,3 +50,8 @@ app:
     service-key: ${SENS_SERVICEKEY}
     secret-key: ${SENS_SECRETKEY}
     from-num: ${SENS_FROMNUM}
+
+ethereum:
+  ethereumFrom: "0x3861ce91ED1b8dE311F025923F711EA07a8501c1"
+  contract: "0x28749c09318D8eef441BB3e0eD5F759C2CCbbf1f"
+  privateNetworkUrl: http://13.125.144.163:7540
