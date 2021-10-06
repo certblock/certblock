@@ -20,15 +20,14 @@
     <div class="row justify-content-md-center">
       <div class="col-xl-12 col-lg-12">
         <stats-card>
-          <div class="row" v-if="certificate[certnum].hash != null">
+          <div class="row" v-if="certificate[certnum].flg">
             <div class="col-md-3">
               <badge type="primary"><i class="ni ni-app"></i></badge>
               <span class="text-primary">졸업 증명서</span>
             </div>
             <div class="col">
-              <a>{{ certificate[certnum].hash }}</a
-              >&nbsp;
-              <base-button size="sm" @click="doCopy(0)"> Copy! </base-button>
+              만료일: {{ certificate[certnum].expiryDate }}
+              <base-button @click="Issuedcert(0)">만료일 갱신</base-button>
               <base-button @click="showImage(0)"
                 >증명서 이미지 보기</base-button
               >
@@ -46,9 +45,7 @@
               <span class="text-default">졸업 증명서</span>
             </div>
             <div class="col">
-              <a>
-                <base-button @click="Issuedcert(0)">발급받기</base-button>
-              </a>
+              <base-button @click="Issuedcert(0)">발급받기</base-button>
             </div>
             <div class="col"></div>
           </div>
@@ -56,15 +53,14 @@
       </div>
       <div class="col-xl-12 col-lg-12">
         <stats-card>
-          <div class="row" v-if="certificate[certnum + 1].hash != null">
+          <div class="row" v-if="certificate[certnum + 1].flg">
             <div class="col-md-3">
               <badge type="primary"><i class="ni ni-app"></i></badge>
               <span class="text-primary">성적 증명서</span>
             </div>
             <div class="col">
-              <a>{{ certificate[certnum + 1].hash }}</a
-              >&nbsp;
-              <base-button size="sm" @click="doCopy(1)"> Copy! </base-button>
+              만료일: {{ certificate[certnum + 1].expiryDate }}
+              <base-button @click="Issuedcert(1)">만료일 갱신</base-button>
               <base-button @click="showImage(1)"
                 >증명서 이미지 보기</base-button
               >
@@ -79,12 +75,10 @@
           <div class="row" v-else>
             <div class="col-md-3">
               <badge type="secondary"><i class="ni ni-app"></i></badge>
-              <span class="text-default">졸업 증명서</span>
+              <span class="text-default">성적 증명서</span>
             </div>
             <div class="col">
-              <a>
-                <base-button @click="Issuedcert(1)">발급받기</base-button>
-              </a>
+              <base-button @click="Issuedcert(1)">발급받기</base-button>
             </div>
             <div class="col"></div>
           </div>
@@ -133,12 +127,6 @@ export default {
     updatecertnum(univarrnum) {
       this.certnum = univarrnum * 2;
     },
-    doCopy(num) {
-      console.log(this.certificate[this.certnum + num]);
-      alert(this.certificate[this.certnum + num].hash);
-      this.$copyText(this.certificate[this.certnum + num].hash);
-      alert("복사했습니다.");
-    },
     showImage(num) {
       axios
         .get(
@@ -163,7 +151,6 @@ export default {
           }`
         )
         .then(() => {
-          console.log("완료");
           this.getcertificate(this.certificate[this.certnum + num].studentId);
         })
         .catch((error) => {
