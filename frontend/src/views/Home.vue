@@ -3,15 +3,15 @@
     <base-header type="gradient-default" class="pb-6 pb-8 pt-5 pt-md-8">
     </base-header>
 
-    <div class="container-fluid mt--7">
+    <div class="container-fluid mt--7 bg-darkblack">
       <div class="row">
         <div class="col">
           <div class="card shadow">
-            <div class="card-header bg-secondary">
+            <div class="card-header bg-darkblack">
               <vue-particles color="#dedede"></vue-particles>
               <div class="centered-text">
-                <h2>블록체인 기반 증명서 발급/조회 서비스</h2>
-                <h1 class="title">CERTBLOCK</h1>
+                <h2 class="text-secondary">블록체인 기반 증명서 발급/조회 서비스</h2>
+                <h1 class="title text-primary">CERTBLOCK</h1>
                 <router-link class="navbar-brand" to="/signupAuth">
                   <base-button outline type="primary" class="startBtn"
                     >CertBlock 시작하기</base-button

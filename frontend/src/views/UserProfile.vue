@@ -12,7 +12,7 @@
       <!-- Mask -->
       <span class="mask bg-gradient-default opacity-8"></span>
       <!-- Header container -->
-      <div class="container-fluid align-items-center">
+      <div class="container-fluid align-items-center ">
         <div class="row justify-content-md-center">
           <div class="col col-lg-1"></div>
           <div class="col-lg-4 col-md-10">
@@ -23,7 +23,7 @@
             </p>
           </div>
 
-          <div class="col-lg-6 col-md-10">
+          <div class="col-lg-6 col-md-10 ">
             <div class="card card-profile shadow">
               <div class="card-body pt-0 pt-md-4">
                 <div class="text-right">
@@ -70,7 +70,7 @@
       </div>
     </base-header>
 
-    <div class="container-fluid mt--7">
+    <div class="container-fluid mt--7 bg-darkblack">
       <card shadow type="secondary">
         <div class="row">
           <!-- <div v-if="inuniv.length == 0">등록된 대학교가 없습니다</div> -->
