@@ -8,7 +8,7 @@ import org.web3j.protocol.http.HttpService;
 
 import java.io.IOException;
 
-@Service
+//@Service
 public class EthereumService {
 
     private final String privateKey = "a7ef9ab0de6aa9049487373b7701b50ebf3ab15d9e8bcbe0aa91c8bd10ffc83f";
