@@ -24,7 +24,8 @@
     "vue-iamport": "^0.1.2",
     "vue-router": "^4.0.0-0",
     "vue-toastification": "1.7.11",
-    "vuex": "^4.0.0-0"
+    "vuex": "^4.0.0-0",
+    "vuex-persistedstate": "^4.1.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
