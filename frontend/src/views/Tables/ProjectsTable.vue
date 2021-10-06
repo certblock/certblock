@@ -156,16 +156,15 @@ export default {
         });
     },
     async Issuedcert(num) {
-      let studentId = this.certificate[this.certnum + num].studentId;
-      let universityId = this.certificate[this.certnum + num].universityId;
-      let certId = this.certificate[this.certnum + num].certificateId;
       await axios
         .put(
-          `https://j5a507.p.ssafy.io/api/students/${studentId}/universities/${universityId}/certificates/${certId}`
+          `https://j5a507.p.ssafy.io/api/certificate/${
+            this.certificate[this.certnum + num].certificateId
+          }`
         )
         .then(() => {
           console.log("완료");
-          this.getcertificate(studentId);
+          this.getcertificate(this.certificate[this.certnum + num].studentId);
         })
         .catch((error) => {
           console.log(error);
