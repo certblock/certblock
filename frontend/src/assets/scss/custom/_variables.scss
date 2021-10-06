@@ -80,6 +80,7 @@ $teal:    #11cdef !default;
 $cyan:    #2bffc6 !default;
 $navy:    #232481 !default;
 $lavender: #9e9ce0 !default;
+$darkblack: #161819 !default;
 
 $colors: () !default;
 $colors: map-merge((
@@ -99,7 +100,8 @@ $colors: map-merge((
   "lighter":    $gray-200,
   "gray-dark":  $gray-800,
   "navy":       $navy,
-  "lavender":   $lavender
+  "lavender":   $lavender,
+  "darkblack":   $darkblack
 ), $colors);
 
 $default:       #172b4d !default;

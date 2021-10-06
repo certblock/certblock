@@ -55,6 +55,7 @@
 </template>
 <script>
 import axios from "axios";
+
 // import router from "../../router";
 
 export default {
@@ -66,7 +67,6 @@ export default {
   },
   computed: {},
   methods: {
-    // eslint-disable-next-line no-unused-vars
     certLogin(data){
       axios
         .post(`https://j5a507.p.ssafy.io/api/users/login`, data)
@@ -75,7 +75,7 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          alert("로그인 실패");
+          alert("아이디 또는 비밀번호가 틀렸습니다.");
         });
     }
      

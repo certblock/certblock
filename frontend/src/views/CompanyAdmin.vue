@@ -84,33 +84,39 @@
                   </div>
                 </div>
 
-                 <div class="row">
+                <div class="row">
                   <div class="col-lg-4">
-                    <base-button class="col-lg-12">자기 소개서 작성하기</base-button>
+                    <base-button class="col-lg-12"
+                      >자기 소개서 작성하기</base-button
+                    >
                   </div>
                   <div class="col-lg-4">
-                    <base-button class="col-lg-12">경력 기술서 작성하기</base-button>
+                    <base-button class="col-lg-12"
+                      >경력 기술서 작성하기</base-button
+                    >
                   </div>
-                   <div class="col-lg-4">
-                    <base-button class="col-lg-12">어학 및 자격증 등록하기</base-button>
-                  </div>
+                  <div class="col-lg-4">
+                    <base-button class="col-lg-12"
+                      >어학 및 자격증 등록하기</base-button
+                    >
                   </div>
                 </div>
+              </div>
 
-                <!-- 증명서 제출 구간 -->
+              <!-- 증명서 제출 구간 -->
               <hr class="my-4" />
               <!-- Address -->
               <h6 class="heading-small text-muted mb-4">증명서 제출</h6>
               <div class="pl-lg-4">
                 <div class="row">
                   <div class="col-lg-4">
-                   <span>포트폴리오</span>
+                    <span>포트폴리오</span>
                   </div>
                   <div class="col-lg-4">
-                   <span>성적 증명서</span>
+                    <span>성적 증명서</span>
                   </div>
                   <div class="col-lg-4">
-                   <span>졸업(예정) 증명서</span>
+                    <span>졸업(예정) 증명서</span>
                   </div>
                 </div>
 
@@ -127,9 +133,10 @@
                         <base-button type="warning">지원하기</base-button>
 
                         <modal v-model:show="modals.modal0">
-                          <template v-slot:header>
-                          </template>
-                            <apply-login v-on:certLogin="changeStatus"></apply-login>
+                          <template v-slot:header> </template>
+                          <apply-login
+                            v-on:certLogin="changeStatus"
+                          ></apply-login>
                           <template v-slot:footer>
                             <base-button
                               type="secondary"
@@ -139,20 +146,12 @@
                           </template>
                         </modal>
 
-                        <modal v-model:show="modals.modal1">
-                          <template v-slot:header>
-                          </template>
-                          jheyehey
-                            <apply-login v-on:certLogin="changeStatus1()"></apply-login>
-                          <template v-slot:footer>
-                            <base-button
-                              type="default"
-                              @click="modals.modal1 = false"
-                              >Close</base-button
-                            >
-                          </template>
+                        <modal
+                          v-model:show="modals.modal1"
+                          modal-classes="modal-xl"
+                        >
+                          <apply-submit v-bind:userInfo="this.info"></apply-submit>
                         </modal>
-
                       </div>
                     </span>
                   </div>
@@ -171,13 +170,13 @@
 <script>
 import { mapState } from "vuex";
 import ApplyLogin from "../components/Modals/ApplyLogin.vue";
-// import ApplySubmit from '../components/Modals/ApplySubmit.vue';
+import ApplySubmit from "../components/Modals/ApplySubmit.vue";
 
 export default {
   name: "user-profile",
   components: {
     ApplyLogin,
-    // ApplySubmit,
+    ApplySubmit,
   },
   data() {
     return {
@@ -185,13 +184,14 @@ export default {
         username: "",
         email: "",
         birth: "",
-        phone:"",
+        phone: "",
       },
+      info: [],
       modals: {
         modal0: false,
         modal1: false,
       },
-      modalNum:"modals.modal0",
+      modalNum: "modals.modal0",
       loginStatus: false,
     };
   },
@@ -199,14 +199,14 @@ export default {
     ...mapState(["user"]),
   },
   methods: {
-    showModal(){
-        this.modals.modal0 = true;
+    showModal() {
+      this.modals.modal0 = true;
     },
-    changeStatus(info){
-      alert('넘어옴'+info);
+    changeStatus(info) {
+      this.info = info;
       this.modals.modal0 = false;
       this.modals.modal1 = true;
-    }
+    },
   },
 };
 </script>
