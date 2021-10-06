@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
 
 		ECKeyPair ecKeyPair = Keys.createEcKeyPair();
 		WalletFile newWallet = Wallet.createLight("1234", ecKeyPair);
-		String walletAddress = newWallet.getAddress();
+		String walletAddress = "0x" + newWallet.getAddress();
 
 		if(type==1){
 			if(universityRepository.findByEmail(email).orElse(null)!=null) return false;
