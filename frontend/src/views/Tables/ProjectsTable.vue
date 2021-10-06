@@ -28,12 +28,14 @@
             <div class="col">
               <a>{{ certificate[certnum].hash }}</a
               >&nbsp;
-              <base-button size="sm" @click="doCopy()"> Copy! </base-button>
-              <base-button @click="showImage()">증명서 이미지 보기</base-button>
-               <modal v-model:show="modals.modal0">
-                 <div class="modal-all">
-                  <img :src="this.imageSrc" class="certImage"/>
-                 </div>
+              <base-button size="sm" @click="doCopy(0)"> Copy! </base-button>
+              <base-button @click="showImage(0)"
+                >증명서 이미지 보기</base-button
+              >
+              <modal v-model:show="modals.modal0">
+                <div class="modal-all">
+                  <img :src="this.imageSrc" class="certImage" />
+                </div>
               </modal>
             </div>
             <div class="col"></div>
@@ -45,7 +47,7 @@
             </div>
             <div class="col">
               <a>
-                <base-button>발급받기</base-button>
+                <base-button @click="Issuedcert(0)">발급받기</base-button>
               </a>
             </div>
             <div class="col"></div>
@@ -62,12 +64,14 @@
             <div class="col">
               <a>{{ certificate[certnum + 1].hash }}</a
               >&nbsp;
-              <base-button size="sm" @click="doCopy1()"> Copy! </base-button>
-              <base-button @click="showImage1()">증명서 이미지 보기</base-button>
-               <modal v-model:show="modals.modal0">
-                 <div class="modal-all">
-                  <img :src="this.imageSrc" class="certImage"/>
-                 </div>
+              <base-button size="sm" @click="doCopy(1)"> Copy! </base-button>
+              <base-button @click="showImage(1)"
+                >증명서 이미지 보기</base-button
+              >
+              <modal v-model:show="modals.modal0">
+                <div class="modal-all">
+                  <img :src="this.imageSrc" class="certImage" />
+                </div>
               </modal>
             </div>
             <div class="col"></div>
@@ -79,7 +83,7 @@
             </div>
             <div class="col">
               <a>
-                <base-button>발급받기</base-button>
+                <base-button @click="Issuedcert(1)">발급받기</base-button>
               </a>
             </div>
             <div class="col"></div>
@@ -97,7 +101,7 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 import axios from "axios";
 
 export default {
@@ -118,32 +122,28 @@ export default {
     return {
       inCert: [],
       certnum: this.univarrnum * 2,
-       modals: {
+      modals: {
         modal0: false,
       },
       imageSrc: "",
     };
   },
   methods: {
+    ...mapActions(["getcertificate"]),
     updatecertnum(univarrnum) {
       this.certnum = univarrnum * 2;
     },
-    doCopy() {
-      console.log(this.certificate[this.certnum]);
-      alert(this.certificate[this.certnum].hash);
-      this.$copyText(this.certificate[this.certnum].hash);
+    doCopy(num) {
+      console.log(this.certificate[this.certnum + num]);
+      alert(this.certificate[this.certnum + num].hash);
+      this.$copyText(this.certificate[this.certnum + num].hash);
       alert("복사했습니다.");
     },
-    doCopy1() {
-      alert(this.certificate[this.certnum + 1].hash);
-      this.$copyText(this.certificate[this.certnum + 1].hash);
-      alert("복사했습니다.");
-    },
-    showImage() {
+    showImage(num) {
       axios
         .get(
           `https://j5a507.p.ssafy.io/api/certificate/${
-            this.certificate[this.certnum].certificateId
+            this.certificate[this.certnum + num].certificateId
           }`
         )
         .then((res) => {
@@ -155,17 +155,17 @@ export default {
           console.log(error);
         });
     },
-     showImage1() {
-      axios
-        .get(
-          `https://j5a507.p.ssafy.io/api/certificate/${
-            this.certificate[this.certnum+1].certificateId
-          }`
+    async Issuedcert(num) {
+      let studentId = this.certificate[this.certnum + num].studentId;
+      let universityId = this.certificate[this.certnum + num].universityId;
+      let certId = this.certificate[this.certnum + num].certificateId;
+      await axios
+        .put(
+          `https://j5a507.p.ssafy.io/api/students/${studentId}/universities/${universityId}/certificates/${certId}`
         )
-        .then((res) => {
-          console.log(res.data.message);
-          this.imageSrc = res.data.message;
-          this.modals.modal0 = true;
+        .then(() => {
+          console.log("완료");
+          this.getcertificate(studentId);
         })
         .catch((error) => {
           console.log(error);
