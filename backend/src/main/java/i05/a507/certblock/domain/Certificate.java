@@ -30,6 +30,8 @@ public class Certificate {
     private Date date;
     private String hash;
     private Boolean issuance;
+    private Date issuanceDate;
+    private Date expiryDate;
 
     @OneToMany(mappedBy = "certificate")
     private List<Submit> submitList;

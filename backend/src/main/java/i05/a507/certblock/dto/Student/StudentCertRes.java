@@ -1,5 +1,6 @@
 package i05.a507.certblock.dto.Student;
 
+import i05.a507.certblock.domain.Certificate;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,5 +15,17 @@ public class StudentCertRes {
     private int type; // 증명서 종류
     private boolean flg; // 발급 여부
     private Date date; // 발급 날짜
-    private String hash;
+    private Date expiryDate; // 만료 날짜
+
+    public static StudentCertRes of(Certificate certificate) {
+        StudentCertRes scr = new StudentCertRes();
+        scr.setCertificateId(certificate.getId());
+        scr.setType(certificate.getType());
+        scr.setFlg(certificate.getIssuance());
+        scr.setDate(certificate.getIssuance()? certificate.getDate() : null);
+        scr.setExpiryDate(certificate.getIssuance()? certificate.getExpiryDate() : null);
+        scr.setStudentId(certificate.getUniversityStudent().getStudent().getId());
+        scr.setUniversityId(certificate.getUniversityStudent().getUniversity().getId());
+        return scr;
+    }
 }
