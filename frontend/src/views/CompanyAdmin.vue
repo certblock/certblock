@@ -62,38 +62,55 @@
                     />
                   </div>
                 </div>
-              </div>
+
+                <div class="row">
+                  <div class="col-lg-6">
+                    <base-input
+                      type="date"
+                      alternative=""
+                      label="생년월일"
+                      input-classes="form-control-alternative"
+                      v-model="model.birth"
+                    />
+                  </div>
+                  <div class="col-lg-6">
+                    <base-input
+                      alternative=""
+                      label="전화번호"
+                      placeholder="전화번호"
+                      input-classes="form-control-alternative"
+                      v-model="model.phone"
+                    />
+                  </div>
+                </div>
+
+                 <div class="row">
+                  <div class="col-lg-4">
+                    <base-button class="col-lg-12">자기 소개서 작성하기</base-button>
+                  </div>
+                  <div class="col-lg-4">
+                    <base-button class="col-lg-12">경력 기술서 작성하기</base-button>
+                  </div>
+                   <div class="col-lg-4">
+                    <base-button class="col-lg-12">어학 및 자격증 등록하기</base-button>
+                  </div>
+                  </div>
+                </div>
+
+                <!-- 증명서 제출 구간 -->
               <hr class="my-4" />
               <!-- Address -->
               <h6 class="heading-small text-muted mb-4">증명서 제출</h6>
               <div class="pl-lg-4">
                 <div class="row">
                   <div class="col-lg-4">
-                    <base-input
-                      alternative=""
-                      label="자기소개서"
-                      placeholder="자기소개서"
-                      input-classes="form-control-alternative"
-                      v-model="model.city"
-                    />
+                   <span>포트폴리오</span>
                   </div>
                   <div class="col-lg-4">
-                    <base-input
-                      alternative=""
-                      label="경력기술서"
-                      placeholder="경력기술서"
-                      input-classes="form-control-alternative"
-                      v-model="model.country"
-                    />
+                   <span>성적 증명서</span>
                   </div>
                   <div class="col-lg-4">
-                    <base-input
-                      alternative=""
-                      label="포트폴리오"
-                      placeholder="포트폴리오"
-                      input-classes="form-control-alternative"
-                      v-model="model.zipCode"
-                    />
+                   <span>졸업(예정) 증명서</span>
                   </div>
                 </div>
 
@@ -104,7 +121,7 @@
                   <div class="col-6 col-md-8">
                     <span>
                       <div class="pl-lg-6">
-                        <base-button @click="modals.modal0 = true"
+                        <base-button @click="showModal()"
                           >Certblock으로 증명서 제출</base-button
                         >
                         <base-button type="warning">지원하기</base-button>
@@ -112,7 +129,7 @@
                         <modal v-model:show="modals.modal0">
                           <template v-slot:header>
                           </template>
-                            <apply-login></apply-login>
+                            <apply-login v-on:certLogin="changeStatus"></apply-login>
                           <template v-slot:footer>
                             <base-button
                               type="secondary"
@@ -121,6 +138,21 @@
                             >
                           </template>
                         </modal>
+
+                        <modal v-model:show="modals.modal1">
+                          <template v-slot:header>
+                          </template>
+                          jheyehey
+                            <apply-login v-on:certLogin="changeStatus1()"></apply-login>
+                          <template v-slot:footer>
+                            <base-button
+                              type="default"
+                              @click="modals.modal1 = false"
+                              >Close</base-button
+                            >
+                          </template>
+                        </modal>
+
                       </div>
                     </span>
                   </div>
@@ -139,32 +171,42 @@
 <script>
 import { mapState } from "vuex";
 import ApplyLogin from "../components/Modals/ApplyLogin.vue";
+// import ApplySubmit from '../components/Modals/ApplySubmit.vue';
 
 export default {
   name: "user-profile",
   components: {
     ApplyLogin,
+    // ApplySubmit,
   },
   data() {
     return {
       model: {
         username: "",
         email: "",
-        firstName: "",
-        lastName: "",
-        address: "",
-        city: "",
-        country: "",
-        zipCode: "",
-        about: "",
+        birth: "",
+        phone:"",
       },
       modals: {
         modal0: false,
+        modal1: false,
       },
+      modalNum:"modals.modal0",
+      loginStatus: false,
     };
   },
   computed: {
     ...mapState(["user"]),
+  },
+  methods: {
+    showModal(){
+        this.modals.modal0 = true;
+    },
+    changeStatus(info){
+      alert('넘어옴'+info);
+      this.modals.modal0 = false;
+      this.modals.modal1 = true;
+    }
   },
 };
 </script>

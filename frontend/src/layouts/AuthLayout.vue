@@ -41,7 +41,7 @@
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link nav-link-icon" to="/signup">
+            <router-link class="nav-link nav-link-icon" to="/signupAuth">
               <i class="ni ni-circle-08"></i>
               <span class="nav-link-inner--text">Register</span>
             </router-link>

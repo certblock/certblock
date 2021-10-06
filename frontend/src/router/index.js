@@ -135,6 +135,7 @@ router.beforeEach((to, from, next) => {
 
     case "login":
     case "signup":
+    case "signupAuth":
       if (isLogin) {
         alert("이미 로그인 중입니다.");
       } else {

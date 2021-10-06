@@ -12,21 +12,21 @@
               type="text"
               name="name"
               id="name"
-              v-model="name"
+              v-model="signup.name"
               placeholder="이름"
             />
             <base-input
               type="text"
               name="phone"
               id="phone"
-              v-model="phone"
+              v-model="signup.phone"
               placeholder="전화번호"
             />
             <base-input
               type="date"
               name="birth"
               id="birth"
-              v-model="birth"
+              v-model="signup.birth"
             />
 
             <!-- 본인인증 전 -->
@@ -57,24 +57,22 @@
                   <base-button size="md" @click="confirmNum()"
                     >인증</base-button
                   >
-                  <base-button size="md" @click="sendMsg()"
-                    >재전송</base-button
-                  >
+                  <base-button size="md" @click="sendMsg()">재전송</base-button>
                 </div>
               </div>
 
-<br>
+              <br />
               <div class="text-center">
                 <base-button outline type="primary">
                   <router-link to="/login" class="text-light">
                     로그인
                   </router-link>
                 </base-button>
-                <base-button type="primary">
+                <!-- <base-button type="primary">
                   <router-link to="/signup" class="text-light">
                     회원가입하기
                   </router-link>
-                </base-button>
+                </base-button> -->
               </div>
             </div>
           </div>
@@ -87,24 +85,23 @@
 <script>
 import axios from "axios";
 import router from "../router";
+import { mapState } from "vuex";
 
 export default {
   components: {},
   data() {
     return {
-      name: "",
-      phone: "",
-      birth: "",
       inputNum: "",
       certNum: "",
       certFlg: false,
     };
   },
+  computed: { ...mapState(["signup"]) },
   methods: {
     sendMsg() {
       this.certFlg = true;
       axios
-        .get(`https://j5a507.p.ssafy.io/api/users/auth/${this.phone}`)
+        .get(`https://j5a507.p.ssafy.io/api/users/auth/${this.signup.phone}`)
         .then((res) => {
           this.certNum = res.data;
         })
@@ -115,7 +112,7 @@ export default {
     confirmNum() {
       if (this.inputNum == this.certNum) {
         router.push({ name: "signup" });
-      }else alert("인증번호를 다시 입력해주세요.");
+      } else alert("인증번호를 다시 입력해주세요.");
     },
   },
 };
