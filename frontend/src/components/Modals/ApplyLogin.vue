@@ -33,9 +33,9 @@
               </router-link>
             </base-button>
 
-            <button class="btn btn-primary" @click="certLogin({ email, password })">
+            <base-button @click="certLogin({ email, password })">
               로그인
-            </button>
+            </base-button>
           </div>
           <!-- </form> -->
         </div>
@@ -55,7 +55,7 @@
 </template>
 <script>
 import axios from "axios";
-import router from "../../router";
+// import router from "../../router";
 
 export default {
   data() {
@@ -66,12 +66,12 @@ export default {
   },
   computed: {},
   methods: {
+    // eslint-disable-next-line no-unused-vars
     certLogin(data){
       axios
         .post(`https://j5a507.p.ssafy.io/api/users/login`, data)
         .then(({ data }) => {
-          router.push({ name: "submit" });
-          console.log(data);
+          this.$emit('certLogin',data);
         })
         .catch((error) => {
           console.log(error);
