@@ -68,11 +68,11 @@
                     로그인
                   </router-link>
                 </base-button>
-                <base-button type="primary">
+                <!-- <base-button type="primary">
                   <router-link to="/signup" class="text-light">
                     회원가입하기
                   </router-link>
-                </base-button>
+                </base-button> -->
               </div>
             </div>
           </div>
