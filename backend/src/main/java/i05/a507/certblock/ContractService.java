@@ -1,6 +1,6 @@
 package i05.a507.certblock;
 
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.web3j.abi.FunctionEncoder;
 import org.web3j.abi.FunctionReturnDecoder;
@@ -12,6 +12,7 @@ import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.methods.request.Transaction;
 import org.web3j.protocol.core.methods.response.*;
 import org.web3j.protocol.http.HttpService;
+import org.web3j.tx.Contract;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @Component
+@Slf4j
 public class ContractService {
 
     private String from = "0x3861ce91ED1b8dE311F025923F711EA07a8501c1";
@@ -57,33 +59,47 @@ public class ContractService {
     public String ethSendTransaction(Function function)
             throws IOException, InterruptedException, ExecutionException {
 
-        // 1. Account Lock 해제
+        // 1. account에 대한 nonce값 가져오기.
+        EthGetTransactionCount ethGetTransactionCount = web3j.ethGetTransactionCount(
+                from, DefaultBlockParameterName.LATEST).sendAsync().get();
+
+        EthGetBalance ethGetBalance = web3j.ethGetBalance(from, DefaultBlockParameterName.LATEST)
+                .sendAsync()
+                .get();
+        BigInteger wei = ethGetBalance.getBalance();
+
+        // 2. Account Lock 해제
         PersonalUnlockAccount personalUnlockAccount = web3j.personalUnlockAccount(from, pwd).send();
 
         if (personalUnlockAccount.accountUnlocked()) { // unlock 일때
 
-            //2. account에 대한 nonce값 가져오기.
-            EthGetTransactionCount ethGetTransactionCount = web3j.ethGetTransactionCount(
-                    from, DefaultBlockParameterName.LATEST).sendAsync().get();
-
             BigInteger nonce = ethGetTransactionCount.getTransactionCount();
 
-            //3. Transaction 값 제작
-            Transaction transaction = Transaction.createFunctionCallTransaction(from, nonce,
-                    Transaction.DEFAULT_GAS,
-                    null, contract,
-                    FunctionEncoder.encode(function));
+            // 3. Transaction 값 제작
+            Transaction transaction = Transaction.createFunctionCallTransaction(from, nonce, Transaction.DEFAULT_GAS,
+                    BigInteger.valueOf(1000000L), contract, FunctionEncoder.encode(function));
 
             // 4. ethereum Call &
-            EthSendTransaction ethSendTransaction = web3j.ethSendTransaction(transaction).send();
+//            EthSendTransaction ethSendTransactionResponse = web3j.ethSendTransaction(transaction).send();
 
-            // transaction에 대한 transaction Hash값 얻기.
-            String transactionHash = ethSendTransaction.getTransactionHash();
+            // 5. transaction에 대한 transaction Hash값 얻기.
+//            String transactionHash = ethSendTransactionResponse.getTransactionHash();
 
             // ledger에 쓰여지기 까지 기다리기.
-            Thread.sleep(5000);
+//            Thread.sleep(5000);
 
-            return transactionHash;
+//            return transactionHash;
+
+
+            EthSendTransaction transactionResponse = web3j.ethSendTransaction(transaction).send();
+            if (transactionResponse.hasError()) {
+                String message = transactionResponse.getError().getMessage();
+                log.error("transaction failed , info : {}", message);
+                return message;
+            }else{
+                String hash = transactionResponse.getTransactionHash();
+                return hash;
+            }
         } else {
             throw new PersonalLockException("check ethereum personal Lock");
         }
