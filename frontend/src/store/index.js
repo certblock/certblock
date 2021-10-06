@@ -9,7 +9,15 @@ export default createStore({
     user: null,
     inuniv: [],
     certificate: [],
-    confirm:[],
+    confirm: [],
+    signup: {
+      name: "",
+      phone: "",
+      birth: "",
+      email: "",
+      pass: "",
+      type: 2,
+    },
   },
 
   // state의 상태를 변경하는 함수들의 모음 (동기 methods)
