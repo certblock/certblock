@@ -26,8 +26,7 @@
               <span class="text-primary">졸업 증명서</span>
             </div>
             <div class="col">
-              만료일: {{ certificate[certnum].expiryDate }}
-              <base-button @click="Issuedcert(0)">만료일 갱신</base-button>
+              발급일: {{ certificate[certnum].date.substring(0, 10) }}
               <base-button @click="showImage(0)"
                 >증명서 이미지 보기</base-button
               >
@@ -59,8 +58,7 @@
               <span class="text-primary">성적 증명서</span>
             </div>
             <div class="col">
-              만료일: {{ certificate[certnum + 1].expiryDate }}
-              <base-button @click="Issuedcert(1)">만료일 갱신</base-button>
+              발급일: {{ certificate[certnum + 1].date.substring(0, 10) }}
               <base-button @click="showImage(1)"
                 >증명서 이미지 보기</base-button
               >
