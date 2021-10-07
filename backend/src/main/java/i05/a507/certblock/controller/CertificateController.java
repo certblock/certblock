@@ -2,6 +2,7 @@ package i05.a507.certblock.controller;
 
 import i05.a507.certblock.domain.Certificate;
 import i05.a507.certblock.dto.BaseResponseBody;
+import i05.a507.certblock.dto.Student.StudentCertRes;
 import i05.a507.certblock.service.CertificateService;
 import i05.a507.certblock.service.StudentService;
 import lombok.RequiredArgsConstructor;
@@ -33,9 +34,8 @@ public class CertificateController {
     @PutMapping("/{certificateId}")
     public ResponseEntity<?> issueCertificate(@PathVariable int certificateId)
             throws Exception {
-        Certificate certificate = certificateService.issueCertificate(certificateId);
-//        boolean flg = studentService.issueCertificate(studentId,universityId,certId);
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, ""));
+        StudentCertRes studentCertRes = certificateService.issueCertificate(certificateId);
+        return ResponseEntity.status(200).body(studentCertRes);
     }
 
     @GetMapping("/{certificateId}")
