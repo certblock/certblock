@@ -82,7 +82,6 @@ export default {
   },
   methods: {
     showImage(num) {
-      alert(num);
       axios
         .get(
           `https://j5a507.p.ssafy.io/api/certificate/${this.certificate[num].certificateId}`

@@ -31,7 +31,7 @@
                 증명서 발급 현황이 확인가능합니다.
               </p>
             </div>
-            <div v-else>
+            <div v-if="user.type == 3">
               <h1 class="display-2 text-white">Hello {{ user.name }}</h1>
               <p class="text-white mt-0 mb-5">
                 안녕하세요, 반갑습니다.<br />
