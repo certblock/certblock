@@ -52,7 +52,7 @@
                       justify-content-md-center
                     "
                   >
-                    발급일 &nbsp;{{ certificate[index].date }}&nbsp;&nbsp;
+                    발급일 &nbsp;{{ certificate[index].date.substring(0, 10) }}&nbsp;&nbsp;
                     <base-button @click="showImage(index)"
                       >증명서 이미지 보기</base-button
                     >

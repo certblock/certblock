@@ -20,7 +20,7 @@
              <div class="row align-items-center justify-content-md-left">
             <div class="col-md-3">
               <span class="text-default"
-                >본교학생 {{ certificate[index].studentName }}</span
+                >지원자 {{ certificate[index].id }}</span
               >
             </div>
             <div class="col-md-5">
@@ -33,7 +33,7 @@
             </div>
             <div class="col-md-4">
             <div class="row align-items-center">
-              발급일: {{ certificate[index].issuanceDate.substring(0, 10) }}&nbsp;&nbsp;&nbsp;
+              발급일: {{ certificate[index].createdTime.substring(0, 10) }}&nbsp;&nbsp;&nbsp;
               <base-button @click="showImage(index)">증명서 이미지 보기</base-button>
               <modal v-model:show="modals.modal0">
                 <div class="modal-all">

@@ -88,7 +88,6 @@
       class="card-footer d-flex justify-content-end"
       :class="type === 'dark' ? 'bg-transparent' : ''"
     >
-      <base-pagination total="30"></base-pagination>
     </div>
   </div>
 </template>

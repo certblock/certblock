@@ -15,7 +15,7 @@
       <div class="container-fluid align-items-center">
         <div class="row justify-content-md-center">
           <div class="col col-lg-1"></div>
-          <div class="col-lg-4 col-md-10">
+          <div class="col-lg-7 col-md-10">
             <h1 class="display-2 text-white">Hello {{ user.name }}</h1>
             <p class="text-white mt-0 mb-5">
               안녕하세요, 반갑습니다.<br />
@@ -23,7 +23,7 @@
             </p>
           </div>
 
-          <div class="col-lg-6 col-md-10">
+          <div class="col-lg-4 col-md-10">
             <div class="card card-profile shadow">
               <div class="card-body pt-0 pt-md-4">
                 <div class="text-right">
@@ -43,6 +43,7 @@
                   </h3>
                   <hr class="my-4" />
 
+<div v-if="user.type == 2">
                   <base-button type="primary" @click="modals.modal0 = true">
                     학교 등록
                   </base-button>
@@ -63,6 +64,7 @@
                       >
                     </template>
                   </modal>
+</div>
                 </div>
               </div>
             </div>
@@ -74,7 +76,12 @@
 
     <div class="container-fluid mt--7 bg-darkblack">
       <card shadow type="secondary">
-        <div v-if="user.type == 1">학교{{ certificate }}</div>
+        <div v-if="user.type == 1">
+          <school-table></school-table>
+        </div>
+         <div v-if="user.type == 3">
+          <company-table></company-table>
+        </div>
         <div v-if="user.type == 2">
           <div class="row">
             <!-- <div v-if="inuniv.length == 0">등록된 대학교가 없습니다</div> -->
@@ -106,12 +113,16 @@
 import { mapState } from "vuex";
 import registUniv from "../components/common/registUnivModal.vue";
 import ProjectsTable from "./Tables/ProjectsTable";
+import SchoolTable from "./Tables/schoolTable.vue";
+import CompanyTable from "./Tables/companyTable.vue"
 
 export default {
   name: "user-profile",
   components: {
     registUniv,
     ProjectsTable,
+    SchoolTable,
+    CompanyTable
   },
   data() {
     return {
