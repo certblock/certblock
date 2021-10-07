@@ -13,6 +13,7 @@ public class SubmitRes {
     private int certificateId;
     private int companyId;
     private int certType;
+    private String applicantName;
     private LocalDateTime createdTime;
 
     public static SubmitRes of(Submit submit) {
@@ -21,6 +22,7 @@ public class SubmitRes {
         submitRes.setCertificateId(submit.getCertificate().getId());
         submitRes.setCompanyId(submit.getCompany().getId());
         submitRes.setCertType(submit.getCertificate().getType());
+        submitRes.setApplicantName(submit.getCertificate().getUniversityStudent().getStudent().getName());
         submitRes.setCreatedTime(submit.getCreatedTime());
         return submitRes;
     }
