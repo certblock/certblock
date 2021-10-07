@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface SubmitRepository extends JpaRepository<Submit, String> {
-    Optional<List<Submit>> findByCompanyId(int companyId);
-    Optional<List<Submit>> findByCertificate(Certificate certificate);
+public interface SubmitRepository extends JpaRepository<Submit, Integer> {
+    List<Submit> findByCompanyId(int companyId);
+    List<Submit> findByCertificate(Certificate certificate);
 }
