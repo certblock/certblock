@@ -9,7 +9,6 @@ import i05.a507.certblock.dto.Student.StudentCertRes;
 import i05.a507.certblock.exception.CertificateNotFoundException;
 import i05.a507.certblock.repository.CertificateRepository;
 import i05.a507.certblock.ssafyuniv.Resp;
-import i05.a507.certblock.utils.Aes128;
 import i05.a507.certblock.utils.Base64Encoder;
 import i05.a507.certblock.utils.Checksum;
 import lombok.RequiredArgsConstructor;

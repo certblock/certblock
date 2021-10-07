@@ -1,20 +1,15 @@
 package i05.a507.certblock.controller;
 
-import i05.a507.certblock.dto.Company.CertReq;
 import i05.a507.certblock.dto.Company.CompanyApplicantCertRes;
 import i05.a507.certblock.dto.Company.CompanyApplicantRes;
 import i05.a507.certblock.dto.submit.SubmitRes;
 import i05.a507.certblock.service.CompanyService;
 import i05.a507.certblock.service.SubmitService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/companies")
