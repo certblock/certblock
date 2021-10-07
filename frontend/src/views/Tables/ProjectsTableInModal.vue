@@ -4,7 +4,7 @@
       class="card-header border-0"
       :class="type === 'dark' ? 'bg-transparent' : ''"
     >
-      {{ user.name }}님의 발급된 증명서 목록 
+      {{ user.name }}님의 발급된 증명서 목록
     </div>
 
     <div class="row justify-content-md-center">
@@ -28,9 +28,14 @@
                       :class="type === 'dark' ? 'text-white' : ''"
                     >
                       <div v-for="(item, idx) in inuniv" :key="idx">
-                        <div v-if="inuniv[idx].universityId==certificate[index].universityId">
-                            {{inuniv[idx].universityName}}
-                          </div>
+                        <div
+                          v-if="
+                            inuniv[idx].universityId ==
+                            certificate[index].universityId
+                          "
+                        >
+                          {{ inuniv[idx].universityName }}
+                        </div>
                       </div>
                     </h3>
                     &nbsp;
@@ -54,7 +59,9 @@
                       justify-content-md-center
                     "
                   >
-                    발급일 &nbsp;{{ certificate[index].date.substring(0, 10) }}&nbsp;&nbsp;
+                    발급일 &nbsp;{{
+                      certificate[index].date.substring(0, 10)
+                    }}&nbsp;&nbsp;
                     <base-button @click="showImage(index)"
                       >증명서 이미지 보기</base-button
                     >
@@ -81,8 +88,7 @@
     <div
       class="card-footer d-flex justify-content-end"
       :class="type === 'dark' ? 'bg-transparent' : ''"
-    >
-    </div>
+    ></div>
   </div>
 </template>
 <script>
@@ -107,6 +113,7 @@ export default {
       imageSrc: "",
       submits: {},
       selectCert: [],
+      sendType: [],
     };
   },
   methods: {
@@ -124,6 +131,11 @@ export default {
         });
     },
     submit() {
+      for (let index in this.selectCert) {
+        for (let idx in this.certificate) {
+              if(this.certificate[idx].certificateId==this.selectCert[index]) this.sendType.push(this.certificate[idx].type)
+           }
+           }
       axios
         .post(
           `https://j5a507.p.ssafy.io/api/companies/20/certificates`,
@@ -131,7 +143,7 @@ export default {
         )
         .then((res) => {
           alert("제출이 완료되었습니다.");
-          this.$emit("submit", this.selectCert);
+          this.$emit("submit", this.sendType);
           console.log(res);
         })
         .catch((error) => {
