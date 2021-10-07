@@ -244,7 +244,6 @@ export default {
     },
     submitComplete(cert){
       this.submitStatus = cert;
-      alert(this.submitStatus);
       this.modals.modal1 = false;
     }
   },

@@ -80,7 +80,6 @@
       class="card-footer d-flex justify-content-end"
       :class="type === 'dark' ? 'bg-transparent' : ''"
     >
-      <base-pagination total="30"></base-pagination>
     </div>
   </div>
 </template>
@@ -124,7 +123,6 @@ export default {
         });
     },
     submit() {
-      alert(this.selectCert);
       axios
         .post(
           `https://j5a507.p.ssafy.io/api/companies/20/certificates`,
