@@ -8,8 +8,8 @@ export default createStore({
   // SPA에서 사용하는 변수들의 중앙 저장소
   state: {
     user: null,
-    inuniv: [],
-    certificate: [],
+    inuniv: null,
+    certificate: null,
     confirm: [],
     signup: {
       name: "",
@@ -29,8 +29,8 @@ export default createStore({
 
     logout(state) {
       state.user = null;
-      state.inuniv = [];
-      state.certificate = [];
+      state.inuniv = null;
+      state.certificate = null;
     },
 
     inuniv(state, data) {
