@@ -27,9 +27,11 @@
                       class="mb-0"
                       :class="type === 'dark' ? 'text-white' : ''"
                     >
-                      {{
-                        inuniv[certificate[index].universityId].universityName
-                      }}
+                      <div v-for="(item, idx) in inuniv" :key="idx">
+                        <div v-if="inuniv[idx].universityId==certificate[index].universityId">
+                            {{inuniv[idx].universityName}}
+                          </div>
+                      </div>
                     </h3>
                     &nbsp;
                     <!-- 발급 증명서 -->

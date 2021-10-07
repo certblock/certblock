@@ -72,7 +72,6 @@
                     id="student"
                     v-model="signup.type"
                     value="2"
-                    checked
                   />
                   <label for="student">학생</label>
                 </div>

@@ -5,14 +5,14 @@
         <div class="copyright text-center text-lg-left text-muted">
           © {{ year }}
           <a
-            href="https://www.creative-tim.com"
+            href="https://github.com/certblock"
             class="font-weight-bold ml-1"
             target="_blank"
-            >Creative Tim</a
+            >CERTBLOCK</a
           >
         </div>
       </div>
-      <div class="col-lg-6">
+      <!-- <div class="col-lg-6">
         <ul
           class="nav nav-footer justify-content-center justify-content-lg-end"
         >
@@ -49,7 +49,7 @@
             >
           </li>
         </ul>
-      </div>
+      </div> -->
     </div>
   </footer>
 </template>
