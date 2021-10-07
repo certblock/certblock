@@ -110,7 +110,7 @@ export default createStore({
     async getcertificatehistory({ commit }, universityId) {
       await axios
         .get(
-          `https://j5a507.p.ssafy.io/api/universities/${universityId}/certifcates`
+          `https://j5a507.p.ssafy.io/api/universities/${universityId}/certificates`
         )
         .then(({ data }) => {
           commit("certificate", data);
