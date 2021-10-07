@@ -56,8 +56,14 @@ export default createStore({
         .post(`https://j5a507.p.ssafy.io/api/users/login`, data)
         .then(async ({ data }) => {
           await commit("login", data);
-          await dispatch("studentinuniv", data.id);
-          await dispatch("getcertificate", data.id);
+          if (data.type == 2) {
+            await dispatch("studentinuniv", data.id);
+            await dispatch("getcertificate", data.id);
+          } else if (data.type == 1) {
+            await dispatch("getcertificatehistory", data.id);
+          } else if (data.type == 3) {
+            await dispatch("getcertificatecompanie", data.id);
+          }
           router.push({ name: "profile" });
         })
         .catch((error) => {
@@ -95,6 +101,32 @@ export default createStore({
     async getcertificate({ commit }, studentId) {
       await axios
         .get(`https://j5a507.p.ssafy.io/api/students/${studentId}/certificates`)
+        .then(({ data }) => {
+          commit("certificate", data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    async getcertificatehistory({ commit }, universityId) {
+      await axios
+        .get(
+          `https://j5a507.p.ssafy.io/api/universities/${universityId}/certificates`
+        )
+        .then(({ data }) => {
+          commit("certificate", data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    async getcertificatecompanie({ commit }, companyId) {
+      await axios
+        .get(
+          `https://j5a507.p.ssafy.io/api/companies/${companyId}/certificates`
+        )
         .then(({ data }) => {
           commit("certificate", data);
         })

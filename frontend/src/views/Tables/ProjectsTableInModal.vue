@@ -52,7 +52,7 @@
                       justify-content-md-center
                     "
                   >
-                    발급일 &nbsp;{{ certificate[index].date }}&nbsp;&nbsp;
+                    발급일 &nbsp;{{ certificate[index].date.substring(0, 10) }}&nbsp;&nbsp;
                     <base-button @click="showImage(index)"
                       >증명서 이미지 보기</base-button
                     >
@@ -61,9 +61,12 @@
                         <img :src="this.imageSrc" class="certImage" />
                       </div>
                     </modal>
-                    <base-checkbox
+                    <input
+                      type="checkbox"
                       class="mb-3"
-                    ></base-checkbox>
+                      v-model="selectCert"
+                      v-bind:value="certificate[index].type"
+                    />
                   </div>
                 </div>
               </stats-card>
@@ -72,12 +75,11 @@
         </div>
       </div>
     </div>
-    <base-button>제출하기</base-button>
+    <base-button @click="submit()">제출하기</base-button>
     <div
       class="card-footer d-flex justify-content-end"
       :class="type === 'dark' ? 'bg-transparent' : ''"
     >
-      <base-pagination total="30"></base-pagination>
     </div>
   </div>
 </template>
@@ -101,10 +103,8 @@ export default {
         modal0: false,
       },
       imageSrc: "",
-      submits: {
-        submit0: false,
-        submit1: false,
-      },
+      submits: {},
+      selectCert: [],
     };
   },
   methods: {
@@ -122,17 +122,16 @@ export default {
           console.log(error);
         });
     },
-    async Issuedcert(num) {
-      let studentId = this.certificate[this.certnum + num].studentId;
-      let universityId = this.certificate[this.certnum + num].universityId;
-      let certId = this.certificate[this.certnum + num].certificateId;
-      await axios
-        .put(
-          `https://j5a507.p.ssafy.io/api/students/${studentId}/universities/${universityId}/certificates/${certId}`
+    submit() {
+      axios
+        .post(
+          `https://j5a507.p.ssafy.io/api/companies/20/certificates`,
+          this.selectCert
         )
-        .then(() => {
-          console.log("완료");
-          this.getcertificate(studentId);
+        .then((res) => {
+          alert("제출이 완료되었습니다.");
+          this.$emit("submit", this.selectCert);
+          console.log(res);
         })
         .catch((error) => {
           console.log(error);
