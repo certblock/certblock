@@ -25,7 +25,7 @@ public class ContractService {
 
     private String from = "0x3861ce91ED1b8dE311F025923F711EA07a8501c1";
 
-    private String contract = "0x28749c09318D8eef441BB3e0eD5F759C2CCbbf1f";
+    private String contract = "0x41fF1914b275D06E07f459e9Dd1cA7Ff54F0A580";
 
     // hardcording because of testing
     private String pwd = "0xaca10c42b1fe8262a88f696e5c389a895f1091e8bec36a3f41a8fbd47d3f1f1b";
