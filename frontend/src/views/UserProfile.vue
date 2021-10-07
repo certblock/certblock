@@ -97,6 +97,7 @@
             title="Light Table"
           ></projects-table>
         </div>
+        <div v-if="user.type == 3">기업{{ certificate }}</div>
       </card>
     </div>
   </div>

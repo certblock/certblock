@@ -61,6 +61,8 @@ export default createStore({
             await dispatch("getcertificate", data.id);
           } else if (data.type == 1) {
             await dispatch("getcertificatehistory", data.id);
+          } else if (data.type == 3) {
+            await dispatch("getcertificatecompanie", data.id);
           }
           router.push({ name: "profile" });
         })
@@ -111,6 +113,19 @@ export default createStore({
       await axios
         .get(
           `https://j5a507.p.ssafy.io/api/universities/${universityId}/certificates`
+        )
+        .then(({ data }) => {
+          commit("certificate", data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    async getcertificatecompanie({ commit }, companyId) {
+      await axios
+        .get(
+          `https://j5a507.p.ssafy.io/api/companies/${companyId}/certificates`
         )
         .then(({ data }) => {
           commit("certificate", data);
