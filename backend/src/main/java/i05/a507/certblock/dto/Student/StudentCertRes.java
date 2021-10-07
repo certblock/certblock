@@ -22,7 +22,7 @@ public class StudentCertRes {
         scr.setCertificateId(certificate.getId());
         scr.setType(certificate.getType());
         scr.setFlg(certificate.getIssuance());
-        scr.setDate(certificate.getIssuance()? certificate.getDate() : null);
+        scr.setDate(certificate.getIssuance()? certificate.getIssuanceDate() : null);
         scr.setExpiryDate(certificate.getIssuance()? certificate.getExpiryDate() : null);
         scr.setStudentId(certificate.getUniversityStudent().getStudent().getId());
         scr.setUniversityId(certificate.getUniversityStudent().getUniversity().getId());
