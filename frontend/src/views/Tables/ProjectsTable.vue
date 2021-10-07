@@ -19,7 +19,7 @@
 
     <div class="row justify-content-md-center">
       <div class="col-xl-12 col-lg-12">
-        <stats-card>
+        <stats-card v-if="certificate != null">
           <div class="row" v-if="certificate[certnum].flg">
             <div class="col-md-7">
               <badge type="primary"><i class="ni ni-app"></i></badge>

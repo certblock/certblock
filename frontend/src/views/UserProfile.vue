@@ -118,6 +118,7 @@
           </div>
 
           <projects-table
+            v-if="certificate != null"
             :univarrnum="this.univarrnum"
             title="Light Table"
           ></projects-table>
