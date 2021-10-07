@@ -1,33 +1,4 @@
-# CertBlock(증명서 발급 서비스)
-
-## 서비스 요약
-- 블록체인으로 증명서(성적 증명서, 졸업 증명서 등)를 발급/조회하는 서비스
-
-## 배경
-- 자소서 작성할 때 매번 관련 증명서를 첨부해야만 했고, 해당 증명서가 기간이 만료되었을 경우 새로 발급받은 뒤에 사용해야 함
-- 면접때 증명서를 챙겨가야 함
-
-## 기대 효과
-- 학생
-  - 기업 지원 시 증명서를 따로 준비하지 않아도 됨 ( 현재는 오프라인, 온라인 제출 2번 이상 하는데 certblock사용하면 한 번만 하면 끝 )
-  - 증명서를 한곳에서 관리 가능 ( 여러 학위가 있을 때 번거롭게 각 발급기관에 방문하지 않아도 됨 )
-  - 따로 증명서를 스캔할 필요 없이 기업에 한번에 제출 가능
-  - 블록체인에 증명서를 저장하기 때문에 보안성이 뛰어남
-
-- 기업
-  - 위변조 불가능한, 신뢰도 있는 증명서 조회 가능
-  - 채용과정에서 발생하는 증명서 문서 관리 필요 없음
-  - 증명서 발급에 필요한 종이 소모와 같은 불필요한 비용을 절감하고 환경을 보호할 수 있음
-- 환경
-  - 종이 소모를 줄일 수 있습니다.
-
-## 증명서 목록
-- 졸업 증명서
-- 성적 증명서
-
-## 확장 가능성
-- 다양한 증명서 발급 가능
-    - 백신 접종 완료증, 자격증, 어학성적, 수상 관련 증명서
+# 메뉴얼
 
 ## 기술 스택
 * Frontend: Vue.js, Vuetify, HTML/CSS/JavaScript
@@ -195,19 +166,19 @@ SSH_USERNAME : sshuser
 - 크롬 확장 프로그램에서 MetaMask 설치
 - 사용자 네트워크 추가
 
-![](etc/metamask-add-network.png)
+![](../etc/metamask-add-network.png)
 
 - 계정 추가
 
-![](etc/metamask-import-account.png)
+![](../etc/metamask-import-account.png)
 
 
 
 - private keys 중에서 하나 복사 / 붙여넣기
 
-![](etc/ganache-cli.png)
+![](../etc/ganache-cli.png)
 
-![](etc/metamask-import-privatekey.png)
+![](../etc/metamask-import-privatekey.png)
 
 ## 컨트랙트 배포
 
@@ -217,17 +188,12 @@ SSH_USERNAME : sshuser
 
 - 컴파일
 
-  ![](etc/remix-compile.png)
+  ![](../etc/remix-compile.png)
 
 - Injected Web3, 사용할 Account 선택 후 Deploy
 
-  ![](etc/remix-depoly1.png)
+  ![](../etc/remix-depoly1.png)
 
 - 배포가 완료되고, 해당 컨트랙트의 주소가 생기게 된다. 또한 각 function을 테스트해 볼 수 있다.
 
-  ![](etc/remix-deploy2.png)
-
-
-
-## 팀 노션
-- [노션 링크](https://www.notion.so/5-7-b221c8c2fd5c4e5384a3b508dd2c2611)
+  ![](../etc/remix-deploy2.png)
