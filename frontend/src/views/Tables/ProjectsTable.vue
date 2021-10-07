@@ -30,7 +30,7 @@
               <base-button @click="showImage(0)"
                 >증명서 이미지 보기</base-button
               >
-              <modal v-model:show="modals.modal0">
+              <modal v-model:show="modals.modal0"  modal-classes="modal-xl">
                 <div class="modal-all">
                   <img :src="this.imageSrc" class="certImage" />
                 </div>
@@ -62,7 +62,7 @@
               <base-button @click="showImage(1)"
                 >증명서 이미지 보기</base-button
               >
-              <modal v-model:show="modals.modal0">
+              <modal v-model:show="modals.modal0"  modal-classes="modal-xl">
                 <div class="modal-all">
                   <img :src="this.imageSrc" class="certImage" />
                 </div>
@@ -131,7 +131,6 @@ export default {
           }`
         )
         .then((res) => {
-          console.log(res.data.message);
           this.imageSrc = res.data.message;
           this.modals.modal0 = true;
         })

@@ -15,33 +15,38 @@
 
     <div class="col justify-content-md-right align-items-center">
       <div v-for="(item, index) in certificate" :key="index">
-        <div class="col-xl-12 col-lg-12 ">
+        <div class="col-xl-12 col-lg-12">
           <stats-card>
-             <div class="row align-items-center justify-content-md-left">
-            <div class="col-md-3">
-              <span class="text-default"
-                >지원자 {{ certificate[index].id }}</span
-              >
-            </div>
-            <div class="col-md-5">
-              <div v-if="certificate[index].certType == 1">
-                <span class="text-primary">졸업 증명서</span>
+            <div class="row align-items-center justify-content-md-left">
+              <div class="col-md-3">
+                <span class="text-default"
+                  >지원자 {{ certificate[index].applicantName }}</span
+                >
               </div>
-              <div v-else>
-                <span class="text-primary">성적 증명서</span>
-              </div>
-            </div>
-            <div class="col-md-4">
-            <div class="row align-items-center">
-              발급일: {{ certificate[index].createdTime.substring(0, 10) }}&nbsp;&nbsp;&nbsp;
-              <base-button @click="showImage(index)">증명서 이미지 보기</base-button>
-              <modal v-model:show="modals.modal0">
-                <div class="modal-all">
-                  <img :src="this.imageSrc" class="certImage" />
+              <div class="col-md-5">
+                <div v-if="certificate[index].certType == 1">
+                  <span class="text-primary">졸업 증명서</span>
                 </div>
-              </modal>
-            </div>
-            </div>
+                <div v-else>
+                  <span class="text-primary">성적 증명서</span>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="row align-items-center">
+                  발급일:
+                  {{
+                    certificate[index].createdTime.substring(0, 10)
+                  }}&nbsp;&nbsp;&nbsp;
+                  <base-button @click="showImage(index)"
+                    >증명서 이미지 보기</base-button
+                  >
+                  <modal v-model:show="modals.modal0">
+                    <div class="modal-all">
+                      <img :src="this.imageSrc" class="certImage" />
+                    </div>
+                  </modal>
+                </div>
+              </div>
             </div>
           </stats-card>
         </div>
@@ -63,7 +68,7 @@ export default {
   name: "school-table",
   props: {},
   computed: {
-    ...mapState(["certificate","inuniv"]),
+    ...mapState(["certificate", "inuniv"]),
   },
   data() {
     return {
@@ -77,9 +82,10 @@ export default {
   },
   methods: {
     showImage(num) {
+      alert(num);
       axios
         .get(
-          `https://j5a507.p.ssafy.io/api/certificate/${this.certificate[num].certId}`
+          `https://j5a507.p.ssafy.io/api/certificate/${this.certificate[num].certificateId}`
         )
         .then((res) => {
           this.imageSrc = res.data.message;

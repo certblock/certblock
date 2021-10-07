@@ -16,11 +16,29 @@
         <div class="row justify-content-md-center">
           <div class="col col-lg-1"></div>
           <div class="col-lg-7 col-md-10">
-            <h1 class="display-2 text-white">Hello {{ user.name }}</h1>
-            <p class="text-white mt-0 mb-5">
-              안녕하세요, 반갑습니다.<br />
-              CERTBLOCK에서 쉽게 증명서를 발급해보세요.
-            </p>
+             <div v-if="user.type == 2">
+              <h1 class="display-2 text-white">Hello {{ user.name }}</h1>
+              <p class="text-white mt-0 mb-5">
+                안녕하세요, 반갑습니다.<br />
+                CERTBLOCK에서 쉽게 증명서를 발급해보세요.
+              </p>
+            </div>
+            <div v-if="user.type == 1">
+              <h1 class="display-2 text-white">Hello {{ user.name }}</h1>
+              <p class="text-white mt-0 mb-5">
+                안녕하세요, 반갑습니다.<br />
+                CERTBLOCK에서 쉽게 증명서를 관리해보세요.<br>
+                증명서 발급 현황이 확인가능합니다.
+              </p>
+            </div>
+            <div v-else>
+              <h1 class="display-2 text-white">Hello {{ user.name }}</h1>
+              <p class="text-white mt-0 mb-5">
+                안녕하세요, 반갑습니다.<br />
+                CERTBLOCK에서 쉽게 지원자의 증명서를 관리해보세요.<br>
+                지원자가 제출한 증명서가 확인가능합니다.
+              </p>
+            </div>
           </div>
 
           <div class="col-lg-4 col-md-10">
@@ -104,7 +122,6 @@
             title="Light Table"
           ></projects-table>
         </div>
-        <div v-if="user.type == 3">기업{{ certificate }}</div>
       </card>
     </div>
   </div>

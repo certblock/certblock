@@ -69,8 +69,7 @@
             <div class="col-lg-5 col-md-6">
               <h1 class="text-white">Welcome!</h1>
               <p class="text-lead text-white">
-                Use these awesome forms to login or create new account in your
-                project for free.
+               블록체인 기반 증명서 발급/조회 서비스 CERTBLOCK입니다
               </p>
             </div>
           </div>
