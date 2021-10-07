@@ -4,7 +4,7 @@
       class="card-header border-0"
       :class="type === 'dark' ? 'bg-transparent' : ''"
     >
-      {{ user.name }}님의 발급된 증명서 목록
+      {{ user.name }}님의 발급된 증명서 목록 
     </div>
 
     <div class="row justify-content-md-center">
@@ -67,7 +67,7 @@
                       type="checkbox"
                       class="mb-3"
                       v-model="selectCert"
-                      v-bind:value="certificate[index].type"
+                      v-bind:value="certificate[index].certificateId"
                     />
                   </div>
                 </div>
@@ -116,7 +116,6 @@ export default {
           `https://j5a507.p.ssafy.io/api/certificate/${this.$props.certificate[num].certificateId}`
         )
         .then((res) => {
-          console.log(res.data.message);
           this.imageSrc = res.data.message;
           this.modals.modal0 = true;
         })
