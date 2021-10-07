@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service("universityService")
@@ -52,17 +53,15 @@ public class UniversityServiceImpl implements UniversityService {
 		List<UniversityCertiRes> certList = new ArrayList<>();
 
 		//학교 목록 먼저 다 찾기
-		List<UniversityStudent> universityStudentList = universityStudentRepository.findByUniversityId(universityId).orElse(null);
-		for (UniversityStudent us: universityStudentList) {
-			//저장된 학교의 증명서 모두 찾기
-			List<Certificate> certificateList = certificateRepository.findByUniversityStudent(us).orElse(null);
-			for (Certificate cf : certificateList) {
-				if(cf.getIssuance()) {
-					UniversityCertiRes ucr = new UniversityCertiRes();
-					ucr.setCertificateHistoryId(cf.getId());
-					certList.add(ucr);
-				}
-			}
+//		List<UniversityStudent> universityStudentList = universityStudentRepository.findByUniversityId(universityId).orElse(new ArrayList<>());
+		University university = universityRepository.findById(universityId).orElseThrow(RuntimeException::new);
+		List<Certificate> certificateList = certificateRepository
+				.findByUniversityStudent_UniversityAndIssuance(university, true).orElse(new ArrayList<>());
+		certificateList.sort((certificate, t1) -> t1.getIssuanceDate().compareTo(certificate.getIssuanceDate()));
+		for (Certificate cf : certificateList) {
+//			UniversityCertiRes ucr = new UniversityCertiRes();
+//			ucr.setCertificateHistoryId(cf.getId());
+			certList.add(UniversityCertiRes.of(cf));
 		}
 		return certList;
 	}
@@ -77,9 +76,9 @@ public class UniversityServiceImpl implements UniversityService {
 		for (Certificate cf : certificateList) { //증명서 목록(1~6)
 			//증명서가 발급된 경우만 -> 조회
 			if (cf.getIssuance()) {
-				UniversityCertiRes ucr = new UniversityCertiRes();
-				ucr.setCertificateHistoryId(cf.getId());
-				issueCertList.add(ucr);
+//				UniversityCertiRes ucr = new UniversityCertiRes();
+//				ucr.setCertificateHistoryId(cf.getId());
+				issueCertList.add(UniversityCertiRes.of(cf));
 			}
 		}
 		return issueCertList;

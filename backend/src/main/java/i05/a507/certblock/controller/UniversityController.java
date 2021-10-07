@@ -27,7 +27,7 @@ public class UniversityController {
         return ResponseEntity.status(200).body(list);
     }
 
-   //대학 조회
+    //대학 조회
     @GetMapping("/{universityId}")
     public ResponseEntity<?> selectUniversity(@PathVariable int universityId) {
         UniversitySelectRes usr = universityService.getUniversity(universityId);
@@ -36,13 +36,13 @@ public class UniversityController {
     }
 
     //증명서 발급 기록 목록 조회
-    @GetMapping("/{universityId}/certifcates")
+    @GetMapping("/{universityId}/certificates")
     public ResponseEntity<?> selectAllCertificate(@PathVariable int universityId) {
         List<UniversityCertiRes> certificateList = universityService.selectAllCertificate(universityId);
         return ResponseEntity.status(200).body(certificateList);
     }
 
-    //특적 학생의 발급 기록 조회
+    //특정 학생의 발급 기록 조회
     @GetMapping("/{universityId}/users/{userId}/certificates")
     public ResponseEntity<?> selectAllCertificate(@PathVariable int universityId, @PathVariable int userId) {
         List<UniversityCertiRes> certificateList = universityService.getStudentCertificate(userId,universityId);
