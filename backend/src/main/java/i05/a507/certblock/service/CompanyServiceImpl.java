@@ -29,7 +29,7 @@ public class CompanyServiceImpl implements CompanyService {
 	public List<CompanyApplicantRes> selectAllApplicant(int companyId){
 		List<CompanyApplicantRes> list = new ArrayList<>();
 
-		List<Submit> subList = submitRepository.findByCompanyId(companyId).orElse(null);
+		List<Submit> subList = submitRepository.findByCompanyId(companyId);
 		for (Submit submit: subList) {
 			CompanyApplicantRes car = new CompanyApplicantRes();
 			car.setStudentId(submit.getCertificate().getUniversityStudent().getStudent().getId());
@@ -43,7 +43,7 @@ public class CompanyServiceImpl implements CompanyService {
 	public List<CompanyApplicantCertRes> selectApplicantCert(int companyId, int studentId){
 		List<CompanyApplicantCertRes> list = new ArrayList<>();
 
-		List<Submit> subList = submitRepository.findByCompanyId(companyId).orElse(null);
+		List<Submit> subList = submitRepository.findByCompanyId(companyId);
 		for (Submit submit: subList) {
 			if(submit.getCertificate().getUniversityStudent().getStudent().getId()==studentId){
 				CompanyApplicantCertRes car = new CompanyApplicantCertRes();
