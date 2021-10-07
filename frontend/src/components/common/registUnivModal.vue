@@ -85,7 +85,7 @@ export default {
     ...mapState(["user"]),
   },
   methods: {
-    ...mapActions(["studentinuniv"]),
+    ...mapActions(["studentinuniv", "getcertificate"]),
     async getuniv() {
       await axios
         .get(`https://j5a507.p.ssafy.io/api/universities`)
@@ -105,6 +105,7 @@ export default {
         .then(() => {
           alert("등록 완료");
           this.studentinuniv(this.user.id);
+          this.getcertificate(this.user.id);
         })
         .catch(() => {
           alert("해당 대학의 졸업생이 아니거나 이미 등록되어 있습니다.");
