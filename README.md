@@ -195,19 +195,19 @@ SSH_USERNAME : sshuser
 - 크롬 확장 프로그램에서 MetaMask 설치
 - 사용자 네트워크 추가
 
-![](../etc/metamask-add-network.png)
+![](etc/metamask-add-network.png)
 
 - 계정 추가
 
-![](../metamask-import-account.png)
+![](etc/metamask-import-account.png)
 
 
 
 - private keys 중에서 하나 복사 / 붙여넣기
 
-![](../etc/ganache-cli.png)
+![](etc/ganache-cli.png)
 
-![](../etc/metamask-import-privatekey.png)
+![](etc/metamask-import-privatekey.png)
 
 ## 컨트랙트 배포
 
@@ -217,15 +217,15 @@ SSH_USERNAME : sshuser
 
 - 컴파일
 
-  ![](../etc/remix-compile.png)
+  ![](etc/remix-compile.png)
 
 - Injected Web3, 사용할 Account 선택 후 Deploy
 
-  ![](../etc/remix-depoly1.png)
+  ![](etc/remix-depoly1.png)
 
 - 배포가 완료되고, 해당 컨트랙트의 주소가 생기게 된다. 또한 각 function을 테스트해 볼 수 있다.
 
-  ![](../etc/remix-deploy2.png)
+  ![](etc/remix-deploy2.png)
 
 
 
