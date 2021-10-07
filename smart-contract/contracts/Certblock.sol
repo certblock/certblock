@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.6.0;
+pragma experimental ABIEncoderV2;
 
 import "./Ownable.sol";
 
@@ -20,24 +21,15 @@ contract Certblock is Ownable {
 
     event AddCertificate(string fileHash, string fileName, address user, uint16 certificateNumber);
 
-
-    enum TypeofCertificate {Graduate, Transcript}
+    enum TypeOfCertificate {Graduate, Transcript}
 
     constructor () public {
         owner = msg.sender;
     }
 
     /**
-     * @dev Find All Certificate by User
-     * @param user
-     */
-    // function getCertificates(address _user) public view returns(Certificate[] memory) {
-    //     return userCertificates[_user];
-    // }
-
-    /**
      * @dev Find one of certificate by User, CertificateNumber
-     * @param _user, certificateNumber
+     * @param _user, _certificateNumber
      */
     function getCertificate(address _user, uint16 _certificateNumber) public view returns(string memory, string memory, uint256) {
         Certificate memory certificate = userCertificates[_user][_certificateNumber];
@@ -45,8 +37,16 @@ contract Certblock is Ownable {
     }
 
     /**
-     * @dev Add Certificate by User
-     * @param _user, certificateNumber
+     * @dev Find all of certificate by User
+     * @param {_user}
+     */
+    function getCertificate(address _user) public view returns(Certificate[6] memory) {
+        return userCertificates[_user];
+    }
+
+    /**
+     * @dev Get ExpiryDate
+     * @param _user, _certificateNumber
      */
     function getExpiryDate(address _user, uint16 _certificateNumber) public view returns(uint256) {
         return userCertificates[_user][_certificateNumber].expiryDate;
@@ -54,7 +54,7 @@ contract Certblock is Ownable {
 
     /**
      * @dev Add Certificate by User
-     * @param _fileHash, fileName, userAddress, certificateNumber
+     * @param _fileHash, _fileName, _userAddress, _certificateNumber
      */
     function addCertificate(string memory _fileHash, string memory _fileName, address _user, uint16 _certificateNumber) public onlyOwner {
         emit AddCertificate(_fileHash, _fileName, _user, _certificateNumber);
@@ -64,37 +64,48 @@ contract Certblock is Ownable {
         }
         // Update expiryDate
         if (userCertificates[_user][_certificateNumber].flag) {
-            userCertificates[_user][_certificateNumber].expiryDate = now + availableDays;
+            updateExpiryDate(_user, _certificateNumber);
             return;
         }
-        userCertificateCount[_user]++;
+        increaseCertificate(_user);
         userCertificates[_user][_certificateNumber] = Certificate(_fileHash, _fileName, now + availableDays, true);
     }
 
-    // function getCertificateImage(address _user, uint16 _certificateNumber) public returns(bytes32) {
-    //     return getCertificate(_user, _certificateNumber).fileName;
-    // }
-
-    // function getCertificateExpiryDate(address _user, uint16 _certificateNumber) public returns(uint256) {
-    //     return getCertificate(_user, _certificateNumber).expiryDate;
-    // }
+    /**
+     * @dev Update ExpiryDate : now date + 1 years
+     */
+    function updateExpiryDate(address _user, uint16 _certificateNumber) internal {
+        userCertificates[_user][_certificateNumber].expiryDate = now + availableDays;
+    }
 
     /**
      * @dev Remove one of certificate
-     * @param _user, certificateNumber
+     * @param _user, _certificateNumber
      */
     function removeCertificate(address _user, uint16 _certificateNumber) public {
         userCertificates[_user][_certificateNumber].flag = false;
-        userCertificateCount[_user]--;
+        decreaseCertificate(_user);
     }
 
     /**
      * @dev Check if the user is already registred
-     * @param {user}
      */
     function containsUser(address _user) public view returns (bool) {
         return users[_user];
     }
 
+    /**
+     * @dev Increase certificate count
+     */
+    function increaseCertificate(address _user) internal {
+        userCertificateCount[_user]++;
+    }
+
+    /**
+     * @dev Decrease certificate count
+     */
+    function decreaseCertificate(address _user) internal {
+        userCertificateCount[_user]--;
+    }
 }
 
