@@ -20,48 +20,21 @@
     <div class="row justify-content-md-center">
       <div class="col-xl-12 col-lg-12">
         <stats-card>
-          <div class="row" v-if="certificate[certnum].hash != null">
+          <div class="row" v-if="certificate[certnum].flg">
             <div class="col-md-3">
               <badge type="primary"><i class="ni ni-app"></i></badge>
               <span class="text-primary">졸업 증명서</span>
             </div>
             <div class="col">
-              <a>{{ certificate[certnum].hash }}</a
-              >&nbsp;
-              <base-button size="sm" @click="doCopy()"> Copy! </base-button>
-            </div>
-            <div class="col"></div>
-          </div>
-          <div class="row" v-else>
-            <div class="col-md-3">
-              <badge type="secondary"><i class="ni ni-app"></i></badge>
-              <span class="text-default">졸업 증명서</span>
-            </div>
-            <div class="col">
-              <a>
-                <base-button>발급받기</base-button>
-              </a>
-            </div>
-            <div class="col"></div>
-          </div>
-        </stats-card>
-      </div>
-      <div class="col-xl-12 col-lg-12">
-        <stats-card>
-          <div class="row" v-if="certificate[certnum + 1].hash != null">
-            <div class="col-md-3">
-              <badge type="primary"><i class="ni ni-app"></i></badge>
-              <span class="text-primary">성적 증명서</span>
-            </div>
-            <div class="col">
-              <a>{{ certificate[certnum + 1].hash }}</a
-              >&nbsp;
-              <base-button size="sm" @click="doCopy1()"> Copy! </base-button>
-              <base-button @click="showImage()">증명서 이미지 보기</base-button>
-               <modal v-model:show="modals.modal0">
-                 <div class="modal-all">
-                  <img :src="this.imageSrc" class="certImage"/>
-                 </div>
+              만료일: {{ certificate[certnum].expiryDate }}
+              <base-button @click="Issuedcert(0)">만료일 갱신</base-button>
+              <base-button @click="showImage(0)"
+                >증명서 이미지 보기</base-button
+              >
+              <modal v-model:show="modals.modal0">
+                <div class="modal-all">
+                  <img :src="this.imageSrc" class="certImage" />
+                </div>
               </modal>
             </div>
             <div class="col"></div>
@@ -72,9 +45,40 @@
               <span class="text-default">졸업 증명서</span>
             </div>
             <div class="col">
-              <a>
-                <base-button>발급받기</base-button>
-              </a>
+              <base-button @click="Issuedcert(0)">발급받기</base-button>
+            </div>
+            <div class="col"></div>
+          </div>
+        </stats-card>
+      </div>
+      <div class="col-xl-12 col-lg-12">
+        <stats-card>
+          <div class="row" v-if="certificate[certnum + 1].flg">
+            <div class="col-md-3">
+              <badge type="primary"><i class="ni ni-app"></i></badge>
+              <span class="text-primary">성적 증명서</span>
+            </div>
+            <div class="col">
+              만료일: {{ certificate[certnum + 1].expiryDate }}
+              <base-button @click="Issuedcert(1)">만료일 갱신</base-button>
+              <base-button @click="showImage(1)"
+                >증명서 이미지 보기</base-button
+              >
+              <modal v-model:show="modals.modal0">
+                <div class="modal-all">
+                  <img :src="this.imageSrc" class="certImage" />
+                </div>
+              </modal>
+            </div>
+            <div class="col"></div>
+          </div>
+          <div class="row" v-else>
+            <div class="col-md-3">
+              <badge type="secondary"><i class="ni ni-app"></i></badge>
+              <span class="text-default">성적 증명서</span>
+            </div>
+            <div class="col">
+              <base-button @click="Issuedcert(1)">발급받기</base-button>
             </div>
             <div class="col"></div>
           </div>
@@ -91,7 +95,7 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 import axios from "axios";
 
 export default {
@@ -112,38 +116,42 @@ export default {
     return {
       inCert: [],
       certnum: this.univarrnum * 2,
-       modals: {
+      modals: {
         modal0: false,
       },
       imageSrc: "",
     };
   },
   methods: {
+    ...mapActions(["getcertificate"]),
     updatecertnum(univarrnum) {
       this.certnum = univarrnum * 2;
     },
-    doCopy() {
-      console.log(this.certificate[this.certnum]);
-      alert(this.certificate[this.certnum].hash);
-      this.$copyText(this.certificate[this.certnum].hash);
-      alert("복사했습니다.");
-    },
-    doCopy1() {
-      alert(this.certificate[this.certnum + 1].hash);
-      this.$copyText(this.certificate[this.certnum + 1].hash);
-      alert("복사했습니다.");
-    },
-    showImage() {
+    showImage(num) {
       axios
         .get(
           `https://j5a507.p.ssafy.io/api/certificate/${
-            this.certificate[this.certnum].certificateId
+            this.certificate[this.certnum + num].certificateId
           }`
         )
         .then((res) => {
           console.log(res.data.message);
           this.imageSrc = res.data.message;
           this.modals.modal0 = true;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    async Issuedcert(num) {
+      await axios
+        .put(
+          `https://j5a507.p.ssafy.io/api/certificate/${
+            this.certificate[this.certnum + num].certificateId
+          }`
+        )
+        .then(() => {
+          this.getcertificate(this.certificate[this.certnum + num].studentId);
         })
         .catch((error) => {
           console.log(error);
