@@ -34,7 +34,7 @@
 * BackEnd: Spring Boot 2.5.4, JPA(Hibernate)
 * Storage: MySQL 5.7
 * Deploy: AWS EC2
-* BlockChain : Solidity
+* BlockChain : Solidity v0.6.0, Ganache-cli v6.12.2, Remix
 
 ## Dockerization 방법
 docker buildkit을 위해 `docker/dockerfile:1` 이미지를 미리 pull 합니다.
@@ -147,5 +147,87 @@ SSH_USERNAME : sshuser
   - execute docker compose using ssh
 
 
-## 팀 노션 
+
+## EC2에 이더리움 Private Network 구성
+
+- EC2 서버에 접속
+
+  ```shell
+  ssh -i ~/.ssh/{pem 파일명}.pem {서버 도메인 명}
+  ```
+
+- Node 설치 및 버전 확인
+
+  ```shell
+  brew install node
+  
+  node -v
+  ```
+
+- Ganache 설치
+
+  ```shell
+  npm install -g ganache-cli
+  ```
+
+- Ganache 실행
+
+  ```shell
+  // 1. 백그라운드에서 실행할 경우
+  // 맨 앞에 nohup 추가, 맨 뒤에 & 추가
+  nohup ganache-cli -p "port number" -h 0.0.0.0 2 >> ~/geth.log &
+  
+  // 네트워크 상태 확인
+  netstat -ntlp
+  
+  // 실행 중지하기
+  kill -9 PID
+  
+  // 2. 포그라운드에서 실행할 경우
+  ganache-cli -p "port number"
+  
+  ```
+
+
+
+## Metamask  설치 및 Ganache에 연결
+
+- 크롬 확장 프로그램에서 MetaMask 설치
+- 사용자 네트워크 추가
+
+![](../etc/metamask-add-network.png)
+
+- 계정 추가
+
+![](../metamask-import-account.png)
+
+
+
+- private keys 중에서 하나 복사 / 붙여넣기
+
+![](../etc/ganache-cli.png)
+
+![](../etc/metamask-import-privatekey.png)
+
+## 컨트랙트 배포
+
+### Remix 사용
+
+- 컨트랙트 파일 업로드
+
+- 컴파일
+
+  ![](../etc/remix-compile.png)
+
+- Injected Web3, 사용할 Account 선택 후 Deploy
+
+  ![](../etc/remix-depoly1.png)
+
+- 배포가 완료되고, 해당 컨트랙트의 주소가 생기게 된다. 또한 각 function을 테스트해 볼 수 있다.
+
+  ![](../etc/remix-deploy2.png)
+
+
+
+## 팀 노션
 - [노션 링크](https://www.notion.so/5-7-b221c8c2fd5c4e5384a3b508dd2c2611)
