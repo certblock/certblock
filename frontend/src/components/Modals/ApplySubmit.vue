@@ -15,44 +15,49 @@
       <div class="container-fluid align-items-center">
         <div class="row justify-content-md-center">
           <div class="col-lg-4 col-md-10">
-            <h1 class="display-2 text-white text-center">CERTBLOCK</h1> 
-             <h1 class="display-2 text-white text-center">"{{ userInfo.name }}"</h1> 
+            <h1 class="display-2 text-white text-center">CERTBLOCK</h1>
+            <h1 class="display-2 text-white text-center">
+              "{{ userInfo.name }}"
+            </h1>
             <p class="text-white mt-0 mb-5 text-center">
-              증명서 불러오기 버튼을 클릭해 <br>발급된 증명서를 불러오세요
+              증명서 불러오기 버튼을 클릭해 <br />발급된 증명서를 불러오세요
             </p>
             <div class="d-flex justify-content-center">
-            <base-button @click="receive()" class="justify-content-center" type="secondary">증명서 불러오기</base-button>
+              <base-button
+                @click="receive()"
+                class="justify-content-center"
+                type="secondary"
+                >증명서 불러오기</base-button
+              >
             </div>
           </div>
         </div>
       </div>
     </base-header>
-    
+
     <div class="container-fluid mt--9">
       <card shadow type="secondary">
- 
-        <projects-table 
+        <projects-table
           :user="this.userInfo"
           :certificate="this.certificate"
           :univarrnum="this.univarrnum"
           :inuniv="this.inUniv"
           title="Light Table"
+          v-on:submit="submitComplete"
         ></projects-table>
-        <add-univ v-if="click" :univ="this.univ" /> 
+        <add-univ v-if="click" :univ="this.univ" />
       </card>
-    </div> 
+    </div>
   </div>
 </template>
 <script>
 import axios from "axios";
-import ProjectsTable from "../../views/Tables/ProjectsTableInModal.vue"
-import BaseButton from '../BaseButton.vue';
+import ProjectsTable from "../../views/Tables/ProjectsTableInModal.vue";
 
 export default {
   name: "user-profile",
   components: {
     ProjectsTable,
-    BaseButton
   },
   props: ["userInfo"],
   data() {
@@ -64,7 +69,7 @@ export default {
         phone: "",
       },
       inUniv: [],
-      certificate:[],
+      certificate: [],
       modals: {
         modal0: false,
       },
@@ -78,30 +83,34 @@ export default {
     add() {
       this.click = !this.click;
     },
-    receive(){
+    receive() {
       axios
-      .get(
-        `https://j5a507.p.ssafy.io/api/students/${this.userInfo.id}/universities`
-      )
-      .then(({ data }) => {
-        this.inUniv = data;
-        console.log(this.inUniv);
-      })
-      .catch((error) => {
-        console.log(error);
-      }),
-      axios
-        .get(`https://j5a507.p.ssafy.io/api/students/${this.userInfo.id}/certificates`)
+        .get(
+          `https://j5a507.p.ssafy.io/api/students/${this.userInfo.id}/universities`
+        )
         .then(({ data }) => {
-         this.certificate = data;
+          this.inUniv = data;
+          console.log(this.inUniv);
         })
         .catch((error) => {
           console.log(error);
-        });
-    }
+        }),
+        axios
+          .get(
+            `https://j5a507.p.ssafy.io/api/students/${this.userInfo.id}/certificates`
+          )
+          .then(({ data }) => {
+            this.certificate = data;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+    },
+    submitComplete(data) {
+      this.$emit("certSubmit", data);
+    },
   },
-  mounted() {
-  },
+  mounted() {},
 };
 </script>
 <style></style>

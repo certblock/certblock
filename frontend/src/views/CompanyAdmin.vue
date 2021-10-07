@@ -109,17 +109,48 @@
               <h6 class="heading-small text-muted mb-4">증명서 제출</h6>
               <div class="pl-lg-4">
                 <div class="row">
-                  <div class="col-lg-4">
-                    <span>포트폴리오</span>
+                  <div class="col-lg-4 text-center">
+                    <h4>포트폴리오</h4>
+                    <base-button class="col-lg-12">제출하기</base-button>
                   </div>
-                  <div class="col-lg-4">
-                    <span>성적 증명서</span>
+                  
+                  <div class="col-lg-4 text-center">
+                    <h4>졸업증명서</h4>
+                    <div v-if="submitStatus.includes(1)">
+                       <base-input
+                      placeholder="제출완료입니다."
+                      :valid="true"
+                      disabled
+                      formClasses="input-group-alternative"
+                    ></base-input>
+                    </div>
+                    <div v-else>
+                    <base-input
+                      placeholder="현재 미제출상태입니다. 제출해주세요."
+                      disabled
+                    ></base-input>
+                    </div>
                   </div>
-                  <div class="col-lg-4">
-                    <span>졸업(예정) 증명서</span>
+                   <div class="col-lg-4 text-center">
+                    <h4>성적증명서</h4>
+                    <div v-if="submitStatus.includes(2)">
+                       <base-input
+                      placeholder="제출완료입니다."
+                      :valid="true"
+                      disabled
+                      formClasses="input-group-alternative"
+                    ></base-input>
+                    </div>
+                    <div v-else>
+                    <base-input
+                      placeholder="현재 미제출상태입니다. 제출해주세요."
+                      disabled
+                    ></base-input>
+                    </div>
                   </div>
                 </div>
 
+                <hr class="my-4" />
                 <div class="row">
                   <div class="col-6 col-md-4">
                     <span></span>
@@ -150,7 +181,10 @@
                           v-model:show="modals.modal1"
                           modal-classes="modal-xl"
                         >
-                          <apply-submit v-bind:userInfo="this.info"></apply-submit>
+                          <apply-submit
+                            v-bind:userInfo="this.info"
+                             v-on:certSubmit="submitComplete"
+                          ></apply-submit>
                         </modal>
                       </div>
                     </span>
@@ -193,6 +227,7 @@ export default {
       },
       modalNum: "modals.modal0",
       loginStatus: false,
+      submitStatus:[],
     };
   },
   computed: {
@@ -207,6 +242,11 @@ export default {
       this.modals.modal0 = false;
       this.modals.modal1 = true;
     },
+    submitComplete(cert){
+      this.submitStatus = cert;
+      alert(this.submitStatus);
+      this.modals.modal1 = false;
+    }
   },
 };
 </script>
