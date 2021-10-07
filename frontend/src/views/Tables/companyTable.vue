@@ -7,7 +7,7 @@
       <div class="row align-items-center">
         <div class="col">
           <h3 class="mb-0" :class="type === 'dark' ? 'text-white' : ''">
-            증명서 발급 현황
+            지원자 증명서 제출 현황
           </h3>
         </div>
       </div>
