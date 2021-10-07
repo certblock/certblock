@@ -56,8 +56,12 @@ export default createStore({
         .post(`https://j5a507.p.ssafy.io/api/users/login`, data)
         .then(async ({ data }) => {
           await commit("login", data);
-          await dispatch("studentinuniv", data.id);
-          await dispatch("getcertificate", data.id);
+          if (data.type == 2) {
+            await dispatch("studentinuniv", data.id);
+            await dispatch("getcertificate", data.id);
+          } else if (data.type == 1) {
+            await dispatch("getcertificatehistory", data.id);
+          }
           router.push({ name: "profile" });
         })
         .catch((error) => {
@@ -95,6 +99,19 @@ export default createStore({
     async getcertificate({ commit }, studentId) {
       await axios
         .get(`https://j5a507.p.ssafy.io/api/students/${studentId}/certificates`)
+        .then(({ data }) => {
+          commit("certificate", data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    async getcertificatehistory({ commit }, universityId) {
+      await axios
+        .get(
+          `https://j5a507.p.ssafy.io/api/universities/${universityId}/certifcates`
+        )
         .then(({ data }) => {
           commit("certificate", data);
         })
