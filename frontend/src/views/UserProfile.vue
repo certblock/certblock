@@ -12,7 +12,7 @@
       <!-- Mask -->
       <span class="mask bg-gradient-default opacity-8"></span>
       <!-- Header container -->
-      <div class="container-fluid align-items-center ">
+      <div class="container-fluid align-items-center">
         <div class="row justify-content-md-center">
           <div class="col col-lg-1"></div>
           <div class="col-lg-4 col-md-10">
@@ -23,7 +23,7 @@
             </p>
           </div>
 
-          <div class="col-lg-6 col-md-10 ">
+          <div class="col-lg-6 col-md-10">
             <div class="card card-profile shadow">
               <div class="card-body pt-0 pt-md-4">
                 <div class="text-right">
@@ -33,7 +33,9 @@
                   </h3>
                   <h3>
                     Birth
-                    <span class="font-weight-light">{{ user.birth }}</span>
+                    <span class="font-weight-light">{{
+                      user.birth.substring(0, 10)
+                    }}</span>
                   </h3>
                   <h3>
                     Email
@@ -72,26 +74,29 @@
 
     <div class="container-fluid mt--7 bg-darkblack">
       <card shadow type="secondary">
-        <div class="row">
-          <!-- <div v-if="inuniv.length == 0">등록된 대학교가 없습니다</div> -->
-          <div
-            v-for="(item, index) in inuniv"
-            :key="index"
-            @click="univarrnum = index"
-            class="col-md-3"
-          >
-            <base-button class="col-md-12">
-              {{ item.universityName }}(<a v-if="item.type == 1">학사</a
-              ><a v-if="item.type == 2">석사</a
-              ><a v-if="item.type == 3">박사</a>)
-            </base-button>
+        <div v-if="user.type == 1">학교{{ certificate }}</div>
+        <div v-if="user.type == 2">
+          <div class="row">
+            <!-- <div v-if="inuniv.length == 0">등록된 대학교가 없습니다</div> -->
+            <div
+              v-for="(item, index) in inuniv"
+              :key="index"
+              @click="univarrnum = index"
+              class="col-md-3"
+            >
+              <base-button class="col-md-12">
+                {{ item.universityName }}(<a v-if="item.type == 1">학사</a
+                ><a v-if="item.type == 2">석사</a
+                ><a v-if="item.type == 3">박사</a>)
+              </base-button>
+            </div>
           </div>
-        </div>
 
-        <projects-table
-          :univarrnum="this.univarrnum"
-          title="Light Table"
-        ></projects-table>
+          <projects-table
+            :univarrnum="this.univarrnum"
+            title="Light Table"
+          ></projects-table>
+        </div>
       </card>
     </div>
   </div>
