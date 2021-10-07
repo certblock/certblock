@@ -43,28 +43,28 @@
                   </h3>
                   <hr class="my-4" />
 
-<div v-if="user.type == 2">
-                  <base-button type="primary" @click="modals.modal0 = true">
-                    학교 등록
-                  </base-button>
-                  <modal v-model:show="modals.modal0">
-                    <template v-slot:header>
-                      <h5 class="modal-title" id="exampleModalLabel">
-                        학교 등록
-                      </h5>
-                    </template>
-                    <div>
-                      <regist-univ></regist-univ>
-                    </div>
-                    <template v-slot:footer>
-                      <base-button
-                        type="secondary"
-                        @click="modals.modal0 = false"
-                        >Close</base-button
-                      >
-                    </template>
-                  </modal>
-</div>
+                  <div v-if="user.type == 2">
+                    <base-button type="primary" @click="modals.modal0 = true">
+                      학교 등록
+                    </base-button>
+                    <modal v-model:show="modals.modal0">
+                      <template v-slot:header>
+                        <h5 class="modal-title" id="exampleModalLabel">
+                          학교 등록
+                        </h5>
+                      </template>
+                      <div>
+                        <regist-univ></regist-univ>
+                      </div>
+                      <template v-slot:footer>
+                        <base-button
+                          type="secondary"
+                          @click="modals.modal0 = false"
+                          >Close</base-button
+                        >
+                      </template>
+                    </modal>
+                  </div>
                 </div>
               </div>
             </div>
@@ -79,7 +79,7 @@
         <div v-if="user.type == 1">
           <school-table></school-table>
         </div>
-         <div v-if="user.type == 3">
+        <div v-if="user.type == 3">
           <company-table></company-table>
         </div>
         <div v-if="user.type == 2">
@@ -114,7 +114,7 @@ import { mapState } from "vuex";
 import registUniv from "../components/common/registUnivModal.vue";
 import ProjectsTable from "./Tables/ProjectsTable";
 import SchoolTable from "./Tables/schoolTable.vue";
-import CompanyTable from "./Tables/companyTable.vue"
+import CompanyTable from "./Tables/companyTable.vue";
 
 export default {
   name: "user-profile",
@@ -122,7 +122,7 @@ export default {
     registUniv,
     ProjectsTable,
     SchoolTable,
-    CompanyTable
+    CompanyTable,
   },
   data() {
     return {
