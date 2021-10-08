@@ -36,6 +36,7 @@ public class SubmitServiceImpl implements SubmitService {
     @Override
     public List<SubmitRes> getSubmits(int companyId) {
         List<Submit> submits = submitRepository.findByCompanyId(companyId);
+        submits.sort((submit, t1) -> t1.getCreatedTime().compareTo(submit.getCreatedTime()));
         return submits.stream().map(SubmitRes::of).collect(Collectors.toList());
     }
 
