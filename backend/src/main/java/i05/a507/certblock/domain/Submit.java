@@ -32,9 +32,17 @@ public class Submit {
     @CreatedDate
     private LocalDateTime createdTime;
 
-    public Submit(Certificate certificate, Company company) {
+    private LocalDateTime expiryDate;
+
+    private int noticeId;
+    private String noticeTitle;
+
+    public Submit(Certificate certificate, Company company, LocalDateTime expiryDate, int noticeId, String noticeTitle) {
         this.certificate = certificate;
         this.company = company;
+        this.expiryDate = expiryDate;
+        this.noticeId = noticeId;
+        this.noticeTitle = noticeTitle;
     }
 
     public Submit() {
