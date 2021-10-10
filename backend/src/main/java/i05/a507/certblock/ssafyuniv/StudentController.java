@@ -17,4 +17,10 @@ public class StudentController {
         String path = studentService.issueCertificate(studentId, type);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, path));
     }
+
+    @GetMapping("/students/{studentId}")
+    public ResponseEntity<?> getStudent(@PathVariable int studentId) {
+        Student student = studentService.findById(studentId);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(student != null? 200 : 404, ""));
+    }
 }

@@ -10,7 +10,7 @@ public class StudentService {
     private final StudentRepository studentRepository;
 
     Student findById(int id) {
-        Student student = studentRepository.findById(id).orElseThrow(RuntimeException::new);
+        Student student = studentRepository.findById(id).orElse(null);
         return student;
     }
 

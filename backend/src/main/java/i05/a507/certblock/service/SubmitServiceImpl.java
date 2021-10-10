@@ -30,13 +30,9 @@ public class SubmitServiceImpl implements SubmitService {
     public SubmitRes createSubmit(int companyId, int certificateId) {
         Certificate certificate = certificateRepository.findById(certificateId).orElseThrow(RuntimeException::new);
         Company company = companyRepository.findById(companyId).orElseThrow(RuntimeException::new);
-        LocalDateTime expiryDate = LocalDateTime.now().plusMonths(6).plusDays(1)
-                .truncatedTo(ChronoUnit.HOURS)
-                .truncatedTo(ChronoUnit.MINUTES)
-                .truncatedTo(ChronoUnit.SECONDS)
-                .truncatedTo(ChronoUnit.MILLIS);
+        LocalDateTime expiryDate = LocalDateTime.of(2022, 4, 16, 0, 0);
         int noticeId = 2;
-        String noticeTtile = "2021 하반기 OO그룹 공개 채용";
+        String noticeTtile = "2021 하반기 공개 채용";
         Submit submit = new Submit(certificate, company, expiryDate, noticeId, noticeTtile);
         submit = submitRepository.save(submit);
         return SubmitRes.of(submit);
@@ -56,11 +52,7 @@ public class SubmitServiceImpl implements SubmitService {
 
         List<SubmitRes> submitResList = new ArrayList<>();
         List<Integer> certIdList = Arrays.stream(certIds).boxed().collect(Collectors.toList());
-        LocalDateTime expiryDate = LocalDateTime.now().plusMonths(6).plusDays(1)
-                .truncatedTo(ChronoUnit.HOURS)
-                .truncatedTo(ChronoUnit.MINUTES)
-                .truncatedTo(ChronoUnit.SECONDS)
-                .truncatedTo(ChronoUnit.MILLIS);
+        LocalDateTime expiryDate = LocalDateTime.of(2022, 4, 16, 0, 0);
         int noticeId = 2;
         String noticeTtile = "2021 하반기 공개 채용";
         for (Certificate certificate : certificateRepository.findByIds(certIdList)) {
