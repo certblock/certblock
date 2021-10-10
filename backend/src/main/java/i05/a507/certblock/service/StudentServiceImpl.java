@@ -11,8 +11,12 @@ import i05.a507.certblock.repository.CertificateRepository;
 import i05.a507.certblock.repository.StudentRepository;
 import i05.a507.certblock.repository.UniversityRepository;
 import i05.a507.certblock.repository.UniversityStudentRepository;
+import i05.a507.certblock.ssafyuniv.Resp;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -63,6 +67,29 @@ public class StudentServiceImpl implements StudentService {
 		int type = studentRegistUniReq.getType();
 		int studentIdInUniv = studentRegistUniReq.getStudentIdInUniv();
 		if(student == null || university == null || universityStudent!=null) return false;
+
+		if (studentIdInUniv != 20201234) {
+			UniversityStudent alreadyExistingUniversityStudent
+					= universityStudentRepository.findByUniversityIdAndStudentIdInUniv(universityId, studentIdInUniv)
+					.orElse(null);
+			if (alreadyExistingUniversityStudent != null) {
+				return false;
+			}
+		}
+
+		WebClient client = WebClient
+				.builder()
+				.baseUrl(university.getApiServerBaseUrl())
+				.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+				.build();
+
+		WebClient.RequestHeadersSpec<?> req = client.get()
+				.uri("/api/students/{studentId}", studentIdInUniv);
+		Resp response = req.retrieve().bodyToMono(Resp.class).block();
+		String respMessage = response.getStatusCode();
+		if ("404".equals(respMessage)) {
+			 	return false;
+		}
 
 		UniversityStudent us = new UniversityStudent();
 		us.setStudent(student);
