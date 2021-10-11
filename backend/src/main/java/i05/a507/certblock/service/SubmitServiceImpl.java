@@ -31,7 +31,7 @@ public class SubmitServiceImpl implements SubmitService {
         Certificate certificate = certificateRepository.findById(certificateId).orElseThrow(RuntimeException::new);
         Company company = companyRepository.findById(companyId).orElseThrow(RuntimeException::new);
         LocalDateTime expiryDate = LocalDateTime.of(2022, 4, 16, 0, 0);
-        int noticeId = 2;
+        int noticeId = 3;
         String noticeTtile = "2021 하반기 공개 채용";
         Submit submit = new Submit(certificate, company, expiryDate, noticeId, noticeTtile);
         submit = submitRepository.save(submit);
@@ -53,7 +53,7 @@ public class SubmitServiceImpl implements SubmitService {
         List<SubmitRes> submitResList = new ArrayList<>();
         List<Integer> certIdList = Arrays.stream(certIds).boxed().collect(Collectors.toList());
         LocalDateTime expiryDate = LocalDateTime.of(2022, 4, 16, 0, 0);
-        int noticeId = 2;
+        int noticeId = 3;
         String noticeTtile = "2021 하반기 공개 채용";
         for (Certificate certificate : certificateRepository.findByIds(certIdList)) {
             Submit submit = submitRepository.save(new Submit(certificate, company, expiryDate, noticeId, noticeTtile));
