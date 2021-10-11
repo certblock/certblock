@@ -10,7 +10,7 @@
             증명서 발급 현황
           </h3>
         </div>
-      </div>
+      </div> 
     </div>
 
     <div class="col justify-content-md-right align-items-center">
@@ -20,10 +20,15 @@
             <div class="row align-items-center justify-content-md-left">
               <div class="col-md-3">
                 <span class="text-default"
-                  >본교학생 {{ certificate[index].studentName }}</span
+                  >본교학생 <b>{{certificate[index].studentName }}</b></span
                 >
               </div>
-              <div class="col-md-5">
+              <div class="col-md-3">
+                <span class="text-default"
+                  >학번 <b>{{certificate[index].studentIdInUniv }}</b></span
+                >
+              </div>
+              <div class="col-md-3">
                 <div v-if="certificate[index].certType == 1">
                   <span class="text-primary">졸업 증명서</span>
                 </div>
@@ -31,7 +36,7 @@
                   <span class="text-primary">성적 증명서</span>
                 </div>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <div class="row align-items-center">
                   발급일:
                   {{
@@ -56,7 +61,8 @@
     <div
       class="card-footer d-flex justify-content-end"
       :class="type === 'dark' ? 'bg-transparent' : ''"
-    ></div>
+    ><base-pagination total="30"></base-pagination></div>
+     
   </div>
 </template>
 <script>

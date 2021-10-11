@@ -16,7 +16,7 @@
         <div class="row justify-content-md-center">
           <div class="col col-lg-1"></div>
           <div class="col-lg-7 col-md-10">
-             <div v-if="user.type == 2">
+            <div v-if="user.type == 2">
               <h1 class="display-2 text-white">Hello {{ user.name }}</h1>
               <p class="text-white mt-0 mb-5">
                 안녕하세요, 반갑습니다.<br />
@@ -27,7 +27,7 @@
               <h1 class="display-2 text-white">Hello {{ user.name }}</h1>
               <p class="text-white mt-0 mb-5">
                 안녕하세요, 반갑습니다.<br />
-                CERTBLOCK에서 쉽게 증명서를 관리해보세요.<br>
+                CERTBLOCK에서 쉽게 증명서를 관리해보세요.<br />
                 증명서 발급 현황이 확인가능합니다.
               </p>
             </div>
@@ -35,7 +35,7 @@
               <h1 class="display-2 text-white">Hello {{ user.name }}</h1>
               <p class="text-white mt-0 mb-5">
                 안녕하세요, 반갑습니다.<br />
-                CERTBLOCK에서 쉽게 지원자의 증명서를 관리해보세요.<br>
+                CERTBLOCK에서 쉽게 지원자의 증명서를 관리해보세요.<br />
                 지원자가 제출한 증명서가 확인가능합니다.
               </p>
             </div>
@@ -46,7 +46,7 @@
               <div class="card-body pt-0 pt-md-4">
                 <div class="text-right">
                   <h3>
-                    Phone
+                    Phone{{ inuniv }}
                     <span class="font-weight-light">{{ user.phone }}</span>
                   </h3>
                   <h3>
@@ -97,12 +97,35 @@
         <div v-if="user.type == 1">
           <school-table></school-table>
         </div>
-        <div v-if="user.type == 3">
-          <company-table></company-table>
+        <div v-if="user.type == 3" class="row">
+          <div
+            v-for="(item, index) in title"
+            :key="index"
+            @click="noticeId = item.noticeId"
+            class="col-md-6"
+          >
+            <div v-if="item.noticeId == noticeId">
+              <base-button class="col-md-12">
+                {{ item.noticeTitle }}
+              </base-button>
+            </div>
+            <div v-else>
+              <base-button class="col-md-12" type="secondary">
+                {{ item.noticeTitle }}
+              </base-button>
+            </div>
+          </div>
+
+          <company-table
+            v-if="certificate != null"
+            :noticeId="noticeId"
+            title="Light Table"
+            class="col-md-12"
+          ></company-table>
         </div>
         <div v-if="user.type == 2">
           <div class="row">
-            <!-- <div v-if="inuniv.length == 0">등록된 대학교가 없습니다</div> -->
+            <div v-if="inuniv.length == 0">등록된 대학교가 없습니다</div>
             <div
               v-for="(item, index) in inuniv"
               :key="index"
@@ -158,13 +181,27 @@ export default {
       modals: {
         modal0: false,
       },
-      univarrnum: 0,
+      noticeId: 3,
+      title: [
+        {
+          noticeId: 1,
+          noticeTitle: "2020 하반기 공개 채용",
+          endApply: "2020-10-01",
+        },
+        {
+          noticeId: 3,
+          noticeTitle: "2021 상반기 공개 채용",
+          endApply: "2021-04-12",
+        },
+      ],
     };
   },
   computed: {
     ...mapState(["user", "inuniv", "certificate"]),
   },
-  methods: {},
+  methods: {
+
+  },
 };
 </script>
 <style></style>

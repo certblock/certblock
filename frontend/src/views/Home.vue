@@ -6,7 +6,7 @@
     <div class="container-fluid mt--7 bg-darkblack">
       <div class="row">
         <div class="col">
-          <div class="card shadow">
+          <div class="card-shadow">
             <div class="card-header bg-darkblack">
               <vue-particles color="#dedede"></vue-particles>
               <div class="centered-text">
@@ -49,6 +49,7 @@ export default {
   overflow: hidden;
   margin: 0 auto;
 }
+
 .mainImage {
   width: 100%;
   height: 100%;

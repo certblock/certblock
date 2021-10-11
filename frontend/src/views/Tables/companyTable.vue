@@ -4,48 +4,94 @@
       class="card-header border-0"
       :class="type === 'dark' ? 'bg-transparent' : ''"
     >
-      <div class="row align-items-center">
-        <div class="col">
+      <div class="col align-items-center">
+        <div class="row">
+          <div class="col-md-6">
           <h3 class="mb-0" :class="type === 'dark' ? 'text-white' : ''">
             지원자 증명서 제출 현황
           </h3>
+          </div>
+           <div class="col-md-6">
+          <div v-for="(item, index) in title" :key="index" class="text-right">
+            <div v-if="item.noticeId == noticeId">
+              <h4>공고 마감일  <b>{{ item.endApply }}</b></h4>
+            </div>
+          </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="col justify-content-md-right align-items-center">
-      <div v-for="(item, index) in certificate" :key="index">
-        <div class="col-xl-12 col-lg-12">
-          <stats-card>
-            <div class="row align-items-center justify-content-md-left">
-              <div class="col-md-3">
-                <span class="text-default"
-                  >지원자 {{ certificate[index].applicantName }}</span
+    <div class="row justify-content-md-center">
+      <div class="col-xl-12 col-lg-12 col-md-12">
+        <div v-for="(item, index) in certificate" :key="index">
+          <stats-card v-if="item.noticeId == noticeId">
+            <div class="row align-items-center">
+              <div class="col-md-4">
+                <span class="text-primary"
+                  >지원자 <b>{{ item.applicantName }}</b></span
                 >
               </div>
-              <div class="col-md-5">
-                <div v-if="certificate[index].certType == 1">
-                  <span class="text-primary">졸업 증명서</span>
+              <div class="row col-md-4">
+                <div v-if="item.certType == 1">
+                  학사 <badge type="default"><i class="ni ni-hat-3"></i></badge
+                  ><b> 졸업증명서</b>
                 </div>
-                <div v-else>
-                  <span class="text-primary">성적 증명서</span>
+                <div v-if="item.certType == 2">
+                  학사
+                  <badge type="default"
+                    ><i class="ni ni-paper-diploma"></i></badge
+                  ><b> 성적증명서</b>
                 </div>
+                <div v-if="item.certType == 3">
+                  석사 <badge type="default"><i class="ni ni-hat-3"></i></badge
+                  ><b> 졸업증명서</b>
+                </div>
+                <div v-if="item.certType == 4">
+                  석사
+                  <badge type="default"
+                    ><i class="ni ni-paper-diploma"></i></badge
+                  ><b> 성적증명서</b>
+                </div>
+                <div v-if="item.certType == 5">
+                  박사 <badge type="default"><i class="ni ni-hat-3"></i></badge
+                  ><b> 졸업증명서</b>
+                </div>
+                <div v-if="item.certType == 6">
+                  박사
+                  <badge type="default"
+                    ><i class="ni ni-paper-diploma"></i></badge
+                  ><b> 성적증명서</b>
+                </div>
+                &nbsp;&nbsp;&nbsp;
+                <span class="text-default"
+                  >발급기관 <b>{{ item.univName }}</b></span
+                >
               </div>
-              <div class="col-md-4">
-                <div class="row align-items-center">
-                  발급일:
-                  {{
-                    certificate[index].createdTime.substring(0, 10)
-                  }}&nbsp;&nbsp;&nbsp;
-                  <base-button @click="showImage(index)"
-                    >증명서 이미지 보기</base-button
-                  >
-                  <modal v-model:show="modals.modal0">
+              <!-- <div class="col-md-4 text-right">
+                보관일:
+                {{ certificate[index].createdTime.substring(0, 10) }}&nbsp;
+                <base-button @click="showImage(item.certificateId)"
+                  >증명서 이미지 보기</base-button
+                >
+                <modal v-model:show="modals.modal0" modal-classes="modal-xl">
+                  <div class="modal-all">
+                    <img :src="this.imageSrc" class="certImage" />
+                  </div>
+                </modal>
+              </div> -->
+              
+              <div class="col-md-4 text-right">
+                발급일:
+                {{ certificate[index].createdTime.substring(0, 10) }}&nbsp;
+                    <base-button @click="showImage(item.certificateId)"
+                      >증명서 이미지 보기</base-button
+                    >
+                  <modal v-model:show="modals.modal0" modal-classes="modal-xl">
                     <div class="modal-all">
                       <img :src="this.imageSrc" class="certImage" />
                     </div>
                   </modal>
-                </div>
               </div>
             </div>
           </stats-card>
@@ -56,7 +102,9 @@
     <div
       class="card-footer d-flex justify-content-end"
       :class="type === 'dark' ? 'bg-transparent' : ''"
-    ></div>
+    >
+      <base-pagination total="30"></base-pagination>
+    </div>
   </div>
 </template>
 <script>
@@ -65,27 +113,38 @@ import axios from "axios";
 
 export default {
   components: {},
-  name: "school-table",
-  props: {},
+  name: "company-table",
+  props: { noticeId: Number },
   computed: {
-    ...mapState(["certificate", "inuniv"]),
+    ...mapState(["user", "inuniv", "certificate"]),
   },
   data() {
     return {
       inCert: [],
-      certnum: this.univarrnum * 2,
       modals: {
         modal0: false,
       },
       imageSrc: "",
+     title: [
+        {
+          noticeId: 1,
+          noticeTitle: "2020 하반기 공개 채용",
+          endApply: "2020-10-01",
+        },
+        {
+          noticeId: 3,
+          noticeTitle: "2021 상반기 공개 채용",
+          endApply: "2021-04-12",
+        },
+      ],
+      endShow:false,
+      
     };
   },
   methods: {
     showImage(num) {
       axios
-        .get(
-          `https://j5a507.p.ssafy.io/api/certificate/${this.certificate[num].certificateId}`
-        )
+        .get(`https://j5a507.p.ssafy.io/api/certificate/${num}`)
         .then((res) => {
           this.imageSrc = res.data.message;
           this.modals.modal0 = true;
@@ -94,6 +153,16 @@ export default {
           console.log(error);
         });
     },
+  },
+  mounted() {
+
+    var idx = this.title.findIndex(obj => obj.noticeId == this.noticeId);
+    const moment = require('moment'); 
+    // eslint-disable-next-line no-unused-vars
+    const today = moment();
+    
+    var diff = moment.duration(today.diff(this.title[idx].endApply)).months();
+    if(diff>6) this.endShow = true;
   },
 };
 </script>
