@@ -129,44 +129,45 @@
         </div>
 
         <!-- 학생 -->
-        <div v-if="inuniv.length==0"> 
+        <!-- <div v-if="inuniv.length==0"> 
           <h3>등록된 학교가 없습니다. 학교등록 버튼을 통해 학교인증을 해주세요.</h3>
         </div>
-        <div v-else>
-            <div v-if="user.type == 2">
-              <div class="row">
-                <div
-                  v-for="(item, index) in inuniv"
-                  :key="index"
-                  @click="univNum = index"
-                  class="col-md-3"
-                >
-                  <div v-if="index == univNum">
-                    <base-button class="col-md-12">
-                      {{ item.universityName }}
-                      (<a v-if="item.type == 1">학사</a
-                      ><a v-if="item.type == 2">석사</a
-                      ><a v-if="item.type == 3">박사</a>)
-                    </base-button>
-                  </div>
-                  <div v-else>
-                    <base-button class="col-md-12" type="secondary">
-                      {{ item.universityName }}
-                      (<a v-if="item.type == 1">학사</a
-                      ><a v-if="item.type == 2">석사</a
-                      ><a v-if="item.type == 3">박사</a>)
-                    </base-button>
-                  </div>
-                </div>
+        <div v-else> -->
+        <div v-if="user.type == 2">
+          <div v-if="inuniv.length==0"><h3>등록된 학교가 없습니다. 학교등록 버튼을 통해 학교인증을 해주세요.</h3></div>
+          <div v-else class="row">
+            <div
+              v-for="(item, index) in inuniv"
+              :key="index"
+              @click="univNum = index"
+              class="col-md-3"
+            >
+              <div v-if="index == univNum">
+                <base-button class="col-md-12">
+                  {{ item.universityName }}
+                  (<a v-if="item.type == 1">학사</a
+                  ><a v-if="item.type == 2">석사</a
+                  ><a v-if="item.type == 3">박사</a>)
+                </base-button>
               </div>
-
-              <projects-table
-                v-if="certificate != null"
-                :univarrnum="univNum"
-                title="Light Table"
-              ></projects-table>
+              <div v-else>
+                <base-button class="col-md-12" type="secondary">
+                  {{ item.universityName }}
+                  (<a v-if="item.type == 1">학사</a
+                  ><a v-if="item.type == 2">석사</a
+                  ><a v-if="item.type == 3">박사</a>)
+                </base-button>
+              </div>
             </div>
           </div>
+
+          <projects-table
+            v-if="certificate != null"
+            :univarrnum="univNum"
+            title="Light Table"
+          ></projects-table>
+        </div>
+          <!-- </div> -->
       </card>
     </div>
   </div>
@@ -202,7 +203,7 @@ export default {
       modals: {
         modal0: false,
       },
-      noticeId:20,
+      noticeId:3,
       univNum: 0,
       endShow:true,
       title: [
