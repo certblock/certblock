@@ -46,7 +46,7 @@
               <div class="card-body pt-0 pt-md-4">
                 <div class="text-right">
                   <h3>
-                    Phone{{ inuniv }}
+                    Phone
                     <span class="font-weight-light">{{ user.phone }}</span>
                   </h3>
                   <h3>
@@ -94,23 +94,26 @@
 
     <div class="container-fluid mt--7 bg-darkblack">
       <card shadow type="secondary">
+        <!-- 대학교 -->
         <div v-if="user.type == 1">
           <school-table></school-table>
         </div>
+
+        <!-- 회사 -->
         <div v-if="user.type == 3" class="row">
           <div
             v-for="(item, index) in title"
             :key="index"
             @click="noticeId = item.noticeId"
-            class="col-md-6"
+            class="col-md-4"
           >
             <div v-if="item.noticeId == noticeId">
-              <base-button class="col-md-12">
-                {{ item.noticeTitle }}
+              <base-button class="col-md-12" >
+                {{ item.noticeTitle }} 
               </base-button>
             </div>
             <div v-else>
-              <base-button class="col-md-12" type="secondary">
+              <base-button class="col-md-12" type="secondary" @click="checkMonths(index)">
                 {{ item.noticeTitle }}
               </base-button>
             </div>
@@ -119,30 +122,43 @@
           <company-table
             v-if="certificate != null"
             :noticeId="noticeId"
+            :endShow="endShow"
             title="Light Table"
             class="col-md-12"
           ></company-table>
         </div>
+
+        <!-- 학생 -->
         <div v-if="user.type == 2">
           <div class="row">
-            <div v-if="inuniv.length == 0">등록된 대학교가 없습니다</div>
             <div
               v-for="(item, index) in inuniv"
               :key="index"
-              @click="univarrnum = index"
+              @click="univNum = index"
               class="col-md-3"
             >
-              <base-button class="col-md-12">
-                {{ item.universityName }}(<a v-if="item.type == 1">학사</a
-                ><a v-if="item.type == 2">석사</a
-                ><a v-if="item.type == 3">박사</a>)
-              </base-button>
+              <div v-if="index == univNum">
+                <base-button class="col-md-12">
+                  {{ item.universityName }}
+                  (<a v-if="item.type == 1">학사</a
+                  ><a v-if="item.type == 2">석사</a
+                  ><a v-if="item.type == 3">박사</a>)
+                </base-button>
+              </div>
+              <div v-else>
+                <base-button class="col-md-12" type="secondary">
+                  {{ item.universityName }}
+                  (<a v-if="item.type == 1">학사</a
+                  ><a v-if="item.type == 2">석사</a
+                  ><a v-if="item.type == 3">박사</a>)
+                </base-button>
+              </div>
             </div>
           </div>
 
           <projects-table
             v-if="certificate != null"
-            :univarrnum="this.univarrnum"
+            :univarrnum="univNum"
             title="Light Table"
           ></projects-table>
         </div>
@@ -182,16 +198,23 @@ export default {
         modal0: false,
       },
       noticeId: 3,
+      univNum: 0,
+      endShow:true,
       title: [
+       {
+          noticeId: 3,
+          noticeTitle: "2021 하반기 공개 채용",
+          endApply: "2021-11-01",
+        },
+        {
+          noticeId: 2,
+          noticeTitle: "2021 상반기 공개 채용",
+          endApply: "2021-04-12",
+        },
         {
           noticeId: 1,
           noticeTitle: "2020 하반기 공개 채용",
-          endApply: "2020-10-01",
-        },
-        {
-          noticeId: 3,
-          noticeTitle: "2021 상반기 공개 채용",
-          endApply: "2021-04-12",
+          endApply: "2020-11-12",
         },
       ],
     };
@@ -200,7 +223,16 @@ export default {
     ...mapState(["user", "inuniv", "certificate"]),
   },
   methods: {
+    checkMonths(num) {
+      const moment = require("moment");
+      // eslint-disable-next-line no-unused-vars
+      const today = moment();
 
+      var diff = moment.duration(today.diff(this.title[num].endApply)).months();
+      
+      if (diff > 6) this.endShow = false;
+      else this.endShow = true;
+    },
   },
 };
 </script>

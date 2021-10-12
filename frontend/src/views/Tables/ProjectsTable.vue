@@ -11,7 +11,7 @@
             class="mb-0"
             :class="type === 'dark' ? 'text-white' : ''"
           >
-            {{ inuniv[univarrnum].universityName }} 증명서 목록
+            {{ inuniv[univarrnum].universityName }} 증명서 발급 목록
           </h3>
         </div>
       </div>
@@ -19,68 +19,55 @@
 
     <div class="row justify-content-md-center">
       <div class="col-xl-12 col-lg-12">
-        <stats-card v-if="certificate != null">
-          <div class="row" v-if="certificate[certnum].flg">
-            <div class="col-md-7">
-              <badge type="primary"><i class="ni ni-app"></i></badge>
-              <span class="text-primary">졸업 증명서</span>
-            </div>
-            <div class="col-md-5">
-              발급일: {{ certificate[certnum].date.substring(0, 10) }}
-              <base-button @click="showImage(0)"
-                >증명서 이미지 보기</base-button
-              >
-              <modal v-model:show="modals.modal0"  modal-classes="modal-xl">
-                <div class="modal-all">
-                  <img :src="this.imageSrc" class="certImage" />
+        <div v-for="(item, index) in certificate" :key="index">
+          <stats-card
+            v-if="item.universityId == inuniv[univarrnum].universityId"
+          >
+            <div class="row" v-if="item.flg">
+              <div class="col-md-7 text-primary">
+                <div v-if="item.type == 1 || item.type == 3 || item.type == 5">
+                  <badge type="primary"><i class="ni ni-hat-3"></i></badge
+                  ><b> 졸업증명서</b>
                 </div>
-              </modal>
-            </div>
-            <div class="col"></div>
-          </div>
-          <div class="row" v-else>
-            <div class="col-md-3">
-              <badge type="secondary"><i class="ni ni-app"></i></badge>
-              <span class="text-default">졸업 증명서</span>
-            </div>
-            <div class="col">
-              <base-button @click="Issuedcert(0)">발급받기</base-button>
-            </div>
-            <div class="col"></div>
-          </div>
-        </stats-card>
-      </div>
-      <div class="col-xl-12 col-lg-12">
-        <stats-card>
-          <div class="row" v-if="certificate[certnum + 1].flg">
-            <div class="col-md-7">
-              <badge type="primary"><i class="ni ni-app"></i></badge>
-              <span class="text-primary">성적 증명서</span>
-            </div>
-            <div class="col-md-5">
-              발급일: {{ certificate[certnum + 1].date.substring(0, 10) }}
-              <base-button @click="showImage(1)"
-                >증명서 이미지 보기</base-button
-              >
-              <modal v-model:show="modals.modal0"  modal-classes="modal-xl">
-                <div class="modal-all">
-                  <img :src="this.imageSrc" class="certImage" />
+                <div v-else class="text-primary">
+                  <badge type="primary"
+                    ><i class="ni ni-paper-diploma"></i></badge
+                  ><b> 성적증명서</b>
                 </div>
-              </modal>
+              </div>
+              <div class="col-md-5 text-right">
+                발급일: {{ item.date.substring(0, 10) }}
+                <base-button @click="showImage(item.certificateId)"
+                  >증명서 이미지 보기</base-button
+                >
+                <modal v-model:show="modals.modal0" modal-classes="modal-xl">
+                  <div class="modal-all">
+                    <img :src="this.imageSrc" class="certImage" />
+                  </div>
+                </modal>
+              </div>
             </div>
-            <div class="col"></div>
-          </div>
-          <div class="row" v-else>
-            <div class="col-md-3">
-              <badge type="secondary"><i class="ni ni-app"></i></badge>
-              <span class="text-default">성적 증명서</span>
+            <div class="row" v-else>
+              <div class="col-md-3">
+                <div  v-if="item.type == 1 || item.type == 3 || item.type == 5">
+                  <badge type="default"><i class="ni ni-hat-3"></i></badge
+                  ><b> 졸업증명서</b>
+                </div>
+                <div  v-else>
+                  <badge type="default"
+                    ><i class="ni ni-paper-diploma"></i></badge
+                  ><b> 성적증명서</b>
+                </div>
+              </div>
+              <div class="col">
+                <base-button @click="Issuedcert(item.certificateId)"
+                  >발급받기</base-button
+                >
+              </div>
+              <div class="col"></div>
             </div>
-            <div class="col">
-              <base-button @click="Issuedcert(1)">발급받기</base-button>
-            </div>
-            <div class="col"></div>
-          </div>
-        </stats-card>
+          </stats-card>
+        </div>
       </div>
     </div>
 
@@ -97,21 +84,13 @@ import axios from "axios";
 export default {
   components: {},
   name: "projects-table",
-  props: {
-    univarrnum: Number,
-  },
-  watch: {
-    univarrnum: function (val) {
-      this.updatecertnum(val);
-    },
-  },
+  props: ["univarrnum"],
   computed: {
     ...mapState(["user", "inuniv", "certificate"]),
   },
   data() {
     return {
       inCert: [],
-      certnum: this.univarrnum * 2,
       modals: {
         modal0: false,
       },
@@ -120,16 +99,9 @@ export default {
   },
   methods: {
     ...mapActions(["getcertificate"]),
-    updatecertnum(univarrnum) {
-      this.certnum = univarrnum * 2;
-    },
     showImage(num) {
       axios
-        .get(
-          `https://j5a507.p.ssafy.io/api/certificate/${
-            this.certificate[this.certnum + num].certificateId
-          }`
-        )
+        .get(`https://j5a507.p.ssafy.io/api/certificate/${num}`)
         .then((res) => {
           this.imageSrc = res.data.message;
           this.modals.modal0 = true;
@@ -140,19 +112,19 @@ export default {
     },
     async Issuedcert(num) {
       await axios
-        .put(
-          `https://j5a507.p.ssafy.io/api/certificate/${
-            this.certificate[this.certnum + num].certificateId
-          }`
-        )
+        .put(`https://j5a507.p.ssafy.io/api/certificate/${num}`)
         .then(() => {
-          this.getcertificate(this.certificate[this.certnum + num].studentId);
+          for (var i in this.certificate) {
+            if (this.certificate[i].certificateId == num)
+              this.getcertificate(this.certificate[i].studentId);
+          }
         })
         .catch((error) => {
           console.log(error);
         });
     },
   },
+  mounted() {},
 };
 </script>
 <style>

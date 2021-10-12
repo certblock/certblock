@@ -14,10 +14,12 @@
       <!-- Header container -->
       <div class="container-fluid align-items-center">
         <div class="row justify-content-md-center">
-          <div class="col-lg-2 col-md-10">
-            <h1 class="display-2 text-white">지원하기</h1>
+          <div class="col-lg-12 col-md-10 text-center">
+            <h1 class="display-2 text-white">SSAFY소프트웨어</h1>
+            <h1 class="display-2 text-white">2021 하반기 공개 채용</h1>
             <p class="text-white mt-0 mb-5">
               안녕하세요, 반갑습니다.<br />
+              SSAFY소프트웨어 채용 지원 페이지입니다.<br />
               지원해주셔서 감사합니다.
             </p>
           </div>
@@ -155,7 +157,7 @@
                   <div class="col-6 col-md-4">
                     <span></span>
                   </div>
-                  <div class="col-6 col-md-8">
+                  <div class="col-12 col-md-8">
                     <span>
                       <div class="pl-lg-6">
                         <base-button @click="showModal()"
@@ -228,7 +230,7 @@ export default {
       modalNum: "modals.modal0",
       loginStatus: false,
       submitStatus:[],
-    };
+    }
   },
   computed: {
     ...mapState(["user"]),

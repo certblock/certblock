@@ -57,6 +57,7 @@
                       align-items-center
                       col-xl-8
                       justify-content-md-center
+                      text-right
                     "
                   >
                     발급일 &nbsp;{{

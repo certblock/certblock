@@ -7,16 +7,18 @@
       <div class="col align-items-center">
         <div class="row">
           <div class="col-md-6">
-          <h3 class="mb-0" :class="type === 'dark' ? 'text-white' : ''">
-            지원자 증명서 제출 현황
-          </h3>
+            <h3 class="mb-0" :class="type === 'dark' ? 'text-white' : ''">
+              지원자 증명서 제출 현황
+            </h3>
           </div>
-           <div class="col-md-6">
-          <div v-for="(item, index) in title" :key="index" class="text-right">
-            <div v-if="item.noticeId == noticeId">
-              <h4>공고 마감일  <b>{{ item.endApply }}</b></h4>
+          <div class="col-md-6">
+            <div v-for="(item, index) in title" :key="index" class="text-right">
+              <div v-if="item.noticeId == noticeId">
+                <h4>
+                  공고 마감일 <b>{{ item.endApply }}</b>
+                </h4>
+              </div>
             </div>
-          </div>
           </div>
         </div>
       </div>
@@ -68,30 +70,24 @@
                   >발급기관 <b>{{ item.univName }}</b></span
                 >
               </div>
-              <!-- <div class="col-md-4 text-right">
-                보관일:
-                {{ certificate[index].createdTime.substring(0, 10) }}&nbsp;
-                <base-button @click="showImage(item.certificateId)"
-                  >증명서 이미지 보기</base-button
-                >
-                <modal v-model:show="modals.modal0" modal-classes="modal-xl">
-                  <div class="modal-all">
-                    <img :src="this.imageSrc" class="certImage" />
-                  </div>
-                </modal>
-              </div> -->
-              
+
               <div class="col-md-4 text-right">
                 발급일:
                 {{ certificate[index].createdTime.substring(0, 10) }}&nbsp;
-                    <base-button @click="showImage(item.certificateId)"
-                      >증명서 이미지 보기</base-button
-                    >
+
+                <div v-if ="endShow">
+                  <base-button @click="showImage(item.certificateId)"
+                    >증명서 이미지 보기</base-button
+                  >
                   <modal v-model:show="modals.modal0" modal-classes="modal-xl">
                     <div class="modal-all">
                       <img :src="this.imageSrc" class="certImage" />
                     </div>
                   </modal>
+                </div>
+                <div v-else>
+                  <p> 증명서 보관일이 만료되었습니다.</p>
+                </div>
               </div>
             </div>
           </stats-card>
@@ -114,7 +110,7 @@ import axios from "axios";
 export default {
   components: {},
   name: "company-table",
-  props: { noticeId: Number },
+  props: [ "noticeId", "endShow" ],
   computed: {
     ...mapState(["user", "inuniv", "certificate"]),
   },
@@ -125,20 +121,23 @@ export default {
         modal0: false,
       },
       imageSrc: "",
-     title: [
-        {
-          noticeId: 1,
-          noticeTitle: "2020 하반기 공개 채용",
-          endApply: "2020-10-01",
-        },
+      title: [
         {
           noticeId: 3,
+          noticeTitle: "2021 하반기 공개 채용",
+          endApply: "2021-11-01",
+        },
+        {
+          noticeId: 2,
           noticeTitle: "2021 상반기 공개 채용",
           endApply: "2021-04-12",
         },
+        {
+          noticeId: 1,
+          noticeTitle: "2020 하반기 공개 채용",
+          endApply: "2020-11-12",
+        },
       ],
-      endShow:false,
-      
     };
   },
   methods: {
@@ -155,14 +154,6 @@ export default {
     },
   },
   mounted() {
-
-    var idx = this.title.findIndex(obj => obj.noticeId == this.noticeId);
-    const moment = require('moment'); 
-    // eslint-disable-next-line no-unused-vars
-    const today = moment();
-    
-    var diff = moment.duration(today.diff(this.title[idx].endApply)).months();
-    if(diff>6) this.endShow = true;
   },
 };
 </script>

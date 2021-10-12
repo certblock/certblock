@@ -14,7 +14,7 @@
       <!-- Header container -->
       <div class="container-fluid align-items-center">
         <div class="row justify-content-md-center">
-          <div class="col-lg-4 col-md-10">
+          <div class="col-lg- col-md-10">
             <h1 class="display-2 text-white text-center">CERTBLOCK</h1>
             <h1 class="display-2 text-white text-center">
               "{{ userInfo.name }}"
