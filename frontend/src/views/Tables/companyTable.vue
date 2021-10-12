@@ -72,7 +72,7 @@
               </div>
 
               <div class="col-md-4 text-right">
-                발급일:
+                증명서 제출일:
                 {{ certificate[index].createdTime.substring(0, 10) }}&nbsp;
 
                 <div v-if ="endShow">
