@@ -118,7 +118,7 @@
                   
                   <div class="col-lg-4 text-center">
                     <h4>졸업증명서</h4>
-                    <div v-if="submitStatus.includes(1)">
+                    <div v-if="submitStatus.includes(1) || submitStatus.includes(3) || submitStatus.includes(5)">
                        <base-input
                       placeholder="제출완료입니다."
                       :valid="true"
@@ -135,7 +135,7 @@
                   </div>
                    <div class="col-lg-4 text-center">
                     <h4>성적증명서</h4>
-                    <div v-if="submitStatus.includes(2)">
+                    <div v-if="submitStatus.includes(2) || submitStatus.includes(4) || submitStatus.includes(6)">
                        <base-input
                       placeholder="제출완료입니다."
                       :valid="true"

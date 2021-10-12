@@ -11,7 +11,7 @@
             class="mb-0"
             :class="type === 'dark' ? 'text-white' : ''"
           >
-            {{ inuniv[univarrnum].universityName }} 증명서 발급 목록
+            {{ inuniv[univarrnum].universityName }} 증명서 발급 목록 
           </h3>
         </div>
       </div>
@@ -103,6 +103,7 @@ export default {
       axios
         .get(`https://j5a507.p.ssafy.io/api/certificate/${num}`)
         .then((res) => {
+          console.log(res);
           this.imageSrc = res.data.message;
           this.modals.modal0 = true;
         })
