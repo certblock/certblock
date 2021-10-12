@@ -123,7 +123,7 @@ export default {
       imageSrc: "",
       title: [
         {
-          noticeId: 1,
+          noticeId: 3,
           noticeTitle: "2021 하반기 공개 채용",
           endApply: "2021-11-01",
         },
@@ -133,7 +133,7 @@ export default {
           endApply: "2021-04-12",
         },
         {
-          noticeId: 3,
+          noticeId: 1,
           noticeTitle: "2020 하반기 공개 채용",
           endApply: "2020-11-12",
         },
