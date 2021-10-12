@@ -64,7 +64,8 @@ public class CertificateServiceImpl implements CertificateService {
                 .build();
 
         WebClient.RequestHeadersSpec<?> req = client.get()
-                .uri("/api/students/{studentId}/certificates/{certId}", universityStudent.getStudentIdInUniv(), id);
+                .uri("/api/students/{studentId}/certificates/{certType}", universityStudent.getStudentIdInUniv(),
+                        certificate.getType());
         Resp response = req.retrieve().bodyToMono(Resp.class).block();
         String certImageFilePath = response.getMessage();
 
