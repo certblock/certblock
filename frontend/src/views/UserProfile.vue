@@ -197,7 +197,7 @@ export default {
       modals: {
         modal0: false,
       },
-      noticeId: 3,
+      noticeId:20,
       univNum: 0,
       endShow:true,
       title: [
@@ -209,7 +209,7 @@ export default {
         {
           noticeId: 2,
           noticeTitle: "2021 상반기 공개 채용",
-          endApply: "2021-04-12",
+          endApply: "2021-04-20",
         },
         {
           noticeId: 1,

@@ -72,7 +72,7 @@
               </div>
 
               <div class="col-md-4 text-right">
-                발급일:
+                증명서 제출일:
                 {{ certificate[index].createdTime.substring(0, 10) }}&nbsp;
 
                 <div v-if ="endShow">
@@ -122,7 +122,7 @@ export default {
       },
       imageSrc: "",
       title: [
-        {
+       {
           noticeId: 3,
           noticeTitle: "2021 하반기 공개 채용",
           endApply: "2021-11-01",
@@ -130,7 +130,7 @@ export default {
         {
           noticeId: 2,
           noticeTitle: "2021 상반기 공개 채용",
-          endApply: "2021-04-12",
+          endApply: "2021-04-20",
         },
         {
           noticeId: 1,
