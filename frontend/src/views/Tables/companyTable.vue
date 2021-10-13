@@ -84,6 +84,8 @@
                       <img :src="this.imageSrc" class="certImage" />
                     </div>
                   </modal>
+                  <br>
+                  <a class="text-green">해당 증명서는 위변조가 없습니다</a>
                 </div>
                 <div v-else>
                   <p> 증명서 보관일이 만료되었습니다.</p>

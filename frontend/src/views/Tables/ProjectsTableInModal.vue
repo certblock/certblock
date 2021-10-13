@@ -84,6 +84,7 @@
           </div>
         </div>
       </div>
+      <a style="padding: 10px">기업에 제출된 증명서는 6개월간 보관됩니다.</a>
     </div>
     <base-button @click="submit()">제출하기</base-button>
     <div
@@ -134,9 +135,10 @@ export default {
     submit() {
       for (let index in this.selectCert) {
         for (let idx in this.certificate) {
-              if(this.certificate[idx].certificateId==this.selectCert[index]) this.sendType.push(this.certificate[idx].type)
-           }
-           }
+          if (this.certificate[idx].certificateId == this.selectCert[index])
+            this.sendType.push(this.certificate[idx].type);
+        }
+      }
       axios
         .post(
           `https://j5a507.p.ssafy.io/api/companies/20/certificates`,
