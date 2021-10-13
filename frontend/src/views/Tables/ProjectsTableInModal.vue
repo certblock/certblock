@@ -84,7 +84,7 @@
           </div>
         </div>
       </div>
-      <a style="padding: 10px">기업에 제출된 증명서는 6개월간 보관됩니다.</a>
+      <a style="padding: 10px">제출된 증명서는 SSAFY소프트웨어에서 6개월간 열람 가능합니다.</a>
     </div>
     <base-button @click="submit()">제출하기</base-button>
     <div
